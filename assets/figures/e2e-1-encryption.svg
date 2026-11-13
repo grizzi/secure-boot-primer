@@ -35,6 +35,7 @@
   <text class="s" x="708" y="34">signature checked</text>
   <circle cx="694" cy="30" r="8" fill="#e8f5e9" stroke="#548c58" stroke-width="1.5"/>
   <text class="c t" x="694" y="34" style="font-size:11px;fill:#548c58">✓</text>
+  <g data-step="1" data-caption="No stage checks the next one, and the boot loader, kernel and initrd on /boot cannot be encrypted.">
   <rect class="hw" x="24.0" y="56" width="70.0" height="60" rx="6"/>
   <text class="c t" x="59.0" y="91" style="font-size:14px">Power on</text>
   <rect class="fw" x="134.0" y="56" width="165.5" height="60" rx="6"/>
@@ -61,6 +62,8 @@
   <path class="ar" d="M710.5,86.0 H748.5"/>
   <text class="c red" x="422.2" y="134" style="font-size:12px">cannot be encrypted</text>
   <text class="c red" x="627.8" y="134" style="font-size:12px">cannot be encrypted</text>
+  </g>
+  <g data-step="2" data-caption="A person types the passphrase at every boot, and the initrd opens the LUKS partition with it.">
   <rect class="w" x="24" y="172" width="393.8" height="72" rx="6"/>
   <text class="t" x="38" y="196">A person</text>
   <text class="s" x="38" y="216">types the passphrase</text>
@@ -71,9 +74,11 @@
   <text class="c s" x="627.8" y="234">passphrase → keyslot → volume key</text>
   <path class="ar" d="M417.8,208 H515.8"/>
   <text class="lbl c" x="467.8" y="200">passphrase</text>
-  <path class="ar" d="M627.8,116 V170"/>
+  <path class="ar" d="M557.8,116 V170"/>
   <path class="ar" d="M737.8,208 H833.2 V118"/>
   <text class="lbl" x="841.2" y="162">opens</text>
+  </g>
+  <g data-step="3" data-caption="A disk read on a laptop now shows only encrypted bytes. But the robot cannot boot on its own, and edited boot files or firmware still work.">
   <text class="t" x="24" y="278">With this design:</text>
   <rect class="ok" x="24.0" y="290" width="214.0" height="64" rx="6"/>
   <text class="t green" x="36.0" y="318" style="font-size:18px">✓</text>
@@ -91,5 +96,8 @@
   <text class="t red" x="714.0" y="318" style="font-size:18px">✗</text>
   <text class="t" x="736.0" y="315">Replaced firmware</text>
   <text class="s" x="736.0" y="335">still works</text>
+  </g>
+  <g data-step="4" data-caption="Still missing: an edited initrd can record the passphrase as the person types it.">
   <text x="24" y="384" style="font-size:13px">An edited initrd can also record the passphrase the person types.</text>
+  </g>
 </svg>

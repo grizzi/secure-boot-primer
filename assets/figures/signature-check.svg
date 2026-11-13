@@ -21,49 +21,63 @@
   <rect class="bg" x="0.75" y="0.75" width="898.5" height="318.5" rx="12"/>
 
   <!-- Signing -->
-  <text class="h" x="24" y="38">Signing: on Hari's computer, once per release</text>
-  <rect class="plain" x="24" y="54" width="120" height="40" rx="6"/>
-  <text class="c" x="84" y="79">Boot file</text>
-  <path class="ar" d="M144,74 H192"/>
-  <rect class="fw" x="194" y="54" width="150" height="40" rx="6"/>
-  <text class="c" x="269" y="79">Hash (SHA-256)</text>
-  <path class="ar" d="M344,74 H392"/>
-  <rect class="key" x="394" y="54" width="190" height="40" rx="6"/>
-  <text class="c" x="489" y="79">Sign with private key</text>
-  <path class="ar" d="M584,74 H624"/>
-  <rect class="plain" x="626" y="54" width="250" height="40" rx="6"/>
-  <text class="c" x="751" y="79">Signature, stored with the file</text>
-  <text class="c" x="269" y="114" style="font-size:12px;fill:#2c4f8f">no key needed</text>
-  <text class="c" x="489" y="114" style="font-size:12px;fill:#8a5a00">only step that needs the private key</text>
+  <g data-step="1" data-caption="Signing, on Hari's computer: the boot file is hashed. Hashing needs no key.">
+    <text class="h" x="24" y="38">Signing: on Hari's computer, once per release</text>
+    <rect class="plain" x="24" y="54" width="120" height="40" rx="6"/>
+    <text class="c" x="84" y="79">Boot file</text>
+    <path class="ar" d="M144,74 H192"/>
+    <rect class="fw" x="194" y="54" width="150" height="40" rx="6"/>
+    <text class="c" x="269" y="79">Hash (SHA-256)</text>
+  </g>
+  <g data-step="2" data-caption="The hash is signed with the private key, and the signature is stored with the file. Only this step needs the private key.">
+    <path class="ar" d="M344,74 H392"/>
+    <rect class="key" x="394" y="54" width="190" height="40" rx="6"/>
+    <text class="c" x="489" y="79">Sign with private key</text>
+    <path class="ar" d="M584,74 H624"/>
+    <rect class="plain" x="626" y="54" width="250" height="40" rx="6"/>
+    <text class="c" x="751" y="79">Signature, stored with the file</text>
+  </g>
+  <g data-step="1">
+    <text class="c" x="269" y="114" style="font-size:12px;fill:#2c4f8f">no key needed</text>
+  </g>
+  <g data-step="2">
+    <text class="c" x="489" y="114" style="font-size:12px;fill:#8a5a00">only step that needs the private key</text>
+  </g>
 
   <!-- Checking -->
-  <text class="h" x="24" y="144">Checking: on the robot, at every boot</text>
-  <rect class="plain" x="24" y="164" width="120" height="36" rx="6"/>
-  <text class="c" x="84" y="187">Boot file</text>
-  <path class="ar" d="M144,182 H192"/>
-  <rect class="fw" x="194" y="164" width="150" height="36" rx="6"/>
-  <text class="c" x="269" y="187">Hash (SHA-256)</text>
-  <path class="ar" d="M344,182 H428"/>
-  <text class="c" x="269" y="216" style="font-size:12px;fill:#2c4f8f">computed fresh, no key needed</text>
+  <g data-step="3" data-caption="Checking, on the robot at every boot: the robot computes the file's hash itself.">
+    <text class="h" x="24" y="144">Checking: on the robot, at every boot</text>
+    <rect class="plain" x="24" y="164" width="120" height="36" rx="6"/>
+    <text class="c" x="84" y="187">Boot file</text>
+    <path class="ar" d="M144,182 H192"/>
+    <rect class="fw" x="194" y="164" width="150" height="36" rx="6"/>
+    <text class="c" x="269" y="187">Hash (SHA-256)</text>
+    <path class="ar" d="M344,182 H428"/>
+    <text class="c" x="269" y="216" style="font-size:12px;fill:#2c4f8f">computed fresh, no key needed</text>
+  </g>
 
-  <rect class="plain" x="24" y="210" width="120" height="36" rx="6"/>
-  <text class="c" x="84" y="233">Signature</text>
-  <path class="ar" d="M144,228 H428"/>
+  <g data-step="4" data-caption="Using only the public key, the verify step checks whether the signature matches this hash.">
+    <rect class="plain" x="24" y="210" width="120" height="36" rx="6"/>
+    <text class="c" x="84" y="233">Signature</text>
+    <path class="ar" d="M144,228 H428"/>
 
-  <rect class="key" x="24" y="256" width="120" height="36" rx="6"/>
-  <text class="c" x="84" y="279">Public key</text>
-  <path class="ar" d="M144,274 H428"/>
+    <rect class="key" x="24" y="256" width="120" height="36" rx="6"/>
+    <text class="c" x="84" y="279">Public key</text>
+    <path class="ar" d="M144,274 H428"/>
 
-  <rect class="fw" x="430" y="164" width="140" height="128" rx="6"/>
-  <text class="c t" x="500" y="224">Verify</text>
-  <text class="c" x="500" y="244" style="font-size:12px;fill:#475569">does the signature</text>
-  <text class="c" x="500" y="260" style="font-size:12px;fill:#475569">match this hash?</text>
-  <text class="c" x="500" y="280" style="font-size:12px;fill:#8a5a00">public key only</text>
+    <rect class="fw" x="430" y="164" width="140" height="128" rx="6"/>
+    <text class="c t" x="500" y="224">Verify</text>
+    <text class="c" x="500" y="244" style="font-size:12px;fill:#475569">does the signature</text>
+    <text class="c" x="500" y="260" style="font-size:12px;fill:#475569">match this hash?</text>
+    <text class="c" x="500" y="280" style="font-size:12px;fill:#8a5a00">public key only</text>
+  </g>
 
-  <path class="ar" d="M570,204 H618"/>
-  <rect class="ok" x="620" y="184" width="256" height="40" rx="6"/>
-  <text class="c" x="748" y="209">Yes: run the file</text>
-  <path class="ar" d="M570,252 H618"/>
-  <rect class="bad" x="620" y="232" width="256" height="40" rx="6"/>
-  <text class="c" x="748" y="257">No: refuse to run it</text>
+  <g data-step="5" data-caption="If it matches, the file runs. If not, the robot refuses to run it.">
+    <path class="ar" d="M570,204 H618"/>
+    <rect class="ok" x="620" y="184" width="256" height="40" rx="6"/>
+    <text class="c" x="748" y="209">Yes: run the file</text>
+    <path class="ar" d="M570,252 H618"/>
+    <rect class="bad" x="620" y="232" width="256" height="40" rx="6"/>
+    <text class="c" x="748" y="257">No: refuse to run it</text>
+  </g>
 </svg>

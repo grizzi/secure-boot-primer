@@ -26,7 +26,7 @@ APPENDIX_FROM = "Reference"
 HOME_INTRO = """\
 # {title}
 
-This primer explains how a Linux computer protects its disk and its boot software, and why each protection exists. The example computer is an NVIDIA Jetson Orin, but most of the ideas apply to any Linux computer.
+This primer explains how a Linux computer protects its disk and its boot software, and why each protection exists. The ideas apply to any Linux computer. As a real-world running example, it uses an NVIDIA Jetson Orin NX: the boxes titled "On the Jetson" show how each idea is done on that computer.
 
 It tells one story. Hari builds robots, and each chapter starts with an attack on one of them. Hari then invents the protection that stops it, step by step, before the chapter reveals the standard name of what Hari has built and shows how the Jetson does it. Each chapter ends with what is still missing, which is where the next chapter starts.
 

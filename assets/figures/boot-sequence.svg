@@ -48,6 +48,7 @@
   <text class="col" x="60" y="98">WHAT RUNS, IN BOOT ORDER</text>
   <text class="col" x="418" y="98">KEYS AND WHERE THEY ARE STORED</text>
   <text class="col" x="692" y="98">ON THE JETSON</text>
+  <g data-step="1" data-caption="Power-on: the BootROM, fixed in the chip, checks the first boot programs against the hash of the firmware key in the fuses.">
   <rect class="stage" x="60" y="112" width="344" height="68" rx="6"/>
   <text class="t m" x="72" y="131">BootROM<tspan class="s" font-weight="400">  in mask ROM, the first code to run</tspan></text>
   <text class="sd" x="72" y="149"><tspan class="t">checks:</tspan> the first boot programs, with the firmware key</text>
@@ -60,6 +61,8 @@
   <text class="sd t" x="704" y="135.0">BootROM</text>
   <text class="s" x="704" y="150.0">checks MB1 against PublicKeyHash</text>
   <text class="s" x="704" y="165.0">decrypts with the SBK, if burned</text>
+  </g>
+  <g data-step="2" data-caption="The first boot programs check the secure-world image and UEFI with the same firmware key, and load the secure world into protected memory.">
   <path class="ar" d="M84,180 V195"/>
   <rect class="stage" x="60" y="196" width="344" height="68" rx="6"/>
   <text class="t m" x="72" y="215">First boot programs<tspan class="s" font-weight="400">  from the flash chip</tspan></text>
@@ -71,6 +74,8 @@
   <text class="sd t" x="704" y="219.0">MB1, MB2</text>
   <text class="s" x="704" y="234.0">in QSPI, signed with the PKC key</text>
   <text class="s" x="704" y="249.0">load ATF + OP-TEE into TZDRAM</text>
+  </g>
+  <g data-step="3" data-caption="The secure world decrypts the key blob with a key derived from the root key in the fuses. The decrypted keys never leave secure memory.">
   <path class="ar" d="M84,264 V279"/>
   <rect class="stage" x="60" y="280" width="344" height="84" rx="6"/>
   <text class="t m" x="72" y="299">Secure world<tspan class="s" font-weight="400">  ATF and OP-TEE, in secure memory</tspan></text>
@@ -88,6 +93,8 @@
   <text class="mono" x="704" y="318.5">jetson_user_key_pta opens</text>
   <text class="s" x="704" y="333.5">the EKB with keys from OEM_K1</text>
   <text class="s" x="704" y="348.5">disk key: sym2</text>
+  </g>
+  <g data-step="4" data-caption="The processor switches to the normal world. UEFI checks the boot loader against the allowed and forbidden lists in the flash chip.">
   <line class="dash" x1="56" y1="387" x2="916" y2="387"/>
   <text class="s" x="418" y="382">the processor switches to the normal world</text>
   <path class="ar" d="M84,364 V393"/>
@@ -103,6 +110,8 @@
   <text class="sd t" x="704" y="417.0">NVIDIA UEFI (EDK2)</text>
   <text class="s" x="704" y="432.0">PK, KEK, db, dbx:</text>
   <text class="s" x="704" y="447.0">UEFI variables in QSPI</text>
+  </g>
+  <g data-step="5" data-caption="The boot loader checks the kernel, the initrd and the command line against the allowed list.">
   <path class="ar" d="M84,462 V477"/>
   <rect class="stage" x="60" y="478" width="344" height="68" rx="6"/>
   <text class="t m" x="72" y="497">Boot loader<tspan class="s" font-weight="400">  from the disk</tspan></text>
@@ -116,6 +125,8 @@
   <text class="sd t" x="704" y="501.0">L4TLauncher</text>
   <text class="s" x="704" y="516.0">.sig files next to Image, initrd</text>
   <text class="s" x="704" y="531.0">and extlinux.conf, in /boot</text>
+  </g>
+  <g data-step="6" data-caption="The initrd asks the TA for the disk passphrase. The TA derives it from the disk key, hands it over once, and stops answering.">
   <path class="ar" d="M84,546 V561"/>
   <rect class="stage" x="60" y="562" width="344" height="100" rx="6"/>
   <text class="t m" x="72" y="581">initrd<tspan class="s" font-weight="400">  asks the TA for the disk passphrase</tspan></text>
@@ -132,6 +143,8 @@
   <text class="s" x="704" y="608.5">KDF over sym2, ECID and the</text>
   <text class="s" x="704" y="623.5">partition UUID; then</text>
   <text class="mono" x="704" y="638.5">nvluks-srv-app -n</text>
+  </g>
+  <g data-step="7" data-caption="The initrd unlocks a LUKS keyslot with the passphrase, takes out the volume key and gives it to dm-crypt.">
   <path class="ar" d="M84,662 V677"/>
   <rect class="stage" x="60" y="678" width="344" height="68" rx="6"/>
   <text class="t m" x="72" y="697">initrd<tspan class="s" font-weight="400">  opens the disk</tspan></text>
@@ -145,6 +158,8 @@
   <text class="sd t" x="704" y="701.0">cryptsetup luksOpen</text>
   <text class="mono" x="704" y="716.0">nvme0n1p2 → /dev/mapper/</text>
   <text class="mono" x="704" y="731.0">crypt_root</text>
+  </g>
+  <g data-step="8" data-caption="The system runs from the decrypted root filesystem. The volume key stays in kernel memory until power-off.">
   <path class="ar" d="M84,746 V761"/>
   <rect class="stage" x="60" y="762" width="344" height="52" rx="6"/>
   <text class="t m" x="72" y="781">Running system<tspan class="s" font-weight="400">  from the decrypted root filesystem</tspan></text>
@@ -154,6 +169,7 @@
   <rect class="jet" x="692" y="762" width="224" height="52" rx="6"/>
   <text class="sd t" x="704" y="784.5">root filesystem</text>
   <text class="mono" x="704" y="799.5">/dev/mapper/crypt_root</text>
+  </g>
   <path class="brk" d="M48,112 H42 V364 H48"/>
   <text class="vert" x="30" y="238.0" text-anchor="middle" transform="rotate(-90 30 238.0)">secure world</text>
   <path class="brk" d="M48,394 H42 V814 H48"/>

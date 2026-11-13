@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 330" width="940" height="330">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .m { font-size: 13px; }
+    .mono { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 13px; }
+    .monot { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 13px; font-weight: 600; }
+    .blue { fill: #2c4f8f; }
+    .green { fill: #2f6b33; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .disk { fill: #f8fafc; stroke: #64748b; }
+    .p1 { fill: #e8f0fe; stroke: #4a73b8; }
+    .p2 { fill: #e8f5e9; stroke: #548c58; }
+    .tagb { fill: #e8f0fe; stroke: #4a73b8; stroke-width: 1; }
+    .tagg { fill: #e8f5e9; stroke: #548c58; stroke-width: 1; }
+    .tree { stroke: #94a3b8; stroke-width: 1.2; fill: none; }
+    .treebox { fill: #f4faf4; stroke: #548c58; stroke-width: 1.2; stroke-dasharray: 5 3; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="328.5" rx="12"/>
+  <text class="h" x="24" y="34">A disk, its partitions, and where their files appear</text>
+
+  <g data-step="1" data-caption="Linux shows the whole disk as one special file: /dev/nvme0n1, the first NVMe SSD.">
+    <rect class="disk" x="24" y="52" width="400" height="262" rx="8"/>
+    <text class="t" x="40" y="76">Disk</text>
+    <text class="mono" x="84" y="76">/dev/nvme0n1</text>
+  </g>
+
+  <g data-step="2" data-caption="The disk is divided into partitions, each with its own file in /dev. Each partition holds a filesystem, here FAT and ext4.">
+    <rect class="p1" x="40" y="92" width="368" height="72" rx="6"/>
+    <text class="monot" x="54" y="116">/dev/nvme0n1p1</text>
+    <text class="s" x="54" y="136">partition 1, small (512 MB)</text>
+    <text class="s" x="54" y="153">filesystem: FAT</text>
+    <rect class="p2" x="40" y="176" width="368" height="124" rx="6"/>
+    <text class="monot" x="54" y="200">/dev/nvme0n1p2</text>
+    <text class="s" x="54" y="220">partition 2, the rest of the disk</text>
+    <text class="s" x="54" y="237">filesystem: ext4</text>
+  </g>
+
+  <g data-step="3" data-caption="Mounting partition 2 at / makes its filesystem the folder tree: every file of the running system is in it.">
+    <rect class="treebox" x="470" y="56" width="446" height="244" rx="8"/>
+    <text class="s green" x="900" y="76" text-anchor="end">the folder tree</text>
+    <path class="ar" d="M408,272 H468"/>
+    <rect class="tagg" x="300" y="258" width="96" height="22" rx="4"/>
+    <text class="s green" x="310" y="273">mounted at /</text>
+    <text class="monot green" x="486" y="80">/</text>
+    <path class="tree" d="M492,88 V200 M492,108 H508 M492,140 H508 M492,172 H508 M492,200 H508"/>
+    <text class="mono" x="514" y="112">bin/</text>
+    <text class="s" x="600" y="112">programs</text>
+    <text class="mono" x="514" y="144">etc/</text>
+    <text class="s" x="600" y="144">configuration</text>
+    <text class="mono" x="514" y="176">home/</text>
+    <text class="s" x="600" y="176">users' files</text>
+    <text class="mono" x="514" y="204">boot/</text>
+    <text class="s" x="600" y="204">an empty folder for now</text>
+  </g>
+
+  <g data-step="4" data-caption="Mounting partition 1 at /boot puts its files, the kernel and the initrd, under /boot.">
+    <path class="ar" d="M408,128 H446 V204 H508"/>
+    <rect class="tagb" x="292" y="100" width="108" height="22" rx="4"/>
+    <text class="s blue" x="302" y="115">mounted at /boot</text>
+    <rect x="508" y="190" width="300" height="20" fill="#f4faf4" stroke="none"/>
+    <text class="monot blue" x="514" y="204">boot/</text>
+    <text class="s blue" x="600" y="204">files of partition 1:</text>
+    <path class="tree" d="M520,212 V262 M520,232 H536 M520,262 H536"/>
+    <text class="mono" x="542" y="236">vmlinuz</text>
+    <text class="s" x="640" y="236">the kernel</text>
+    <text class="mono" x="542" y="266">initrd.img</text>
+    <text class="s" x="640" y="266">the initrd</text>
+  </g>
+</svg>

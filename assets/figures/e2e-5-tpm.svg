@@ -32,6 +32,7 @@
   <text class="s" x="802" y="34">signature checked</text>
   <circle cx="789" cy="30" r="8" fill="#e8f5e9" stroke="#548c58" stroke-width="1.5"/>
   <text class="c t" x="789" y="34" style="font-size:11px;fill:#548c58">✓</text>
+  <g data-step="1" data-caption="The same chain of signed stages. The firmware also records the secure boot state in PCR 7.">
   <rect class="hw" x="24.0" y="56" width="70.0" height="60" rx="6"/>
   <text class="c t" x="59.0" y="91" style="font-size:14px">Power on</text>
   <rect class="hw" x="134.0" y="56" width="124.4" height="60" rx="6"/>
@@ -61,6 +62,8 @@
   <text class="c t" x="607.2" y="75.0" style="font-size:11px;fill:#548c58">✓</text>
   <path class="ar" d="M751.6,86.0 H789.6"/>
   <text class="c s" x="360.6" y="134" style="font-size:12px">records PCR 7</text>
+  </g>
+  <g data-step="2" data-caption="The TPM releases the passphrase only if PCR 7 shows secure boot on, with Hari's keys.">
   <rect class="key new" x="24" y="172" width="455.4" height="72" rx="6"/>
   <text class="t" x="38" y="196">TPM (fTPM on the Jetson)</text>
   <text class="s" x="38" y="216">unseals the key only if PCR 7 shows</text>
@@ -74,6 +77,8 @@
   <path class="ar" d="M689.4,116 V170"/>
   <path class="ar" d="M799.4,208 H853.8 V118"/>
   <text class="lbl" x="861.8" y="162">opens</text>
+  </g>
+  <g data-step="3" data-caption="All four attacks are stopped, and the robot still boots on its own.">
   <text class="t" x="24" y="278">With this design:</text>
   <rect class="ok" x="24.0" y="290" width="214.0" height="64" rx="6"/>
   <text class="t green" x="36.0" y="318" style="font-size:18px">✓</text>
@@ -91,5 +96,8 @@
   <text class="t green" x="714.0" y="318" style="font-size:18px">✓</text>
   <text class="t" x="736.0" y="315">Replaced firmware</text>
   <text class="s" x="736.0" y="335">stopped: bad signature</text>
+  </g>
+  <g data-step="4" data-caption="Switching secure boot off or installing other keys changes PCR 7, and the TPM keeps the key.">
   <text x="24" y="384" style="font-size:13px">Secure boot switched off, or other keys installed: PCR 7 differs, and the TPM keeps the key.</text>
+  </g>
 </svg>

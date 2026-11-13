@@ -16,9 +16,31 @@
     {{- $svg = replaceRE `href="#([\w-]+)"` (printf `href="#%s-$1"` $id) $svg -}}
     {{- $svg = replaceRE `(?s)<style>(.*?)</style>` (printf `<style>#%s {$1}</style>` $id) $svg -}}
     {{- $svg = replaceRE `<svg\s([^>]*?)\s*width="[\d.]+"\s*height="[\d.]+"` (printf `<svg id="%s" role="img" aria-label="%s" $1` $id ($alt | htmlEscape)) $svg 1 -}}
+    {{- /* Animated figure: groups marked <g data-step="N" data-caption="..."> get step controls (see figures.css). */ -}}
+    {{- $n := 0 -}}
+    {{- range findRESubmatch `data-step="(\d+)"` $svg }}{{ $n = math.Max $n (int (index . 1)) | int }}{{ end -}}
+    {{- if $n }}
+<figure class="figure anim" style="--steps: {{ $n }}">
+  <div class="anim-controls" role="group" aria-label="Animation steps">
+    <input type="radio" class="play" name="{{ $id }}" id="{{ $id }}-play"><label for="{{ $id }}-play">▶ Play</label>
+    {{- range seq $n }}
+    <input type="radio" class="s{{ . }}" name="{{ $id }}" id="{{ $id }}-s{{ . }}"{{ if eq . $n }} checked{{ end }}><label for="{{ $id }}-s{{ . }}" data-step="{{ . }}" aria-label="Step {{ . }}">{{ . }}</label>
+    {{- end }}
+  </div>
+{{ $svg | safeHTML }}
+  {{- with findRESubmatch `data-step="(\d+)"[^>]*?data-caption="([^"]*)"` $svg }}
+  <div class="anim-captions" aria-live="polite">
+    {{- range . }}
+    <p data-step="{{ index . 1 }}">{{ index . 2 | safeHTML }}</p>
+    {{- end }}
+  </div>
+  {{- end }}
+</figure>
+    {{- else }}
 <figure class="figure">
 {{ $svg | safeHTML }}
 </figure>
+    {{- end }}
   {{- else -}}
     {{- errorf "figure %q not found in assets/figures (linked from %s)" $name $.Page.File.Path -}}
   {{- end -}}

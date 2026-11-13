@@ -1,6 +1,6 @@
 baseURL = "http://localhost:1313/"   # the GitHub Pages workflow passes the real address
 languageCode = "en"
-title = "Linux (Jetson) security primer"
+title = "Linux security primer"
 disableKinds = ["taxonomy", "term", "rss"]
 enableRobotsTXT = true
 

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 334" width="940" height="334">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .m { font-size: 13px; }
+    .red { fill: #b42318; }
+    .green { fill: #2f6b33; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .panel { fill: #f8fafc; stroke: #cbd5e1; }
+    .hw { fill: #eef2f6; stroke: #64748b; }
+    .ram { fill: #fdf0f6; stroke: #c2588f; }
+    .fw { fill: #e8f0fe; stroke: #4a73b8; }
+    .os { fill: #e8f5e9; stroke: #548c58; }
+  </style>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="332.5" rx="12"/>
+  <text class="h" x="24" y="34">The parts of a computer that matter at boot</text>
+
+  <!-- Processor -->
+  <rect class="panel" x="24" y="52" width="211" height="218" rx="8"/>
+  <rect class="hw" x="24" y="52" width="211" height="48" rx="8"/>
+  <text class="t" x="38" y="74">Processor (CPU)</text>
+  <text class="s" x="38" y="92">runs the programs</text>
+  <text class="s" x="38" y="124">carries out a program's</text>
+  <text class="s" x="38" y="141">instructions, one by one</text>
+  <text class="s" x="38" y="168">can run only programs in</text>
+  <text class="s" x="38" y="185">memory it reads directly:</text>
+  <text class="s" x="38" y="202">RAM, or the flash chip</text>
+  <text class="s" x="38" y="219">at power-on</text>
+
+  <!-- RAM -->
+  <rect class="panel" x="251" y="52" width="211" height="218" rx="8"/>
+  <rect class="ram" x="251" y="52" width="211" height="48" rx="8"/>
+  <text class="t" x="265" y="74">RAM</text>
+  <text class="s" x="265" y="92">the working memory</text>
+  <text class="s" x="265" y="124">holds the running programs</text>
+  <text class="s" x="265" y="141">and their data</text>
+  <text class="s" x="265" y="168">fast: the processor reads</text>
+  <text class="s" x="265" y="185">and writes it directly</text>
+  <text class="m red" x="265" y="236">empty at power-on,</text>
+  <text class="m red" x="265" y="253">erased at power-off</text>
+
+  <!-- Flash chip -->
+  <rect class="panel" x="478" y="52" width="211" height="218" rx="8"/>
+  <rect class="fw" x="478" y="52" width="211" height="48" rx="8"/>
+  <text class="t" x="492" y="74">Flash chip</text>
+  <text class="s" x="492" y="92">soldered on the board</text>
+  <text class="s" x="492" y="124">holds the firmware,</text>
+  <text class="s" x="492" y="141">a few megabytes</text>
+  <text class="s" x="492" y="168">the processor reads it</text>
+  <text class="s" x="492" y="185">directly at power-on</text>
+  <text class="m green" x="492" y="236">keeps its contents</text>
+  <text class="m green" x="492" y="253">without power</text>
+
+  <!-- Disk -->
+  <rect class="panel" x="705" y="52" width="211" height="218" rx="8"/>
+  <rect class="os" x="705" y="52" width="211" height="48" rx="8"/>
+  <text class="t" x="719" y="74">Disk</text>
+  <text class="s" x="719" y="92">an SSD, far larger</text>
+  <text class="s" x="719" y="124">holds the boot loader, the</text>
+  <text class="s" x="719" y="141">kernel, the initrd, all files</text>
+  <text class="s" x="719" y="168">programs are copied into</text>
+  <text class="s" x="719" y="185">RAM before they run</text>
+  <text class="m green" x="719" y="236">keeps its contents</text>
+  <text class="m green" x="719" y="253">without power</text>
+
+  <text class="m" x="24" y="298">At power-on, RAM is empty and only the flash chip can be read directly. The processor starts the firmware</text>
+  <text class="m" x="24" y="317">from it, and every later program is copied from the disk into RAM by the program before it.</text>
+</svg>

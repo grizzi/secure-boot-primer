@@ -223,7 +223,19 @@ def boot_sequence():
     world_spans = {"s": [None, None], "n": [None, None]}
     prev_bottom = None
     prev_world = None
-    for title, sub, lines, chips, jet, world in rows:
+    # One animation step per row (see assets/css/figures.css), with these captions.
+    captions = [
+        "Power-on: the BootROM, fixed in the chip, checks the first boot programs against the hash of the firmware key in the fuses.",
+        "The first boot programs check the secure-world image and UEFI with the same firmware key, and load the secure world into protected memory.",
+        "The secure world decrypts the key blob with a key derived from the root key in the fuses. The decrypted keys never leave secure memory.",
+        "The processor switches to the normal world. UEFI checks the boot loader against the allowed and forbidden lists in the flash chip.",
+        "The boot loader checks the kernel, the initrd and the command line against the allowed list.",
+        "The initrd asks the TA for the disk passphrase. The TA derives it from the disk key, hands it over once, and stops answering.",
+        "The initrd unlocks a LUKS keyslot with the passphrase, takes out the volume key and gives it to dm-crypt.",
+        "The system runs from the decrypted root filesystem. The volume key stays in kernel memory until power-off.",
+    ]
+    for i, (title, sub, lines, chips, jet, world) in enumerate(rows):
+        out.append(f'  <g data-step="{i + 1}" data-caption="{e(captions[i], {chr(34): "&quot;"})}">')
         nlines = 1 + len(lines)
         h = 14 + nlines * 16 + 6
         h = max(h, 14 + len(jet) * 15 + 4, 10 + len(chips) * 24)
@@ -255,6 +267,7 @@ def boot_sequence():
         out.append(f'  <rect class="jet" x="{C3}" y="{y}" width="{C3W}" height="{h}" rx="6"/>')
         jy = y + (h - (len(jet) - 1) * 15) / 2 + 4
         out += jet_lines(C3 + 12, jy, jet, 15)
+        out.append('  </g>')
         prev_bottom = y + h
         prev_world = world
         y += h + 16

@@ -22,34 +22,44 @@
   <text class="h" x="24" y="38">One register during a boot. Each stage is recorded before it runs:</text>
   <text class="mono" x="560" y="38">reg ← hash(reg ‖ hash(stage))</text>
 
-  <!-- measurements -->
-  <rect class="m" x="196" y="58" width="150" height="40" rx="6"/>
-  <text class="c" x="271" y="83">UEFI firmware</text>
-  <rect class="m" x="418" y="58" width="150" height="40" rx="6"/>
-  <text class="c" x="493" y="83">Boot loader</text>
-  <rect class="m" x="640" y="58" width="150" height="40" rx="6"/>
-  <text class="c" x="715" y="83">Kernel + initrd</text>
-  <path class="ar" d="M271,98 V128"/>
-  <path class="ar" d="M493,98 V128"/>
-  <path class="ar" d="M715,98 V128"/>
+  <g data-step="1" data-caption="Power-on: the register starts at zero, and nothing can set it to any other value.">
+    <rect class="pcr" x="24" y="130" width="120" height="48" rx="6"/>
+    <text class="c t" x="84" y="152">register = 0</text>
+    <text class="c s" x="84" y="170">at power-on</text>
+  </g>
 
-  <!-- PCR values -->
-  <rect class="pcr" x="24" y="130" width="120" height="48" rx="6"/>
-  <text class="c t" x="84" y="152">register = 0</text>
-  <text class="c s" x="84" y="170">at power-on</text>
-  <path class="ar" d="M144,154 H194"/>
-  <rect class="pcr" x="196" y="130" width="150" height="48" rx="6"/>
-  <text class="c mono" x="271" y="159">3f9a…</text>
-  <path class="ar" d="M346,154 H416"/>
-  <rect class="pcr" x="418" y="130" width="150" height="48" rx="6"/>
-  <text class="c mono" x="493" y="159">b27c…</text>
-  <path class="ar" d="M568,154 H638"/>
-  <rect class="pcr" x="640" y="130" width="150" height="48" rx="6"/>
-  <text class="c mono" x="715" y="159">e041…</text>
-  <path class="ar" d="M790,154 H822"/>
-  <text class="t" x="828" y="150">final</text>
-  <text class="t" x="828" y="168">value</text>
+  <g data-step="2" data-caption="Before UEFI runs, its hash is folded into the register: the new value is hash(0 ‖ hash(UEFI)).">
+    <rect class="m" x="196" y="58" width="150" height="40" rx="6"/>
+    <text class="c" x="271" y="83">UEFI firmware</text>
+    <path class="ar" d="M271,98 V128"/>
+    <path class="ar" d="M144,154 H194"/>
+    <rect class="pcr" x="196" y="130" width="150" height="48" rx="6"/>
+    <text class="c mono" x="271" y="159">3f9a…</text>
+  </g>
 
-  <text x="24" y="210">Same software in the same order: same final value.</text>
-  <text class="red" x="24" y="232">Any stage changed: a different final value. The register can only be extended, never set.</text>
+  <g data-step="3" data-caption="UEFI records the boot loader before starting it: hash(3f9a… ‖ hash(boot loader)).">
+    <rect class="m" x="418" y="58" width="150" height="40" rx="6"/>
+    <text class="c" x="493" y="83">Boot loader</text>
+    <path class="ar" d="M493,98 V128"/>
+    <path class="ar" d="M346,154 H416"/>
+    <rect class="pcr" x="418" y="130" width="150" height="48" rx="6"/>
+    <text class="c mono" x="493" y="159">b27c…</text>
+  </g>
+
+  <g data-step="4" data-caption="The boot loader records the kernel and the initrd: hash(b27c… ‖ hash(kernel + initrd)).">
+    <rect class="m" x="640" y="58" width="150" height="40" rx="6"/>
+    <text class="c" x="715" y="83">Kernel + initrd</text>
+    <path class="ar" d="M715,98 V128"/>
+    <path class="ar" d="M568,154 H638"/>
+    <rect class="pcr" x="640" y="130" width="150" height="48" rx="6"/>
+    <text class="c mono" x="715" y="159">e041…</text>
+  </g>
+
+  <g data-step="5" data-caption="The final value sums up the whole boot. Any changed stage gives a different value, and no later code can turn it back.">
+    <path class="ar" d="M790,154 H822"/>
+    <text class="t" x="828" y="150">final</text>
+    <text class="t" x="828" y="168">value</text>
+    <text x="24" y="210">Same software in the same order: same final value.</text>
+    <text class="red" x="24" y="232">Any stage changed: a different final value. The register can only be extended, never set.</text>
+  </g>
 </svg>

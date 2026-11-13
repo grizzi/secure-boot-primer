@@ -99,7 +99,7 @@ main { min-width: 0; max-width: var(--content-width); padding: 1.5rem 0 2rem; }
   text-transform: uppercase;
   color: var(--muted);
 }
-.chapters ol, .chapters ul { margin: 0 0 1.2rem; padding-left: 1.5rem; }
+.chapters ol, .chapters ul { margin: 0 0 1.2rem; padding-left: 1.9rem; }
 .chapters ul { list-style: none; padding-left: 0; }
 .chapters li { margin: 0.35rem 0; line-height: 1.35; }
 .chapters a { color: var(--fg); text-decoration: none; }

@@ -8,7 +8,14 @@ appendix: true
 - **AES**: the standard symmetric encryption; keys of 128 or 256 bits.
 - **ATF / BL31**: Arm Trusted Firmware, the code that switches between the normal and secure worlds.
 - **BCT**: Boot Configuration Table: memory, pinmux and GPIO setup read by the early bootloaders.
+- **Boot loader**: the program the firmware loads from the disk; it loads the kernel and the initrd into RAM and starts the kernel.
+- **Booting**: starting a computer: a sequence of programs, each loading the next.
 - **BootROM**: immutable first code in the SoC, stored in mask ROM.
+- **Filesystem**: the layout that organises a partition into files and folders, such as ext4 or FAT.
+- **Firmware**: the first program of the boot, stored in the flash chip; it prepares the hardware and loads the boot loader.
+- **Flash chip**: the small flash memory on the board that holds the firmware; not the disk.
+- **Kernel**: the core of the operating system; the only program that talks to the hardware directly.
+- **Kernel command line**: a line of settings the boot loader passes to the kernel, such as `root=`; readable in `/proc/cmdline`.
 - **Mask ROM**: read-only memory whose contents are fixed by the chip's manufacturing masks; identical on every chip and unchangeable.
 - **Capsule**: signed UEFI firmware update package.
 - **CA (OP-TEE)**: client application in the normal world. **CA (PKI)**: certificate authority. Context tells which.
@@ -32,14 +39,19 @@ appendix: true
 - **LUKS**: the standard format for encrypted Linux partitions.
 - **Mapped device**: the decrypted view of an opened LUKS partition, under `/dev/mapper`; the filesystem is mounted from it.
 - **MB1 / MB2**: NVIDIA's first and second stage bootloaders.
+- **Mounting**: attaching a partition's filesystem to a folder of the single folder tree.
 - **NS bit**: the "non-secure" signal that travels with every access on the chip's interconnect. Cores set it from their world state; for other devices the chip's wiring fixes it, usually to 1.
+- **NVMe**: Non-Volatile Memory Express, the usual way to connect a fast SSD; such disks appear as `/dev/nvme0n1`.
 - **OEM / ODM**: original equipment manufacturer / original design manufacturer: the company that builds a product around the chip. NVIDIA uses both names, as in the OEM key fuses and `odmfuse.sh`.
 - **OP-TEE**: the small operating system that runs in the secure world.
+- **Partition**: a separate area of a disk, with its own filesystem.
 - **PCR**: Platform Configuration Register, a TPM register that can only be extended. A TPM has 24, numbered 0 to 23, each with a fixed meaning (PCR 4: boot programs, PCR 7: secure boot state, PCR 15: opened disks).
 - **PK / KEK / db / dbx**: the UEFI secure boot key hierarchy: owner key, key-exchange key, allowed list, forbidden list.
 - **PKC**: public key cryptography; on the Jetson, the name of the firmware key, which signs the bootloader stages.
 - **QSPI**: Quad SPI, a four-wire variant of the SPI chip-to-chip interface; on the Jetson, the module's flash chip holding all firmware.
+- **RAM**: the working memory; holds the running programs and their data, and is empty at power-on.
 - **RCM**: recovery mode over USB, selected with a jumper or button on the carrier board. Flashing tools talk to the BootROM through it.
+- **Root filesystem**: the filesystem mounted at `/`, holding the system programs, the configuration and the data.
 - **Root key**: the one key burned into fuses; all other device keys are derived from it or encrypted with it.
 - **SBK**: secure boot key, for AES encryption of firmware images.
 - **Secure world / TrustZone**: the protected processor mode, enforced in hardware, with memory and devices Linux cannot access.
@@ -48,9 +60,13 @@ appendix: true
 - **SMC**: Secure Monitor Call, the only instruction that enters the secure world.
 - **Setup Mode / User Mode**: UEFI without an enrolled PK (runs anything) / with one (enforces signatures).
 - **SoC**: system on a chip. CPU, GPU, controllers, BootROM and fuses on one chip; on Orin, the T234.
+- **SSD**: solid-state drive: a disk made of flash memory.
+- **System call**: a request from a program to the kernel, such as opening or reading a file.
+- **systemd**: the first program of most Linux systems (process 1); it starts everything else.
 - **TA / PTA**: trusted application / pseudo-TA inside OP-TEE.
 - **TCG**: Trusted Computing Group, the industry group that writes the TPM standard.
 - **TOS / secure-world image**: the image holding ATF, OP-TEE and its built-in TAs, copied from flash into secure memory at every boot.
 - **TZASC / TZPC**: Arm's reference gates in front of memory and devices; they refuse normal-world accesses to secure resources. On the Jetson, NVIDIA's memory controller carveouts (such as TZDRAM) do the same job.
 - **TPM**: a chip or firmware that records boot measurements and releases sealed secrets only for the expected boot.
+- **UEFI**: Unified Extensible Firmware Interface, the standard that modern firmware follows.
 - **UKI**: unified kernel image, kernel + initrd + cmdline in one signed EFI file.

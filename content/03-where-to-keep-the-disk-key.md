@@ -13,13 +13,7 @@ Hari's first idea: keep a secret inside the processor chip. On the board, the ch
 
 **What the fuses hold.** Not the disk key itself, but a **root key** from which the disk passphrase is computed at boot. The passphrase has to be handed to Linux at every boot, because `cryptsetup` runs in Linux. If it were the fused key itself, Linux would see that key, and a single leak would expose it for the life of the device, since fuses cannot change. A key computed from the fused key can be handed out, replaced (for example for a new disk), and made different for every purpose, while the root key itself stays inside the chip. The LUKS volume key does not move either: it stays in the LUKS header, locked in a keyslot, and the computed passphrase unlocks that keyslot. [Putting the two parts together](#Putting%20the%20two%20parts%20together) shows the whole chain.
 
-> [!info] SoC, module, carrier board
-> A **SoC** (System on a Chip) is one chip that holds the core of a computer: processor cores, GPU, memory controller, and USB and PCIe controllers. The Orin SoC is called T234.
->
-> The **Orin NX module** is a small card with the SoC, its RAM, and a flash memory chip that holds all firmware. NVIDIA calls it the QSPI flash, after its interface: **QSPI** (Quad SPI) is a faster variant of **SPI** (Serial Peripheral Interface), a simple connection between chips on a board, using four data wires instead of one. It plugs into a **carrier board** that has the connectors (see [The carrier board port](11-addendum-jetson-secure-boot-on-nixos.md#The%20carrier%20board%20port)).
->
-> ![](../assets/img/orin-nx-annotated.jpg)
-> *An Orin NX module on a carrier board. This carrier selects recovery mode (see [Who checks the firmware](05-who-checks-the-firmware.md)) with a button; others use a jumper. Photo: [4300streetcar, Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Nvidia_Jetson_Orin_NX_on_a_motherboard_Computex_2025.jpg), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), annotations added.*
+The processor chip on the Jetson is a SoC, a single chip with the processor cores and most controllers (see [The parts of a computer](00-basics.md#The%20parts%20of%20a%20computer)).
 
 > [!info] Fuses
 > A **fuse** in a chip is a microscopic link of conducting material between two contacts, built into the silicon. A small sense circuit next to it checks whether current flows through the link: an intact link conducts and reads as 0. To store a 1, a programming circuit on the same chip sends a short, strong current pulse through the link. The link heats up and breaks, like an overloaded household fuse. A broken link no longer conducts, reads as 1, and cannot be repaired. Writing a fuse this way is called **burning** it. Because they are programmed electrically, these fuses are also called **eFuses**.

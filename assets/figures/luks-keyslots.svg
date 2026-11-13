@@ -25,38 +25,50 @@
   <text class="h" x="24" y="34">A LUKS partition</text>
   <text class="s mono" x="160" y="34">/dev/nvme0n1p2</text>
 
-  <rect class="hdr" x="24" y="48" width="430" height="176" rx="8"/>
-  <text class="t" x="40" y="72">Header</text>
-  <text class="s" x="104" y="72">cipher, UUID, …</text>
-  <rect class="key" x="40" y="86" width="398" height="38" rx="5"/>
-  <text x="54" y="110"><tspan class="t">Keyslot 0</tspan>: volume key, locked with passphrase A</text>
-  <rect class="key" x="40" y="132" width="398" height="38" rx="5"/>
-  <text x="54" y="156"><tspan class="t">Keyslot 1</tspan>: volume key, locked with passphrase B</text>
-  <text class="s" x="54" y="196">Keyslots 2 to 31: empty. Any one filled keyslot opens the partition.</text>
+  <g data-step="1" data-caption="A LUKS partition: a header with up to 32 keyslots, followed by the data, encrypted with the volume key.">
+    <rect class="hdr" x="24" y="48" width="430" height="176" rx="8"/>
+    <text class="t" x="40" y="72">Header</text>
+    <text class="s" x="104" y="72">cipher, UUID, …</text>
+    <rect class="key" x="40" y="86" width="398" height="38" rx="5"/>
+    <text x="54" y="110"><tspan class="t">Keyslot 0</tspan>: volume key, locked with passphrase A</text>
+    <rect class="key" x="40" y="132" width="398" height="38" rx="5"/>
+    <text x="54" y="156"><tspan class="t">Keyslot 1</tspan>: volume key, locked with passphrase B</text>
+    <text class="s" x="54" y="196">Keyslots 2 to 31: empty. Any one filled keyslot opens the partition.</text>
 
-  <rect class="enc" x="470" y="48" width="446" height="176" rx="8"/>
-  <text class="t" x="486" y="72">Encrypted data</text>
-  <text class="mono" x="486" y="108" style="fill:#64748b">4c e9 07 b1 5a 3f 88 d2 0c 71 …</text>
-  <text class="mono" x="486" y="130" style="fill:#64748b">a2 19 fe 63 c4 0b 9d 2e 57 e8 …</text>
-  <text class="s" x="486" y="172">encrypted with the volume key,</text>
-  <text class="s" x="486" y="190">unreadable without it</text>
+    <rect class="enc" x="470" y="48" width="446" height="176" rx="8"/>
+    <text class="t" x="486" y="72">Encrypted data</text>
+    <text class="mono" x="486" y="108" style="fill:#64748b">4c e9 07 b1 5a 3f 88 d2 0c 71 …</text>
+    <text class="mono" x="486" y="130" style="fill:#64748b">a2 19 fe 63 c4 0b 9d 2e 57 e8 …</text>
+    <text class="s" x="486" y="172">encrypted with the volume key,</text>
+    <text class="s" x="486" y="190">unreadable without it</text>
+  </g>
 
   <!-- unlock flow -->
-  <text class="h" x="24" y="262">Opening it</text>
-  <rect class="key" x="24" y="274" width="130" height="40" rx="6"/>
-  <text class="c" x="89" y="299">Passphrase A</text>
-  <path class="ar" d="M154,294 H186"/>
-  <rect class="fw" x="188" y="274" width="164" height="40" rx="6"/>
-  <text class="c" x="270" y="292" style="font-size:13px">slow KDF (argon2id)</text>
-  <text class="c s" x="270" y="307">about 2 s per try</text>
-  <path class="ar" d="M352,294 H384"/>
-  <rect class="hdr" x="386" y="274" width="150" height="40" rx="6"/>
-  <text class="c" x="461" y="299">unlocks keyslot 0</text>
-  <path class="ard" d="M462,272 V105 H442"/>
-  <path class="ar" d="M536,294 H568"/>
-  <rect class="key" x="570" y="274" width="120" height="40" rx="6"/>
-  <text class="c" x="630" y="299">Volume key</text>
-  <path class="ar" d="M690,294 H722"/>
-  <rect class="os" x="724" y="274" width="192" height="40" rx="6"/>
-  <text class="c" x="820" y="299">handed to dm-crypt</text>
+  <g data-step="2" data-caption="Opening the partition starts with a passphrase, here passphrase A.">
+    <text class="h" x="24" y="262">Opening it</text>
+    <rect class="key" x="24" y="274" width="130" height="40" rx="6"/>
+    <text class="c" x="89" y="299">Passphrase A</text>
+  </g>
+  <g data-step="3" data-caption="The slow KDF (argon2id) turns the passphrase into the key of its keyslot. Each try takes about two seconds.">
+    <path class="ar" d="M154,294 H186"/>
+    <rect class="fw" x="188" y="274" width="164" height="40" rx="6"/>
+    <text class="c" x="270" y="292" style="font-size:13px">slow KDF (argon2id)</text>
+    <text class="c s" x="270" y="307">about 2 s per try</text>
+  </g>
+  <g data-step="4" data-caption="That key unlocks keyslot 0, the keyslot locked with passphrase A.">
+    <path class="ar" d="M352,294 H384"/>
+    <rect class="hdr" x="386" y="274" width="150" height="40" rx="6"/>
+    <text class="c" x="461" y="299">unlocks keyslot 0</text>
+    <path class="ard" d="M462,272 V105 H442"/>
+  </g>
+  <g data-step="5" data-caption="The keyslot releases the volume key.">
+    <path class="ar" d="M536,294 H568"/>
+    <rect class="key" x="570" y="274" width="120" height="40" rx="6"/>
+    <text class="c" x="630" y="299">Volume key</text>
+  </g>
+  <g data-step="6" data-caption="The volume key is handed to dm-crypt, which can now decrypt the data.">
+    <path class="ar" d="M690,294 H722"/>
+    <rect class="os" x="724" y="274" width="192" height="40" rx="6"/>
+    <text class="c" x="820" y="299">handed to dm-crypt</text>
+  </g>
 </svg>

@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 330" width="940" height="330">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .m { font-size: 13px; }
+    .c { text-anchor: middle; }
+    .lbl { font-size: 11px; fill: #64748b; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .panel { fill: #f8fafc; stroke: #cbd5e1; }
+    .fw { fill: #e8f0fe; stroke: #4a73b8; }
+    .os { fill: #e8f5e9; stroke: #548c58; }
+    .part { fill: #ffffff; stroke: #548c58; stroke-dasharray: 5 3; }
+    .item { fill: #ffffff; stroke: #64748b; }
+    .run { fill: #fdf0f6; stroke: #c2588f; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+    .link { stroke: #94a3b8; stroke-width: 1.4; stroke-dasharray: 4 3; fill: none; marker-end: url(#a); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="328.5" rx="12"/>
+  <text class="h" x="24" y="34">From power-on to a running system: each program loads the next</text>
+
+  <!-- Where the programs are stored (always visible) -->
+  <rect class="fw" x="24" y="56" width="152" height="84" rx="8"/>
+  <text class="t" x="38" y="78">Flash chip</text>
+  <rect class="item" x="38" y="96" width="124" height="30" rx="5"/>
+  <text class="c m" x="100" y="116">firmware</text>
+
+  <rect class="os" x="194" y="48" width="722" height="100" rx="8"/>
+  <text class="t" x="208" y="68">Disk</text>
+  <rect class="part" x="206" y="76" width="544" height="62" rx="6"/>
+  <text class="s" x="218" y="91">/boot partition</text>
+  <rect class="item" x="225" y="98" width="120" height="30" rx="5"/>
+  <text class="c m" x="285" y="118">boot loader</text>
+  <rect class="item" x="410" y="98" width="120" height="30" rx="5"/>
+  <text class="c m" x="470" y="118">kernel</text>
+  <rect class="item" x="595" y="98" width="120" height="30" rx="5"/>
+  <text class="c m" x="655" y="118">initrd</text>
+  <rect class="part" x="764" y="76" width="144" height="62" rx="6"/>
+  <text class="s" x="776" y="91">root partition</text>
+  <text class="m" x="776" y="112">system programs,</text>
+  <text class="m" x="776" y="129">configuration, data</text>
+
+  <text class="s" x="24" y="182" style="paint-order: stroke; stroke: #ffffff; stroke-width: 6px; stroke-linejoin: round">copied into RAM and run, one after another:</text>
+
+  <g data-step="1" data-caption="Power-on: RAM is empty. The processor starts the firmware straight from the flash chip.">
+    <path class="link" d="M100,126 V204"/>
+    <rect class="run" x="24" y="206" width="152" height="64" rx="6"/>
+    <text class="c t" x="100" y="230">Firmware</text>
+    <text class="c s" x="100" y="248">prepares the hardware,</text>
+    <text class="c s" x="100" y="262">finds the disk</text>
+  </g>
+
+  <g data-step="2" data-caption="The firmware prepares the hardware, finds the disk and loads the boot loader from it into RAM.">
+    <path class="link" d="M285,128 V204"/>
+    <path class="ar" d="M176,238 H207"/>
+    <rect class="run" x="209" y="206" width="152" height="64" rx="6"/>
+    <text class="c t" x="285" y="230">Boot loader</text>
+    <text class="c s" x="285" y="248">loads the kernel and</text>
+    <text class="c s" x="285" y="262">the initrd into RAM</text>
+  </g>
+
+  <g data-step="3" data-caption="The boot loader loads the kernel and the initrd into RAM and starts the kernel, passing it the command line.">
+    <path class="link" d="M470,128 V204"/>
+    <path class="ar" d="M361,238 H392"/>
+    <rect class="run" x="394" y="206" width="152" height="64" rx="6"/>
+    <text class="c t" x="470" y="230">Kernel</text>
+    <text class="c s" x="470" y="248">drives the hardware,</text>
+    <text class="c s" x="470" y="262">runs every program</text>
+  </g>
+
+  <g data-step="4" data-caption="The kernel unpacks the initrd and runs its program /init, which prepares and mounts the root partition.">
+    <path class="link" d="M655,128 V204"/>
+    <path class="ar" d="M546,238 H577"/>
+    <rect class="run" x="579" y="206" width="152" height="64" rx="6"/>
+    <text class="c t" x="655" y="230">/init in the initrd</text>
+    <text class="c s" x="655" y="248">prepares and mounts</text>
+    <text class="c s" x="655" y="262">the root partition</text>
+  </g>
+
+  <g data-step="5" data-caption="/init hands over to the root filesystem. Its first program, systemd, starts everything else.">
+    <path class="link" d="M840,138 V204"/>
+    <path class="ar" d="M731,238 H762"/>
+    <rect class="run" x="764" y="206" width="152" height="64" rx="6"/>
+    <text class="c t" x="840" y="230">systemd</text>
+    <text class="c s" x="840" y="248">first program of the</text>
+    <text class="c s" x="840" y="262">system, starts the rest</text>
+  </g>
+
+  <text class="m" x="24" y="306">Each program only has to know how to find the next one, load it into RAM, and start it.</text>
+</svg>

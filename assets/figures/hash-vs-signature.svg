@@ -28,80 +28,92 @@
   <text class="h" x="24" y="34">Two ways for the firmware to recognise Hari's boot files</text>
 
   <!-- Design 1 -->
-  <rect class="panel" x="24" y="52" width="436" height="362" rx="8"/>
-  <text class="t" x="40" y="76">Design 1: a list of hashes</text>
-  <rect class="fw" x="40" y="88" width="404" height="102" rx="6"/>
-  <text class="t m" x="54" y="108">Firmware: holds the expected hashes</text>
-  <rect class="w" x="54" y="118" width="376" height="62" rx="4"/>
-  <text class="mono" x="66" y="135">boot loader</text><text class="mono" x="196" y="135">7a3f 91c0 5be2 …</text>
-  <text class="mono" x="66" y="153">kernel</text><text class="mono" x="196" y="153">c19e 22ab 0f47 …</text>
-  <text class="mono" x="66" y="171">initrd</text><text class="mono" x="196" y="171">9f2c 4e1a 8b03 …</text>
+  <g data-step="1" data-caption="Design 1: the firmware holds the expected hash of every boot file.">
+    <rect class="panel" x="24" y="52" width="436" height="362" rx="8"/>
+    <text class="t" x="40" y="76">Design 1: a list of hashes</text>
+    <rect class="fw" x="40" y="88" width="404" height="102" rx="6"/>
+    <text class="t m" x="54" y="108">Firmware: holds the expected hashes</text>
+    <rect class="w" x="54" y="118" width="376" height="62" rx="4"/>
+    <text class="mono" x="66" y="135">boot loader</text><text class="mono" x="196" y="135">7a3f 91c0 5be2 …</text>
+    <text class="mono" x="66" y="153">kernel</text><text class="mono" x="196" y="153">c19e 22ab 0f47 …</text>
+    <text class="mono" x="66" y="171">initrd</text><text class="mono" x="196" y="171">9f2c 4e1a 8b03 …</text>
+  </g>
 
-  <text class="s" x="40" y="212">At boot, each stage hashes the next file and looks it up:</text>
-  <rect class="w" x="40" y="222" width="140" height="40" rx="5"/>
-  <text class="m" x="52" y="247">Hari's new kernel</text>
-  <path class="ar" d="M180,242 H202"/>
-  <rect class="w" x="204" y="222" width="90" height="40" rx="5"/>
-  <text class="mono" x="214" y="247">d5e8 …</text>
-  <path class="ar" d="M294,242 H316"/>
-  <rect class="bad" x="318" y="222" width="126" height="40" rx="5"/>
-  <text class="t red m" x="330" y="239">refused</text>
-  <text class="s" x="330" y="255">not in the list</text>
+  <g data-step="2" data-caption="At boot, each stage hashes the next file and looks it up. Hari's new kernel is refused, just like the edited initrd.">
+    <text class="s" x="40" y="212">At boot, each stage hashes the next file and looks it up:</text>
+    <rect class="w" x="40" y="222" width="140" height="40" rx="5"/>
+    <text class="m" x="52" y="247">Hari's new kernel</text>
+    <path class="ar" d="M180,242 H202"/>
+    <rect class="w" x="204" y="222" width="90" height="40" rx="5"/>
+    <text class="mono" x="214" y="247">d5e8 …</text>
+    <path class="ar" d="M294,242 H316"/>
+    <rect class="bad" x="318" y="222" width="126" height="40" rx="5"/>
+    <text class="t red m" x="330" y="239">refused</text>
+    <text class="s" x="330" y="255">not in the list</text>
 
-  <rect class="w" x="40" y="272" width="140" height="40" rx="5"/>
-  <text class="m" x="52" y="297">edited initrd</text>
-  <path class="ar" d="M180,292 H202"/>
-  <rect class="w" x="204" y="272" width="90" height="40" rx="5"/>
-  <text class="mono" x="214" y="297">4b71 …</text>
-  <path class="ar" d="M294,292 H316"/>
-  <rect class="bad" x="318" y="272" width="126" height="40" rx="5"/>
-  <text class="t red m" x="330" y="289">refused</text>
-  <text class="s" x="330" y="305">not in the list</text>
+    <rect class="w" x="40" y="272" width="140" height="40" rx="5"/>
+    <text class="m" x="52" y="297">edited initrd</text>
+    <path class="ar" d="M180,292 H202"/>
+    <rect class="w" x="204" y="272" width="90" height="40" rx="5"/>
+    <text class="mono" x="214" y="297">4b71 …</text>
+    <path class="ar" d="M294,292 H316"/>
+    <rect class="bad" x="318" y="272" width="126" height="40" rx="5"/>
+    <text class="t red m" x="330" y="289">refused</text>
+    <text class="s" x="330" y="305">not in the list</text>
+  </g>
 
-  <text class="m red" x="40" y="342">✗ Hari's own update is refused until the list</text>
-  <text class="m red" x="56" y="360">is rewritten, on every robot.</text>
-  <text class="m red" x="40" y="384">✗ Whoever can rewrite the list can add</text>
-  <text class="m red" x="56" y="402">the hash of their own initrd.</text>
+  <g data-step="3" data-caption="Every update means rewriting the list on every robot, and whoever can rewrite the list can add their own hash.">
+    <text class="m red" x="40" y="342">✗ Hari's own update is refused until the list</text>
+    <text class="m red" x="56" y="360">is rewritten, on every robot.</text>
+    <text class="m red" x="40" y="384">✗ Whoever can rewrite the list can add</text>
+    <text class="m red" x="56" y="402">the hash of their own initrd.</text>
+  </g>
 
   <!-- Design 2 -->
-  <rect class="panel" x="480" y="52" width="436" height="362" rx="8"/>
-  <text class="t" x="496" y="76">Design 2: Hari's public key</text>
-  <rect class="key" x="496" y="88" width="404" height="36" rx="6"/>
-  <text class="t m" x="510" y="111">Hari's computer</text>
-  <text class="s" x="626" y="111">keeps the private key, signs every release</text>
-  <path class="ar" d="M698,124 V148"/>
-  <text class="s" x="708" y="140">public key, installed once</text>
-  <rect class="fw" x="496" y="150" width="404" height="40" rx="6"/>
-  <text class="t m" x="510" y="175">Firmware</text>
-  <text class="s" x="580" y="175">holds Hari's public key</text>
+  <g data-step="4" data-caption="Design 2: Hari keeps the private key and signs every release. The firmware holds only his public key, installed once.">
+    <rect class="panel" x="480" y="52" width="436" height="362" rx="8"/>
+    <text class="t" x="496" y="76">Design 2: Hari's public key</text>
+    <rect class="key" x="496" y="88" width="404" height="36" rx="6"/>
+    <text class="t m" x="510" y="111">Hari's computer</text>
+    <text class="s" x="626" y="111">keeps the private key, signs every release</text>
+    <path class="ar" d="M698,124 V148"/>
+    <text class="s" x="708" y="140">public key, installed once</text>
+    <rect class="fw" x="496" y="150" width="404" height="40" rx="6"/>
+    <text class="t m" x="510" y="175">Firmware</text>
+    <text class="s" x="580" y="175">holds Hari's public key</text>
+  </g>
 
-  <text class="s" x="496" y="212">At boot, each stage verifies the next file's signature:</text>
-  <rect class="w" x="496" y="222" width="150" height="40" rx="5"/>
-  <text class="m" x="508" y="239">Hari's new kernel</text>
-  <text class="s" x="508" y="255">+ Hari's signature</text>
-  <path class="ar" d="M646,242 H668"/>
-  <rect class="fw" x="670" y="222" width="96" height="40" rx="5"/>
-  <text class="t m" x="682" y="239">verify</text>
-  <text class="s" x="682" y="255">public key</text>
-  <path class="ar" d="M766,242 H788"/>
-  <rect class="ok" x="790" y="222" width="110" height="40" rx="5"/>
-  <text class="t green m" x="802" y="239">runs</text>
-  <text class="s" x="802" y="255">valid signature</text>
+  <g data-step="5" data-caption="At boot, each stage verifies the next file's signature: Hari's new kernel runs, the edited initrd is refused.">
+    <text class="s" x="496" y="212">At boot, each stage verifies the next file's signature:</text>
+    <rect class="w" x="496" y="222" width="150" height="40" rx="5"/>
+    <text class="m" x="508" y="239">Hari's new kernel</text>
+    <text class="s" x="508" y="255">+ Hari's signature</text>
+    <path class="ar" d="M646,242 H668"/>
+    <rect class="fw" x="670" y="222" width="96" height="40" rx="5"/>
+    <text class="t m" x="682" y="239">verify</text>
+    <text class="s" x="682" y="255">public key</text>
+    <path class="ar" d="M766,242 H788"/>
+    <rect class="ok" x="790" y="222" width="110" height="40" rx="5"/>
+    <text class="t green m" x="802" y="239">runs</text>
+    <text class="s" x="802" y="255">valid signature</text>
 
-  <rect class="w" x="496" y="272" width="150" height="40" rx="5"/>
-  <text class="m" x="508" y="289">edited initrd</text>
-  <text class="s" x="508" y="305">+ old signature</text>
-  <path class="ar" d="M646,292 H668"/>
-  <rect class="fw" x="670" y="272" width="96" height="40" rx="5"/>
-  <text class="t m" x="682" y="289">verify</text>
-  <text class="s" x="682" y="305">public key</text>
-  <path class="ar" d="M766,292 H788"/>
-  <rect class="bad" x="790" y="272" width="110" height="40" rx="5"/>
-  <text class="t red m" x="802" y="289">refused</text>
-  <text class="s" x="802" y="305">invalid signature</text>
+    <rect class="w" x="496" y="272" width="150" height="40" rx="5"/>
+    <text class="m" x="508" y="289">edited initrd</text>
+    <text class="s" x="508" y="305">+ old signature</text>
+    <path class="ar" d="M646,292 H668"/>
+    <rect class="fw" x="670" y="272" width="96" height="40" rx="5"/>
+    <text class="t m" x="682" y="289">verify</text>
+    <text class="s" x="682" y="305">public key</text>
+    <path class="ar" d="M766,292 H788"/>
+    <rect class="bad" x="790" y="272" width="110" height="40" rx="5"/>
+    <text class="t red m" x="802" y="289">refused</text>
+    <text class="s" x="802" y="305">invalid signature</text>
+  </g>
 
-  <text class="m green" x="496" y="342">✓ An update needs only a new signature;</text>
-  <text class="m green" x="512" y="360">the firmware never changes.</text>
-  <text class="m green" x="496" y="384">✓ The private key never leaves Hari's</text>
-  <text class="m green" x="512" y="402">computer, so the thief cannot sign.</text>
+  <g data-step="6" data-caption="An update needs only a new signature, and the private key never leaves Hari's computer.">
+    <text class="m green" x="496" y="342">✓ An update needs only a new signature;</text>
+    <text class="m green" x="512" y="360">the firmware never changes.</text>
+    <text class="m green" x="496" y="384">✓ The private key never leaves Hari's</text>
+    <text class="m green" x="512" y="402">computer, so the thief cannot sign.</text>
+  </g>
 </svg>

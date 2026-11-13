@@ -1,6 +1,6 @@
-# Linux (Jetson) security primer
+# Linux security primer
 
-How a Linux computer protects its disk and its boot software, told as a story: each chapter starts with an attack, and Hari invents the protection that stops it. The example computer is an NVIDIA Jetson Orin.
+How a Linux computer protects its disk and its boot software, told as a story: each chapter starts with an attack, and Hari invents the protection that stops it. The ideas apply to any Linux computer; an NVIDIA Jetson Orin NX serves as the real-world running example.
 
 **Read it:** the chapters are plain Markdown in [`content/`](content/), readable on GitHub or in any editor. The website is built from the same files.
 
@@ -12,6 +12,7 @@ The repository is also an Obsidian vault: open this folder in Obsidian and edit 
 - Callouts use Obsidian's syntax: `> [!info] Title`, `> [!example]`, `> [!warning]`. A `+` or `-` after the type (`> [!example]+`) makes the box foldable, open or closed.
 - Each file starts with a `slug` (the page's address) and its title as a `# ` heading. Chapters are ordered by their file names; `appendix: true` puts a page under "Appendix".
 - Figures are SVG files in `assets/figures/`, linked as `![description](../assets/figures/name.svg)`. Photos go in `assets/img/`.
+- To animate a figure, wrap each part of the SVG in `<g data-step="N" data-caption="…">` (N from 1 to at most 9). The site then shows ▶ Play and step buttons above the figure and the current step's caption below it. Parts outside any group are always visible, and Obsidian shows the complete figure.
 
 ## Building
 
@@ -31,7 +32,8 @@ Pushing to `main` publishes the site through GitHub Actions (`.github/workflows/
 |---|---|
 | Page frame, chapter list, previous/next | `layouts/baseof.html`, `page.html`, `home.html`, `layouts/_partials/` |
 | Callouts | `layouts/_markup/render-blockquote.html` |
-| Figures: each SVG is placed into the page as code, so CSS can animate it | `layouts/_markup/render-image.html` |
+| Figures: each SVG is placed into the page as code; step controls and captions for animated figures | `layouts/_markup/render-image.html` |
+| Step animations (no JavaScript: radio buttons, `:has()` and a CSS custom property) | `assets/css/figures.css` |
 | Links to other pages and headings | `layouts/_markup/render-link.html` |
 | Styles | `assets/css/main.css` (text and layout), `figures.css`, `syntax.css` (code colours) |
 

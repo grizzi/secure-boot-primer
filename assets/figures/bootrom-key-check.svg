@@ -26,47 +26,65 @@
   <rect class="bg" x="0.75" y="0.75" width="938.5" height="328.5" rx="12"/>
 
   <!-- SoC -->
-  <rect class="hw" x="24" y="48" width="240" height="262" rx="8"/>
-  <text class="h" x="40" y="74">SoC</text>
-  <rect class="hw2" x="40" y="88" width="208" height="60" rx="6"/>
-  <text class="t" x="56" y="113">BootROM</text>
-  <text class="s" x="56" y="134">fixed code, runs first</text>
-  <rect class="hw2" x="40" y="164" width="208" height="130" rx="6"/>
-  <text class="t" x="56" y="189">Fuses</text>
-  <rect class="key" x="56" y="202" width="176" height="34" rx="5"/>
-  <text x="66" y="224" style="font-size:13px">hash of Hari's firmware key</text>
-  <text class="s" x="56" y="260">burned once by Hari,</text>
-  <text class="s" x="56" y="278">never changed afterwards</text>
+  <g data-step="1" data-caption="At power-on, the BootROM reads the first signed firmware file from the flash chip: a public key, a signature and the code.">
+    <rect class="hw" x="24" y="48" width="240" height="262" rx="8"/>
+    <text class="h" x="40" y="74">SoC</text>
+    <rect class="hw2" x="40" y="88" width="208" height="60" rx="6"/>
+    <text class="t" x="56" y="113">BootROM</text>
+    <text class="s" x="56" y="134">fixed code, runs first</text>
+    <rect class="hw2" x="40" y="164" width="208" height="130" rx="6"/>
+    <text class="t" x="56" y="189">Fuses</text>
+    <rect class="key" x="56" y="202" width="176" height="34" rx="5"/>
+    <text x="66" y="224" style="font-size:13px">hash of Hari's firmware key</text>
+    <text class="s" x="56" y="260">burned once by Hari,</text>
+    <text class="s" x="56" y="278">never changed afterwards</text>
+  </g>
 
   <!-- Steps -->
-  <rect class="grp" x="300" y="40" width="336" height="270" rx="8"/>
-  <text class="h" x="316" y="64">At power-on, the BootROM:</text>
-  <rect class="step" x="316" y="80" width="304" height="72" rx="6"/>
-  <text x="330" y="102">1. Hashes the public key from the file</text>
-  <text x="348" y="121">and compares it with the fuses.</text>
-  <text class="red" x="348" y="141" style="font-size:13px">Different: stop.</text>
-  <rect class="step" x="316" y="162" width="304" height="72" rx="6"/>
-  <text x="330" y="184">2. Checks the signature of the code</text>
-  <text x="348" y="203">with that public key.</text>
-  <text class="red" x="348" y="223" style="font-size:13px">Invalid: stop.</text>
-  <rect class="ok" x="316" y="244" width="304" height="50" rx="6"/>
-  <text x="330" y="274">3. Runs the code.</text>
+  <g data-step="2" data-caption="It hashes the public key from the file and compares the result with the hash in the fuses. If they differ, it stops.">
+    <rect class="grp" x="300" y="40" width="336" height="270" rx="8"/>
+    <text class="h" x="316" y="64">At power-on, the BootROM:</text>
+    <rect class="step" x="316" y="80" width="304" height="72" rx="6"/>
+    <text x="330" y="102">1. Hashes the public key from the file</text>
+    <text x="348" y="121">and compares it with the fuses.</text>
+    <text class="red" x="348" y="141" style="font-size:13px">Different: stop.</text>
+  </g>
+  <g data-step="3" data-caption="It checks the signature of the code with that public key. If the signature is invalid, it stops.">
+    <rect class="step" x="316" y="162" width="304" height="72" rx="6"/>
+    <text x="330" y="184">2. Checks the signature of the code</text>
+    <text x="348" y="203">with that public key.</text>
+    <text class="red" x="348" y="223" style="font-size:13px">Invalid: stop.</text>
+  </g>
+  <g data-step="4" data-caption="Only then does it run the code.">
+    <rect class="ok" x="316" y="244" width="304" height="50" rx="6"/>
+    <text x="330" y="274">3. Runs the code.</text>
+  </g>
 
-  <path class="ar" d="M248,118 H298"/>
-  <path class="ar" d="M232,219 L314,132"/>
+  <g data-step="2">
+    <path class="ar" d="M248,118 H298"/>
+    <path class="ar" d="M232,219 L314,132"/>
+  </g>
 
   <!-- Signed file -->
-  <rect class="fw" x="676" y="48" width="240" height="262" rx="8"/>
-  <text class="h" x="692" y="74">Signed firmware file</text>
-  <text class="s" x="692" y="93">MB1, read from QSPI flash</text>
-  <rect class="key" x="692" y="108" width="208" height="46" rx="6"/>
-  <text class="c" x="796" y="136">Public key</text>
-  <rect class="fw2" x="692" y="177" width="208" height="46" rx="6"/>
-  <text class="c" x="796" y="205">Signature</text>
-  <rect class="fw2" x="692" y="246" width="208" height="46" rx="6"/>
-  <text class="c" x="796" y="274">Code</text>
+  <g data-step="1">
+    <rect class="fw" x="676" y="48" width="240" height="262" rx="8"/>
+    <text class="h" x="692" y="74">Signed firmware file</text>
+    <text class="s" x="692" y="93">MB1, read from QSPI flash</text>
+    <rect class="key" x="692" y="108" width="208" height="46" rx="6"/>
+    <text class="c" x="796" y="136">Public key</text>
+    <rect class="fw2" x="692" y="177" width="208" height="46" rx="6"/>
+    <text class="c" x="796" y="205">Signature</text>
+    <rect class="fw2" x="692" y="246" width="208" height="46" rx="6"/>
+    <text class="c" x="796" y="274">Code</text>
+  </g>
 
-  <path class="ar" d="M692,131 L622,116"/>
-  <path class="ar" d="M692,200 L622,198"/>
-  <path class="ar" d="M692,269 L622,269"/>
+  <g data-step="2">
+    <path class="ar" d="M692,131 L622,116"/>
+  </g>
+  <g data-step="3">
+    <path class="ar" d="M692,200 L622,198"/>
+  </g>
+  <g data-step="4">
+    <path class="ar" d="M692,269 L622,269"/>
+  </g>
 </svg>

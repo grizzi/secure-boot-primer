@@ -35,74 +35,96 @@
   <text class="h" x="24" y="34">How the trusted program gets into the secure world</text>
 
   <!-- Left panel: flashing -->
-  <rect class="panel" x="24" y="52" width="316" height="392" rx="8"/>
-  <text class="t" x="40" y="76">Once, when the device is prepared</text>
-  <text class="s" x="40" y="94">writing the flash chip: flashing</text>
+  <g data-step="1" data-caption="Once, when the device is prepared, the flashing tool writes all firmware images into the flash chip, the secure-world image among them.">
+    <rect class="panel" x="24" y="52" width="316" height="392" rx="8"/>
+    <text class="t" x="40" y="76">Once, when the device is prepared</text>
+    <text class="s" x="40" y="94">writing the flash chip: flashing</text>
 
-  <rect class="w" x="40" y="108" width="284" height="46" rx="6"/>
-  <text class="t m" x="54" y="127">Hari's computer</text>
-  <text class="s" x="54" y="145">flashing tool with all firmware images</text>
-  <path class="ar" d="M182,154 V190"/>
-  <text class="s" x="192" y="176">USB, recovery mode</text>
+    <rect class="w" x="40" y="108" width="284" height="46" rx="6"/>
+    <text class="t m" x="54" y="127">Hari's computer</text>
+    <text class="s" x="54" y="145">flashing tool with all firmware images</text>
+    <path class="ar" d="M182,154 V190"/>
+    <text class="s" x="192" y="176">USB, recovery mode</text>
 
-  <rect class="hw" x="40" y="192" width="284" height="236" rx="8"/>
-  <text class="t m" x="54" y="214">Flash chip on the board</text>
-  <rect class="fw" x="54" y="226" width="256" height="36" rx="5"/>
-  <text class="m" x="66" y="249">first boot programs</text>
-  <rect class="sec" x="54" y="270" width="256" height="74" rx="5"/>
-  <text class="t m" x="66" y="292">secure-world image</text>
-  <text class="s" x="66" y="310">ATF + OP-TEE</text>
-  <text class="s" x="66" y="326">+ built-in TAs (the disk-key TA)</text>
-  <rect class="fw" x="54" y="352" width="256" height="36" rx="5"/>
-  <text class="m" x="66" y="375">rest of the firmware</text>
-  <text class="s" x="54" y="412">rewritable later: updates, root, a cable</text>
+    <rect class="hw" x="40" y="192" width="284" height="236" rx="8"/>
+    <text class="t m" x="54" y="214">Flash chip on the board</text>
+    <rect class="fw" x="54" y="226" width="256" height="36" rx="5"/>
+    <text class="m" x="66" y="249">first boot programs</text>
+    <rect class="sec" x="54" y="270" width="256" height="74" rx="5"/>
+    <text class="t m" x="66" y="292">secure-world image</text>
+    <text class="s" x="66" y="310">ATF + OP-TEE</text>
+    <text class="s" x="66" y="326">+ built-in TAs (the disk-key TA)</text>
+    <rect class="fw" x="54" y="352" width="256" height="36" rx="5"/>
+    <text class="m" x="66" y="375">rest of the firmware</text>
+    <text class="s" x="54" y="412">rewritable later: updates, root, a cable</text>
+  </g>
 
   <!-- Right panel: loading -->
-  <rect class="panel" x="356" y="52" width="560" height="392" rx="8"/>
-  <text class="t" x="372" y="76">At every power-on: loading</text>
-  <text class="s" x="372" y="94">time runs downward</text>
+  <g data-step="2" data-caption="At every power-on, the cores start in the secure world. Nothing runs in the normal world yet.">
+    <rect class="panel" x="356" y="52" width="560" height="392" rx="8"/>
+    <text class="t" x="372" y="76">At every power-on: loading</text>
+    <text class="s" x="372" y="94">time runs downward</text>
 
-  <rect class="laneS" x="372" y="104" width="258" height="326" rx="6"/>
-  <text class="t purple m" x="386" y="124">Secure world (NS = 0)</text>
-  <rect class="laneN" x="644" y="104" width="258" height="326" rx="6"/>
-  <text class="t green m" x="658" y="124">Normal world (NS = 1)</text>
+    <rect class="laneS" x="372" y="104" width="258" height="326" rx="6"/>
+    <text class="t purple m" x="386" y="124">Secure world (NS = 0)</text>
+    <rect class="laneN" x="644" y="104" width="258" height="326" rx="6"/>
+    <text class="t green m" x="658" y="124">Normal world (NS = 1)</text>
 
-  <rect class="w" x="386" y="136" width="230" height="44" rx="6"/>
-  <text class="t m" x="398" y="154">1. Power-on</text>
-  <text class="s" x="398" y="171">the cores start in the secure world</text>
-  <path class="ar" d="M501,180 V188"/>
-  <rect class="w" x="386" y="190" width="230" height="44" rx="6"/>
-  <text class="t m" x="398" y="208">2. Set up RAM and the gates</text>
-  <text class="s" x="398" y="225">region table marks the secure RAM</text>
-  <path class="ar" d="M501,234 V242"/>
-  <rect class="sec" x="386" y="244" width="230" height="44" rx="6"/>
-  <text class="t m" x="398" y="262">3. Load the secure-world image</text>
-  <text class="s" x="398" y="279">copy it from flash into secure RAM</text>
-  <path class="ar" d="M501,288 V338"/>
+    <rect class="w" x="386" y="136" width="230" height="44" rx="6"/>
+    <text class="t m" x="398" y="154">1. Power-on</text>
+    <text class="s" x="398" y="171">the cores start in the secure world</text>
+    <path class="ar" d="M501,180 V188"/>
+  </g>
+  <g data-step="3" data-caption="The first boot programs set up RAM and the gates: the region table marks the secure RAM.">
+    <rect class="w" x="386" y="190" width="230" height="44" rx="6"/>
+    <text class="t m" x="398" y="208">2. Set up RAM and the gates</text>
+    <text class="s" x="398" y="225">region table marks the secure RAM</text>
+    <path class="ar" d="M501,234 V242"/>
+  </g>
+  <g data-step="4" data-caption="The secure-world image is copied from the flash chip into secure RAM.">
+    <rect class="sec" x="386" y="244" width="230" height="44" rx="6"/>
+    <text class="t m" x="398" y="262">3. Load the secure-world image</text>
+    <text class="s" x="398" y="279">copy it from flash into secure RAM</text>
+  </g>
+  <g data-step="5" data-caption="The processor switches to the normal world and starts the boot loader. ATF, OP-TEE and the TAs stay in secure RAM.">
+    <path class="ar" d="M501,288 V338"/>
+  </g>
 
-  <text class="s c grey" x="773" y="196">nothing runs here yet:</text>
-  <text class="s c grey" x="773" y="212">no boot loader, no Linux</text>
+  <g data-step="2">
+    <text class="s c grey" x="773" y="196">nothing runs here yet:</text>
+    <text class="s c grey" x="773" y="212">no boot loader, no Linux</text>
+  </g>
 
-  <path class="ar" d="M616,266 H637 V322 H656"/>
-  <text class="t m" x="658" y="290">4. Switch to normal world</text>
-  <text class="s" x="658" y="306">one way: back only through SMC</text>
-  <rect class="fw" x="658" y="314" width="230" height="30" rx="6"/>
-  <text class="m" x="670" y="334">boot loader, in normal RAM</text>
-  <path class="ar" d="M773,344 V354"/>
-  <rect class="os" x="658" y="356" width="230" height="60" rx="6"/>
-  <text class="t m" x="670" y="376">5. Linux kernel and initrd</text>
-  <text class="s" x="670" y="394">ask the trusted program,</text>
-  <text class="s" x="670" y="409">cannot read or change it</text>
+  <g data-step="5">
+    <path class="ar" d="M616,266 H637 V322 H656"/>
+    <text class="t m" x="658" y="290">4. Switch to normal world</text>
+    <text class="s" x="658" y="306">one way: back only through SMC</text>
+    <rect class="fw" x="658" y="314" width="230" height="30" rx="6"/>
+    <text class="m" x="670" y="334">boot loader, in normal RAM</text>
+    <path class="ar" d="M773,344 V354"/>
+  </g>
+  <g data-step="6" data-caption="Linux starts. It can send requests to the trusted program (SMC), but cannot read or change it.">
+    <rect class="os" x="658" y="356" width="230" height="60" rx="6"/>
+    <text class="t m" x="670" y="376">5. Linux kernel and initrd</text>
+    <text class="s" x="670" y="394">ask the trusted program,</text>
+    <text class="s" x="670" y="409">cannot read or change it</text>
+  </g>
 
-  <rect class="sec" x="386" y="340" width="230" height="76" rx="6"/>
-  <text class="t m" x="398" y="360">ATF + OP-TEE + TAs</text>
-  <text class="s" x="398" y="378">stay in secure RAM and</text>
-  <text class="s" x="398" y="394">answer requests from Linux</text>
-  <path class="smc" d="M656,398 H618"/>
-  <text class="t c purple" x="637" y="390" style="font-size:12px">SMC</text>
+  <g data-step="5">
+    <rect class="sec" x="386" y="340" width="230" height="76" rx="6"/>
+    <text class="t m" x="398" y="360">ATF + OP-TEE + TAs</text>
+    <text class="s" x="398" y="378">stay in secure RAM and</text>
+    <text class="s" x="398" y="394">answer requests from Linux</text>
+  </g>
+  <g data-step="6">
+    <path class="smc" d="M656,398 H618"/>
+    <text class="t c purple" x="637" y="390" style="font-size:12px">SMC</text>
+  </g>
 
   <!-- Flash -> load link -->
-  <path class="arp" d="M310,300 H348 V266 H384"/>
+  <g data-step="4">
+    <path class="arp" d="M310,300 H348 V266 H384"/>
+  </g>
 
   <!-- Message -->
   <rect class="w" x="24" y="458" width="892" height="60" rx="8"/>

@@ -40,68 +40,80 @@
   <text class="t c green m" transform="translate(37,443) rotate(-90)">handled by Linux</text>
 
   <!-- Row 1: root key -->
-  <text class="t m" x="60" y="104">fuses in the SoC</text>
-  <text class="s" x="60" y="121">read only by the secure world</text>
-  <rect class="sec" x="262" y="84" width="250" height="48" rx="6"/>
-  <text class="t m" x="276" y="104">Root key</text>
-  <text class="s" x="276" y="121">256 bits, burned once</text>
-  <text class="mono" x="612" y="104">OEM_K1</text>
-  <text class="s" x="612" y="121">fuse holding a 256-bit AES key</text>
-  <path class="ar" d="M387,132 V164"/>
-  <text class="s" x="398" y="153">decrypts the blob</text>
+  <g data-step="1" data-caption="The root key sits in the fuses, the only key stored in the clear. Only the secure world can read it.">
+    <text class="t m" x="60" y="104">fuses in the SoC</text>
+    <text class="s" x="60" y="121">read only by the secure world</text>
+    <rect class="sec" x="262" y="84" width="250" height="48" rx="6"/>
+    <text class="t m" x="276" y="104">Root key</text>
+    <text class="s" x="276" y="121">256 bits, burned once</text>
+    <text class="mono" x="612" y="104">OEM_K1</text>
+    <text class="s" x="612" y="121">fuse holding a 256-bit AES key</text>
+  </g>
+  <g data-step="2" data-caption="A key derived from the root key decrypts the key blob, which the flash chip stores encrypted.">
+    <path class="ar" d="M387,132 V164"/>
+    <text class="s" x="398" y="153">decrypts the blob</text>
 
-  <!-- Row 2: key blob -->
-  <text class="t m" x="60" y="186">flash chip</text>
-  <text class="s" x="60" y="203">readable by anyone</text>
-  <rect class="key" x="262" y="166" width="250" height="48" rx="6"/>
-  <text class="t m" x="276" y="186">Key blob</text>
-  <text class="s" x="276" y="203">many keys, encrypted; replaceable</text>
-  <text class="t m" x="612" y="186">EKB (Encrypted Key Blob)</text>
-  <text class="s" x="612" y="203">QSPI partitions A_eks and B_eks</text>
-  <path class="ar" d="M387,214 V246"/>
-  <text class="s" x="398" y="235">the TA takes out one key</text>
+    <!-- Row 2: key blob -->
+    <text class="t m" x="60" y="186">flash chip</text>
+    <text class="s" x="60" y="203">readable by anyone</text>
+    <rect class="key" x="262" y="166" width="250" height="48" rx="6"/>
+    <text class="t m" x="276" y="186">Key blob</text>
+    <text class="s" x="276" y="203">many keys, encrypted; replaceable</text>
+    <text class="t m" x="612" y="186">EKB (Encrypted Key Blob)</text>
+    <text class="s" x="612" y="203">QSPI partitions A_eks and B_eks</text>
+  </g>
+  <g data-step="3" data-caption="The TA takes the disk key out of the blob. It stays in secure memory.">
+    <path class="ar" d="M387,214 V246"/>
+    <text class="s" x="398" y="235">the TA takes out one key</text>
 
-  <!-- Row 3: disk key -->
-  <text class="t m" x="60" y="268">secure RAM</text>
-  <text class="s" x="60" y="285">while the TA runs</text>
-  <rect class="key" x="262" y="248" width="250" height="48" rx="6"/>
-  <text class="t m" x="276" y="268">Disk key</text>
-  <text class="s" x="276" y="285">one of the keys in the blob</text>
-  <text class="mono" x="612" y="268">sym2</text>
-  <text class="s" x="612" y="285">blob opened by jetson_user_key_pta</text>
-  <path class="ar" d="M387,296 V332"/>
-  <text class="s" x="398" y="320">KDF + chip ID + partition ID, in the TA</text>
+    <!-- Row 3: disk key -->
+    <text class="t m" x="60" y="268">secure RAM</text>
+    <text class="s" x="60" y="285">while the TA runs</text>
+    <rect class="key" x="262" y="248" width="250" height="48" rx="6"/>
+    <text class="t m" x="276" y="268">Disk key</text>
+    <text class="s" x="276" y="285">one of the keys in the blob</text>
+    <text class="mono" x="612" y="268">sym2</text>
+    <text class="s" x="612" y="285">blob opened by jetson_user_key_pta</text>
+  </g>
+  <g data-step="4" data-caption="The TA derives the disk passphrase from the disk key, the chip ID and the partition ID. The passphrase is the only key that crosses into Linux.">
+    <path class="ar" d="M387,296 V332"/>
+    <text class="s" x="398" y="320">KDF + chip ID + partition ID, in the TA</text>
 
-  <!-- Row 4: passphrase -->
-  <text class="t m" x="60" y="354">initrd's memory</text>
-  <text class="s" x="60" y="371">briefly, at boot</text>
-  <rect class="key" x="262" y="334" width="250" height="48" rx="6"/>
-  <text class="t m" x="276" y="354">Disk passphrase</text>
-  <text class="s" x="276" y="371">different for every device and disk</text>
-  <text class="t m" x="612" y="354">luks-srv TA output</text>
-  <text class="s" x="612" y="371">fetched by nvluks-srv-app</text>
-  <path class="ar" d="M387,382 V414"/>
-  <text class="s" x="398" y="403">argon2id, unlocks a keyslot</text>
+    <!-- Row 4: passphrase -->
+    <text class="t m" x="60" y="354">initrd's memory</text>
+    <text class="s" x="60" y="371">briefly, at boot</text>
+    <rect class="key" x="262" y="334" width="250" height="48" rx="6"/>
+    <text class="t m" x="276" y="354">Disk passphrase</text>
+    <text class="s" x="276" y="371">different for every device and disk</text>
+    <text class="t m" x="612" y="354">luks-srv TA output</text>
+    <text class="s" x="612" y="371">fetched by nvluks-srv-app</text>
+  </g>
+  <g data-step="5" data-caption="The passphrase unlocks a LUKS keyslot (argon2id), and the keyslot releases the volume key.">
+    <path class="ar" d="M387,382 V414"/>
+    <text class="s" x="398" y="403">argon2id, unlocks a keyslot</text>
 
-  <!-- Row 5: volume key -->
-  <text class="t m" x="60" y="436">LUKS header, locked</text>
-  <text class="s" x="60" y="453">kernel memory while open</text>
-  <rect class="key" x="262" y="416" width="250" height="48" rx="6"/>
-  <text class="t m" x="276" y="436">Volume key</text>
-  <text class="s" x="276" y="453">random, made with the partition</text>
-  <text class="t m" x="612" y="436">LUKS volume key</text>
-  <text class="s" x="612" y="453">opened with cryptsetup luksOpen</text>
-  <path class="ar" d="M387,464 V496"/>
-  <text class="s" x="398" y="485">dm-crypt, on every read and write</text>
+    <!-- Row 5: volume key -->
+    <text class="t m" x="60" y="436">LUKS header, locked</text>
+    <text class="s" x="60" y="453">kernel memory while open</text>
+    <rect class="key" x="262" y="416" width="250" height="48" rx="6"/>
+    <text class="t m" x="276" y="436">Volume key</text>
+    <text class="s" x="276" y="453">random, made with the partition</text>
+    <text class="t m" x="612" y="436">LUKS volume key</text>
+    <text class="s" x="612" y="453">opened with cryptsetup luksOpen</text>
+  </g>
+  <g data-step="6" data-caption="dm-crypt uses the volume key on every read and write of the data.">
+    <path class="ar" d="M387,464 V496"/>
+    <text class="s" x="398" y="485">dm-crypt, on every read and write</text>
 
-  <!-- Row 6: data -->
-  <text class="t m" x="60" y="518">disk</text>
-  <text class="s" x="60" y="535">the encrypted partition</text>
-  <rect class="hw" x="262" y="498" width="250" height="48" rx="6"/>
-  <text class="t m" x="276" y="518">Data</text>
-  <text class="s" x="276" y="535">encrypted with the volume key</text>
-  <text class="t m" x="612" y="518">root filesystem</text>
-  <text class="s" x="612" y="535">for example nvme0n1p2</text>
+    <!-- Row 6: data -->
+    <text class="t m" x="60" y="518">disk</text>
+    <text class="s" x="60" y="535">the encrypted partition</text>
+    <rect class="hw" x="262" y="498" width="250" height="48" rx="6"/>
+    <text class="t m" x="276" y="518">Data</text>
+    <text class="s" x="276" y="535">encrypted with the volume key</text>
+    <text class="t m" x="612" y="518">root filesystem</text>
+    <text class="s" x="612" y="535">for example nvme0n1p2</text>
+  </g>
 
   <!-- Footer -->
   <text class="m" x="24" y="586">Only the root key sits in the clear, and only in the fuses. Every key below it is either stored encrypted</text>

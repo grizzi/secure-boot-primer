@@ -29,3 +29,102 @@
 @media (prefers-color-scheme: dark) {
   .figure svg, .photo img { filter: brightness(0.93); }
 }
+
+/*
+  Step animations. A figure whose SVG has groups <g data-step="N"> gets radio buttons
+  (Play, 1 … N) from render-image.html. The selected button sets --step on the figure;
+  each group is shown once --step reaches its own number (--at). Play animates --step
+  from 1 to N. Without :has() or @property support, --step stays 99: everything shows.
+*/
+@property --step { syntax: "<integer>"; inherits: true; initial-value: 99; }
+
+.anim:has(.s1:checked) { --step: 1; }
+.anim:has(.s2:checked) { --step: 2; }
+.anim:has(.s3:checked) { --step: 3; }
+.anim:has(.s4:checked) { --step: 4; }
+.anim:has(.s5:checked) { --step: 5; }
+.anim:has(.s6:checked) { --step: 6; }
+.anim:has(.s7:checked) { --step: 7; }
+.anim:has(.s8:checked) { --step: 8; }
+.anim:has(.s9:checked) { --step: 9; }
+
+.anim [data-step="1"] { --at: 1; }
+.anim [data-step="2"] { --at: 2; }
+.anim [data-step="3"] { --at: 3; }
+.anim [data-step="4"] { --at: 4; }
+.anim [data-step="5"] { --at: 5; }
+.anim [data-step="6"] { --at: 6; }
+.anim [data-step="7"] { --at: 7; }
+.anim [data-step="8"] { --at: 8; }
+.anim [data-step="9"] { --at: 9; }
+
+/* --shown: 1 once the step is reached. --cur: 1 only at that exact step. */
+.anim [data-step] {
+  --shown: clamp(0, var(--step) - var(--at) + 1, 1);
+  --cur: clamp(0, 1 - max(var(--step) - var(--at), var(--at) - var(--step)), 1);
+}
+
+.anim svg [data-step] {
+  opacity: var(--shown);
+  translate: 0 calc((1 - var(--shown)) * 6px);
+  transition: opacity 0.45s ease, translate 0.45s ease;
+}
+
+.anim:has(.play:checked) {
+  animation: anim-play calc(var(--steps) * 1.8s) steps(var(--steps), jump-none) both;
+}
+@keyframes anim-play {
+  from { --step: 1; }
+  to   { --step: var(--steps); }
+}
+
+/* Controls */
+.anim-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.6rem;
+}
+.anim-controls input { position: absolute; opacity: 0; pointer-events: none; }
+.anim-controls label {
+  min-width: 2rem;
+  padding: 0.12rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  color: var(--muted);
+  background: var(--bg);
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+.anim-controls label:hover { border-color: var(--link); color: var(--link); }
+.anim-controls label[data-step] {
+  background: color-mix(in srgb, var(--link) calc(var(--cur) * 100%), var(--bg));
+  color: color-mix(in srgb, var(--bg) calc(var(--cur) * 100%), var(--muted));
+  border-color: color-mix(in srgb, var(--link) calc(var(--cur) * 100%), var(--line));
+}
+.anim-controls .play:checked + label { border-color: var(--link); color: var(--link); font-weight: 650; }
+.anim-controls input:focus-visible + label { outline: 2px solid var(--link); outline-offset: 2px; }
+
+/* One caption per step, stacked in the same place; the current one is visible. */
+.anim-captions {
+  display: grid;
+  margin-top: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+.anim-captions > p {
+  grid-area: 1 / 1;
+  margin: 0;
+  text-align: left;
+  opacity: var(--cur);
+  transition: opacity 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim svg [data-step], .anim-captions > p, .anim-controls label { transition: none; }
+  .anim:has(.play:checked) { animation: none; --step: var(--steps); }
+}

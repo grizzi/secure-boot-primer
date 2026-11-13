@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 300" width="940" height="300">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .m { font-size: 13px; }
+    .c { text-anchor: middle; }
+    .chip { font-size: 11.5px; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .w { fill: #ffffff; stroke: #64748b; }
+    .ram { fill: #fdf0f6; stroke: #c2588f; stroke-width: 1; stroke-dasharray: 4 3; }
+    .k { fill: #e8f0fe; stroke: #4a73b8; stroke-width: 1; }
+    .i { fill: #fff4e0; stroke: #c98a1b; stroke-width: 1; }
+    .r { fill: #e8f5e9; stroke: #548c58; stroke-width: 1; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="298.5" rx="12"/>
+  <text class="h" x="24" y="34">The initrd: a temporary root filesystem that prepares the real one</text>
+
+  <g data-step="1" data-caption="The boot loader reads the kernel and the initrd from /boot and loads both into RAM.">
+    <rect class="w" x="24" y="52" width="205" height="196" rx="8"/>
+    <text class="t m" x="38" y="74">1. Loaded together</text>
+    <text class="s" x="38" y="94">the boot loader puts both</text>
+    <text class="s" x="38" y="110">files from /boot into RAM</text>
+    <rect class="ram" x="36" y="150" width="181" height="86" rx="5"/>
+    <text class="s" x="44" y="166">in RAM:</text>
+    <rect class="k" x="44" y="176" width="70" height="24" rx="4"/>
+    <text class="chip c" x="79" y="192">kernel</text>
+    <rect class="i" x="120" y="176" width="88" height="24" rx="4"/>
+    <text class="chip c" x="164" y="192">initrd archive</text>
+  </g>
+
+  <g data-step="2" data-caption="The kernel unpacks the initrd into RAM as a temporary root filesystem, and runs its program /init.">
+    <path class="ar" d="M229,150 H243"/>
+    <rect class="w" x="245" y="52" width="205" height="196" rx="8"/>
+    <text class="t m" x="259" y="74">2. Unpacked</text>
+    <text class="s" x="259" y="94">the kernel unpacks the</text>
+    <text class="s" x="259" y="110">archive as a temporary /</text>
+    <text class="s" x="259" y="126">and runs /init from it</text>
+    <rect class="ram" x="257" y="150" width="181" height="86" rx="5"/>
+    <text class="s" x="265" y="166">in RAM:</text>
+    <rect class="k" x="265" y="176" width="70" height="24" rx="4"/>
+    <text class="chip c" x="300" y="192">kernel</text>
+    <rect class="i" x="341" y="176" width="88" height="50" rx="4"/>
+    <text class="chip c" x="385" y="192">/ (temporary)</text>
+    <text class="chip c" x="385" y="210">/init, /dev, …</text>
+  </g>
+
+  <g data-step="3" data-caption="/init prepares the real root: it loads the disk's driver and mounts the root partition at /newroot.">
+    <path class="ar" d="M450,150 H464"/>
+    <rect class="w" x="466" y="52" width="205" height="196" rx="8"/>
+    <text class="t m" x="480" y="74">3. /init prepares</text>
+    <text class="s" x="480" y="94">loads the disk's driver,</text>
+    <text class="s" x="480" y="110">mounts the root partition</text>
+    <text class="s" x="480" y="126">at /newroot</text>
+    <rect class="ram" x="478" y="150" width="181" height="86" rx="5"/>
+    <text class="s" x="486" y="166">in RAM:</text>
+    <rect class="k" x="486" y="176" width="70" height="24" rx="4"/>
+    <text class="chip c" x="521" y="192">kernel</text>
+    <rect class="i" x="562" y="176" width="88" height="24" rx="4"/>
+    <text class="chip c" x="606" y="192">/ (temporary)</text>
+    <rect class="r" x="562" y="204" width="88" height="24" rx="4"/>
+    <text class="chip c" x="606" y="220">/newroot</text>
+  </g>
+
+  <g data-step="4" data-caption="switch_root makes the root partition the new / and frees the initrd. /sbin/init, usually systemd, starts the system.">
+    <path class="ar" d="M671,150 H685"/>
+    <rect class="w" x="687" y="52" width="229" height="196" rx="8"/>
+    <text class="t m" x="701" y="74">4. switch_root hands over</text>
+    <text class="s" x="701" y="94">the root partition becomes /,</text>
+    <text class="s" x="701" y="110">the initrd is freed, and</text>
+    <text class="s" x="701" y="126">/sbin/init starts the system</text>
+    <rect class="ram" x="699" y="150" width="205" height="86" rx="5"/>
+    <text class="s" x="707" y="166">in RAM:</text>
+    <rect class="k" x="707" y="176" width="70" height="24" rx="4"/>
+    <text class="chip c" x="742" y="192">kernel</text>
+    <rect class="r" x="783" y="176" width="112" height="24" rx="4"/>
+    <text class="chip c" x="839" y="192">/ (root partition)</text>
+  </g>
+
+  <text class="m" x="24" y="276">Needed whenever preparing the root takes extra steps, such as loading drivers or, later in this primer, decrypting the disk.</text>
+</svg>

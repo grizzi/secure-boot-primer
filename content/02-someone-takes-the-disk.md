@@ -30,7 +30,7 @@ slug: someone-takes-the-disk
 >
 > ![An opened LUKS partition: decrypted on the way up, encrypted on the way down](../assets/figures/luks-open.svg)
 >
-> In the simplified `/init` script from [A computer that boots](01-a-computer-that-boots.md), opening is one more line, and the mount uses the mapped device:
+> In the simplified `/init` script from [Basics](00-basics.md#The%20initrd), opening is one more line, and the mount uses the mapped device:
 >
 > ```sh
 > #!/bin/sh

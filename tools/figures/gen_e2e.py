@@ -46,6 +46,12 @@ def esc(s):
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
+def step(n, spec):
+    """Opening tag of animation step n (see assets/css/figures.css), with its caption."""
+    cap = esc(spec["steps"][n - 1]).replace('"', "&quot;")
+    return f'  <g data-step="{n}" data-caption="{cap}">'
+
+
 def figure(spec):
     out = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">',
            f"  <style>{STYLE}  </style>", DEFS,
@@ -65,6 +71,7 @@ def figure(spec):
         lx = cx - 8 - 20
 
     # stage row
+    out.append(step(1, spec))
     stages = spec["stages"]
     n = len(stages)
     gap, first_w = 40, 70
@@ -104,8 +111,10 @@ def figure(spec):
     # notes under stages
     for i, (text, cls) in spec.get("stage_notes", {}).items():
         out.append(f'  <text class="c {cls}" x="{centers[i]:.1f}" y="{y0 + hh + 18}" style="font-size:12px">{esc(text)}</text>')
+    out.append("  </g>")
 
     # unlock lane
+    out.append(step(2, spec))
     ki = spec["kernel_index"]
     ri = n - 1
     ly = 172
@@ -124,12 +133,15 @@ def figure(spec):
     out.append(f'  <path class="ar" d="M{sx + sw:.1f},{ly + 36} H{cx0 - 2:.1f}"/>')
     out.append(f'  <text class="lbl c" x="{(sx + sw + cx0) / 2:.1f}" y="{ly + 28}">passphrase</text>')
     # initrd -> cryptsetup, cryptsetup -> root
-    out.append(f'  <path class="ar" d="M{centers[ki]:.1f},{y0 + hh} V{ly - 2}"/>')
+    ax = centers[ki] - 70 if ki in spec.get("stage_notes", {}) else centers[ki]  # keep clear of a note under the stage
+    out.append(f'  <path class="ar" d="M{ax:.1f},{y0 + hh} V{ly - 2}"/>')
     rx = centers[ri]
     out.append(f'  <path class="ar" d="M{cx0 + 220:.1f},{ly + 36} H{rx:.1f} V{y0 + hh + 2}"/>')
     out.append(f'  <text class="lbl" x="{rx + 8:.1f}" y="{ly - 10}">opens</text>')
+    out.append("  </g>")
 
     # scoreboard
+    out.append(step(3, spec))
     sy = 278
     out.append(f'  <text class="t" x="24" y="{sy}">With this design:</text>')
     chips = spec["score"]
@@ -143,8 +155,11 @@ def figure(spec):
         out.append(f'  <text class="t {col}" x="{x + 12:.1f}" y="{sy + 40}" style="font-size:18px">{glyph}</text>')
         out.append(f'  <text class="t" x="{x + 34:.1f}" y="{sy + 37}">{esc(title)}</text>')
         out.append(f'  <text class="s" x="{x + 34:.1f}" y="{sy + 57}">{esc(status)}</text>')
+    out.append("  </g>")
     if spec.get("footer"):
+        out.append(step(4, spec))
         out.append(f'  <text x="24" y="{H - 16}" style="font-size:13px">{esc(spec["footer"])}</text>')
+        out.append("  </g>")
     out.append("</svg>")
     return "\n".join(out) + "\n"
 
@@ -170,6 +185,10 @@ SPECS = {
         score=[(ATTACKS[0], True, "stopped"), (ATTACKS[1], False, "needs a person"),
                (ATTACKS[2], False, "still works"), (ATTACKS[3], False, "still works")],
         footer="An edited initrd can also record the passphrase the person types.",
+        steps=["No stage checks the next one, and the boot loader, kernel and initrd on /boot cannot be encrypted.",
+               "A person types the passphrase at every boot, and the initrd opens the LUKS partition with it.",
+               "A disk read on a laptop now shows only encrypted bytes. But the robot cannot boot on its own, and edited boot files or firmware still work.",
+               "Still missing: an edited initrd can record the passphrase as the person types it."],
     ),
     "e2e-2-secure-world": dict(
         title="With the key in the secure world: the TA supplies the passphrase",
@@ -181,6 +200,10 @@ SPECS = {
         score=[(ATTACKS[0], True, "stopped"), (ATTACKS[1], True, "works"),
                (ATTACKS[2], False, "still works"), (ATTACKS[3], False, "still works")],
         footer="Any initrd can ask the TA, including one the thief edited.",
+        steps=["The same boot: still no stage checks the next one.",
+               "The luks-srv TA in the secure world derives the passphrase from a key the fuses protect, and hands it to the initrd.",
+               "The robot now boots on its own, and the disk alone is still unreadable. But edited boot files and replaced firmware still work.",
+               "Still missing: the TA answers any initrd, including one the thief edited."],
     ),
     "e2e-3-signed-boot": dict(
         title="With signed boot software: the firmware checks what it loads",
@@ -193,6 +216,10 @@ SPECS = {
         score=[(ATTACKS[0], True, "stopped"), (ATTACKS[1], True, "works"),
                (ATTACKS[2], True, "stopped: bad signature"), (ATTACKS[3], False, "still works")],
         footer="Firmware that checks nothing, loaded over USB recovery, skips every check.",
+        steps=["UEFI now checks the boot loader's signature, and the boot loader checks the kernel and initrd. But the firmware itself can be replaced.",
+               "The TA still supplies the passphrase to the initrd.",
+               "An edited /boot is now refused because of its bad signature. Replaced firmware still works.",
+               "Still missing: firmware that checks nothing, loaded over USB recovery, skips every check."],
     ),
     "e2e-4-chain-of-trust": dict(
         title="With a chain of trust: the checks start in the SoC's ROM",
@@ -206,6 +233,10 @@ SPECS = {
         score=[(ATTACKS[0], True, "stopped"), (ATTACKS[1], True, "works"),
                (ATTACKS[2], True, "stopped: bad signature"), (ATTACKS[3], True, "stopped: bad signature")],
         footer="Every program is checked, but the TA does not check that secure boot is still switched on.",
+        steps=["The checks now start in the BootROM, which checks the firmware against the key hash in the fuses. Every stage is signed.",
+               "The TA still supplies the passphrase to the initrd.",
+               "Replaced firmware is now refused because of its bad signature, like an edited /boot.",
+               "Still missing: the TA does not check that secure boot is still switched on."],
     ),
     "e2e-5-tpm": dict(
         title="With a TPM: the key is released only for the expected boot",
@@ -220,6 +251,10 @@ SPECS = {
         score=[(ATTACKS[0], True, "stopped"), (ATTACKS[1], True, "works"),
                (ATTACKS[2], True, "stopped: bad signature"), (ATTACKS[3], True, "stopped: bad signature")],
         footer="Secure boot switched off, or other keys installed: PCR 7 differs, and the TPM keeps the key.",
+        steps=["The same chain of signed stages. The firmware also records the secure boot state in PCR 7.",
+               "The TPM releases the passphrase only if PCR 7 shows secure boot on, with Hari's keys.",
+               "All four attacks are stopped, and the robot still boots on its own.",
+               "Switching secure boot off or installing other keys changes PCR 7, and the TPM keeps the key."],
     ),
 }
 

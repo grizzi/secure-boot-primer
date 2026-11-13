@@ -27,63 +27,83 @@
   <text class="h" x="24" y="34">An opened LUKS partition: decrypted on the way up, encrypted on the way down</text>
 
   <!-- Stack -->
-  <rect class="os" x="24" y="56" width="480" height="44" rx="6"/>
-  <text class="t m" x="38" y="75">A program reads /etc/hostname</text>
-  <text class="s" x="38" y="92">nothing changes for programs: they read and write files as usual</text>
-  <path class="ar" d="M160,100 V128"/>
-  <path class="ar" d="M380,128 V102"/>
-  <text class="mono green" x="390" y="119">robot-01</text>
+  <g data-step="1" data-caption="A program reads the file /etc/hostname, as on any computer.">
+    <rect class="os" x="24" y="56" width="480" height="44" rx="6"/>
+    <text class="t m" x="38" y="75">A program reads /etc/hostname</text>
+    <text class="s" x="38" y="92">nothing changes for programs: they read and write files as usual</text>
+    <path class="ar" d="M160,100 V128"/>
+  </g>
+  <g data-step="5">
+    <path class="ar" d="M380,128 V102"/>
+    <text class="mono green" x="390" y="119">robot-01</text>
+  </g>
 
-  <rect class="fw" x="24" y="130" width="480" height="232" rx="8"/>
-  <text class="t m" x="38" y="151">Linux kernel</text>
-  <rect class="w" x="40" y="162" width="448" height="46" rx="5"/>
-  <text class="t m" x="54" y="181">filesystem code (ext4)</text>
-  <text class="s" x="54" y="198">mounted from <tspan class="mono">/dev/mapper/crypt_root</tspan></text>
-  <path class="ar" d="M160,208 V230"/>
-  <text class="s" x="170" y="224">plain blocks</text>
-  <path class="ar" d="M380,230 V210"/>
-  <text class="mono green" x="390" y="224">robot-01</text>
+  <g data-step="2" data-caption="The filesystem code looks up the file's blocks on the mapped device, /dev/mapper/crypt_root.">
+    <rect class="fw" x="24" y="130" width="480" height="232" rx="8"/>
+    <text class="t m" x="38" y="151">Linux kernel</text>
+    <rect class="w" x="40" y="162" width="448" height="46" rx="5"/>
+    <text class="t m" x="54" y="181">filesystem code (ext4)</text>
+    <text class="s" x="54" y="198">mounted from <tspan class="mono">/dev/mapper/crypt_root</tspan></text>
+    <path class="ar" d="M160,208 V230"/>
+    <text class="s" x="170" y="224">plain blocks</text>
+  </g>
+  <g data-step="5">
+    <path class="ar" d="M380,230 V210"/>
+    <text class="mono green" x="390" y="224">robot-01</text>
+  </g>
 
-  <rect class="key" x="40" y="232" width="448" height="56" rx="5"/>
-  <text class="t m" x="54" y="253">dm-crypt</text>
-  <text class="s" x="54" y="272">holds the volume key in RAM</text>
-  <text class="s" x="300" y="253">reading: decrypts</text>
-  <text class="s" x="300" y="272">writing: encrypts</text>
+  <g data-step="3" data-caption="dm-crypt passes the request on to the real partition.">
+    <rect class="key" x="40" y="232" width="448" height="56" rx="5"/>
+    <text class="t m" x="54" y="253">dm-crypt</text>
+    <text class="s" x="54" y="272">holds the volume key in RAM</text>
+    <text class="s" x="300" y="253">reading: decrypts</text>
+    <text class="s" x="300" y="272">writing: encrypts</text>
 
-  <path class="ar" d="M160,288 V310"/>
-  <text class="s" x="170" y="304">encrypted blocks</text>
-  <path class="ar" d="M380,310 V290"/>
-  <text class="mono orange" x="390" y="304">4c e9 07 b1 …</text>
-  <rect class="w" x="40" y="312" width="448" height="40" rx="5"/>
-  <text class="t m" x="54" y="337">NVMe driver</text>
-  <text class="s" x="160" y="337">reads and writes <tspan class="mono">/dev/nvme0n1p2</tspan></text>
+    <path class="ar" d="M160,288 V310"/>
+    <text class="s" x="170" y="304">encrypted blocks</text>
+  </g>
+  <g data-step="5">
+    <path class="ar" d="M380,310 V290"/>
+    <text class="mono orange" x="390" y="304">4c e9 07 b1 …</text>
+  </g>
+  <g data-step="4" data-caption="The NVMe driver reads the blocks from the LUKS partition: encrypted bytes only.">
+    <rect class="w" x="40" y="312" width="448" height="40" rx="5"/>
+    <text class="t m" x="54" y="337">NVMe driver</text>
+    <text class="s" x="160" y="337">reads and writes <tspan class="mono">/dev/nvme0n1p2</tspan></text>
 
-  <path class="ar" d="M160,362 V386"/>
-  <path class="ar" d="M380,386 V364"/>
-  <rect class="hw" x="24" y="388" width="480" height="52" rx="6"/>
-  <text class="t m" x="38" y="409">LUKS partition on the disk</text>
-  <text class="s" x="38" y="427">header, then encrypted bytes only</text>
+    <path class="ar" d="M160,362 V386"/>
+  </g>
+  <g data-step="5" data-caption="On the way back up, dm-crypt decrypts the blocks with the volume key, so the program receives the plain contents.">
+    <path class="ar" d="M380,386 V364"/>
+  </g>
+  <g data-step="4">
+    <rect class="hw" x="24" y="388" width="480" height="52" rx="6"/>
+    <text class="t m" x="38" y="409">LUKS partition on the disk</text>
+    <text class="s" x="38" y="427">header, then encrypted bytes only</text>
+  </g>
 
   <!-- Right: names -->
-  <rect class="w" x="528" y="56" width="388" height="384" rx="8"/>
-  <text class="t" x="544" y="80">Two names for the same data</text>
+  <g data-step="6" data-caption="Two names for the same data: the encrypted partition and the decrypted mapped device. Decrypted data exists only in RAM.">
+    <rect class="w" x="528" y="56" width="388" height="384" rx="8"/>
+    <text class="t" x="544" y="80">Two names for the same data</text>
 
-  <text class="monot" x="544" y="110">/dev/nvme0n1p2</text>
-  <text class="s" x="544" y="128">the real partition on the disk. Reading it</text>
-  <text class="s" x="544" y="144">directly gives only encrypted bytes.</text>
+    <text class="monot" x="544" y="110">/dev/nvme0n1p2</text>
+    <text class="s" x="544" y="128">the real partition on the disk. Reading it</text>
+    <text class="s" x="544" y="144">directly gives only encrypted bytes.</text>
 
-  <text class="monot green" x="544" y="178">/dev/mapper/crypt_root</text>
-  <text class="s" x="544" y="196">the mapped device, created by cryptsetup open.</text>
-  <text class="s" x="544" y="212">It exists only while the partition is open and</text>
-  <text class="s" x="544" y="228">shows the decrypted contents. The filesystem</text>
-  <text class="s" x="544" y="244">is mounted from it.</text>
+    <text class="monot green" x="544" y="178">/dev/mapper/crypt_root</text>
+    <text class="s" x="544" y="196">the mapped device, created by cryptsetup open.</text>
+    <text class="s" x="544" y="212">It exists only while the partition is open and</text>
+    <text class="s" x="544" y="228">shows the decrypted contents. The filesystem</text>
+    <text class="s" x="544" y="244">is mounted from it.</text>
 
-  <text class="t m" x="544" y="280">Closing</text>
-  <text class="s" x="544" y="298">cryptsetup close, or switching the computer</text>
-  <text class="s" x="544" y="314">off, removes the mapped device and the</text>
-  <text class="s" x="544" y="330">volume key from RAM.</text>
+    <text class="t m" x="544" y="280">Closing</text>
+    <text class="s" x="544" y="298">cryptsetup close, or switching the computer</text>
+    <text class="s" x="544" y="314">off, removes the mapped device and the</text>
+    <text class="s" x="544" y="330">volume key from RAM.</text>
 
-  <rect class="key" x="544" y="356" width="356" height="64" rx="6"/>
-  <text class="t m" x="558" y="380">Decrypted data exists only in RAM.</text>
-  <text class="s" x="558" y="400">The disk only ever holds encrypted bytes.</text>
+    <rect class="key" x="544" y="356" width="356" height="64" rx="6"/>
+    <text class="t m" x="558" y="380">Decrypted data exists only in RAM.</text>
+    <text class="s" x="558" y="400">The disk only ever holds encrypted bytes.</text>
+  </g>
 </svg>

@@ -35,6 +35,7 @@
   <text class="s" x="708" y="34">signature checked</text>
   <circle cx="694" cy="30" r="8" fill="#e8f5e9" stroke="#548c58" stroke-width="1.5"/>
   <text class="c t" x="694" y="34" style="font-size:11px;fill:#548c58">✓</text>
+  <g data-step="1" data-caption="The checks now start in the BootROM, which checks the firmware against the key hash in the fuses. Every stage is signed.">
   <rect class="hw" x="24.0" y="56" width="70.0" height="60" rx="6"/>
   <text class="c t" x="59.0" y="91" style="font-size:14px">Power on</text>
   <rect class="hw new" x="134.0" y="56" width="124.4" height="60" rx="6"/>
@@ -64,6 +65,8 @@
   <text class="c t" x="607.2" y="75.0" style="font-size:11px;fill:#548c58">✓</text>
   <path class="ar" d="M751.6,86.0 H789.6"/>
   <text class="c s" x="196.2" y="134" style="font-size:12px">key hash in fuses</text>
+  </g>
+  <g data-step="2" data-caption="The TA still supplies the passphrase to the initrd.">
   <rect class="sec" x="24" y="172" width="455.4" height="72" rx="6"/>
   <text class="t" x="38" y="196">luks-srv TA (secure world)</text>
   <text class="s" x="38" y="216">derives it from a key the fuses protect</text>
@@ -77,6 +80,8 @@
   <path class="ar" d="M689.4,116 V170"/>
   <path class="ar" d="M799.4,208 H853.8 V118"/>
   <text class="lbl" x="861.8" y="162">opens</text>
+  </g>
+  <g data-step="3" data-caption="Replaced firmware is now refused because of its bad signature, like an edited /boot.">
   <text class="t" x="24" y="278">With this design:</text>
   <rect class="ok" x="24.0" y="290" width="214.0" height="64" rx="6"/>
   <text class="t green" x="36.0" y="318" style="font-size:18px">✓</text>
@@ -94,5 +99,8 @@
   <text class="t green" x="714.0" y="318" style="font-size:18px">✓</text>
   <text class="t" x="736.0" y="315">Replaced firmware</text>
   <text class="s" x="736.0" y="335">stopped: bad signature</text>
+  </g>
+  <g data-step="4" data-caption="Still missing: the TA does not check that secure boot is still switched on.">
   <text x="24" y="384" style="font-size:13px">Every program is checked, but the TA does not check that secure boot is still switched on.</text>
+  </g>
 </svg>
