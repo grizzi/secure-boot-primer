@@ -3,19 +3,20 @@ slug: basics
 ---
 # Basics: how a Linux computer starts
 
-The rest of this primer protects the programs that run when a computer starts, and the data they unlock. This chapter introduces those programs, and the parts of the computer they run on, one at a time. Readers who already know how Linux boots can go straight to [Hari's first robot](01-haris-first-robot.md).
+This chapter introduces those programs that a computer runs when it is powered on one at a time.
 
-Each section ends with two boxes. **Try it** shows the same thing on any Linux computer, with commands that need no special rights; the outputs shown come from an Ubuntu laptop. **On the Jetson** shows it on the running example of this primer, an NVIDIA Jetson Orin NX.
+**Try it** shows the same thing on any Linux computer with the expected output from a Linux computer.
+**On the Jetson** shows what is expected on a Nvidia Jetson: the running example of this guide.
 
 ## The parts of a computer
 
-The **processor**, or CPU (central processing unit), runs programs: it carries out a program's instructions, one after another. It can only run a program that sits in memory it can read directly.
+The **processor**, or CPU (central processing unit), runs programs: it carries out a program's instructions, one after another. It can only run a program that sits in memory that it can read directly.
 
 **RAM** (random-access memory) is the computer's working memory. It holds the programs that are running and the data they work on, and the processor reads and writes it directly and fast. RAM loses its contents when the power goes off, so at power-on it is empty.
 
 The **disk** keeps its contents without power. It holds the operating system, the programs and the data, as files. Most disks today are **SSDs** (solid-state drives), made of flash memory. The processor cannot run a program straight from the disk: the program is first copied into RAM.
 
-The **flash chip** is a small flash memory chip soldered on the board next to the processor, holding a few megabytes. It stores the **firmware**, the first program that runs. The processor can read it directly at power-on, before any program knows how to use the disk. In this primer, "the flash chip" always means this chip, not the disk.
+The **flash chip** is a small flash memory chip soldered on the board next to the processor, holding a few megabytes. It stores the **firmware**, the first program that runs. _The processor can read it directly at power-on_, before any program knows how to use the disk. In this guide, "the flash chip" always means this chip, not the disk.
 
 > [!info] Flash memory
 > **Flash memory** keeps its contents without power and can be erased and rewritten electrically. USB sticks, SSDs and the flash chip are all made of it. Because the flash chip can be rewritten, the firmware can be updated, and also replaced: later chapters return to this.
@@ -49,7 +50,13 @@ So at power-on, the only program the processor can start is the firmware in the 
 
 Starting a computer is called **booting**. At power-on, the computer runs a short sequence of programs. Each one is small and does one job: it prepares what the next program needs, copies the next program into RAM, and starts it.
 
-On a Linux computer the sequence has four stages: the firmware, the boot loader, the Linux kernel together with the initrd, and the root filesystem with its first program. The figure shows where each one is stored and in which order they run. The sections below explain them one by one.
+On a Linux computer the sequence has four stages:
+1. the firmware,
+2. the boot loader,
+3. the Linux kernel together with the initrd,
+4. the root filesystem with its first program.
+
+The figure shows where each one is stored and in which order they run. The sections below explain them one by one.
 
 ![From power-on to a running system](../assets/figures/boot-stages.svg)
 
@@ -101,7 +108,7 @@ Some processor chips run an even smaller program before the firmware, built into
 
 ## Disks, partitions and filesystems
 
-A disk is divided into **partitions**: separate areas, each used for one purpose. A small table at the start of the disk, the partition table, records where each partition starts and ends.
+A disk is divided into **partitions**: separate areas, each used for one purpose. A small table at the start of the disk, the _partition table_, records where each partition starts and ends.
 
 Each partition holds a **filesystem**, such as ext4 or FAT: a layout that organises the partition's blocks into files and folders.
 
@@ -122,6 +129,8 @@ Linux shows each disk and each partition as a special file in the folder `/dev`.
 > ```
 >
 > This laptop matches the figure, with one difference. Its second partition does not hold ext4 directly: it is encrypted (`crypto_LUKS`), and a decrypted view of it, `cryptroot`, holds the ext4 filesystem mounted at `/`. [Someone takes the disk](02-someone-takes-the-disk.md) explains how this works. `vfat` is Linux's name for FAT.
+
+TODO: small callout about fstypes
 
 > [!example] On the Jetson
 > The disk is an NVMe SSD on the carrier board, so it appears as `/dev/nvme0n1`. In NVIDIA's standard setup, its first partition, called `APP`, holds the whole root filesystem, `/boot` included. With NVIDIA's disk encryption, `APP` keeps only `/boot`, and the root filesystem moves to a separate, encrypted partition.
@@ -153,6 +162,8 @@ It also passes the kernel the **kernel command line**: a short line of text with
 > ```
 >
 > `${cbootargs}` is replaced with settings from the firmware, and `root=` names the `APP` partition.
+
+TODO mention that BOOT_IMAGE is not used when there is no Grub menu and neither the cryptdevice.
 
 ## The kernel
 
@@ -187,7 +198,9 @@ When a program reads a file, the kernel's filesystem code finds which blocks of 
 
 ## The initrd
 
-The **initrd** (initial RAM disk) is a small archive of files that the boot loader loads into RAM together with the kernel. The kernel unpacks it as a temporary root filesystem and runs the program `/init` inside it. `/init` prepares the real root filesystem, then hands over to it. A simplified `/init`, written as a shell script:
+The **initrd** (initial RAM disk) is a small archive of files that the boot loader loads into RAM together with the kernel.
+
+The kernel unpacks it as a temporary root filesystem and runs the program `/init` inside it. `/init` prepares the real root filesystem, then hands over to it. A simplified `/init`, written as a shell script:
 
 ```sh
 #!/bin/sh
