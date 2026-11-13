@@ -40,7 +40,7 @@
   <text class="s" x="40" y="94">writing the flash chip: flashing</text>
 
   <rect class="w" x="40" y="108" width="284" height="46" rx="6"/>
-  <text class="t m" x="54" y="127">Sam's computer</text>
+  <text class="t m" x="54" y="127">Hari's computer</text>
   <text class="s" x="54" y="145">flashing tool with all firmware images</text>
   <path class="ar" d="M182,154 V190"/>
   <text class="s" x="192" y="176">USB, recovery mode</text>

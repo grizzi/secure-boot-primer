@@ -1,6 +1,6 @@
 # Linux (Jetson) security primer
 
-How a Linux computer protects its disk and its boot software, told as a story: each chapter starts with an attack, and Sam invents the protection that stops it. The example computer is an NVIDIA Jetson Orin.
+How a Linux computer protects its disk and its boot software, told as a story: each chapter starts with an attack, and Hari invents the protection that stops it. The example computer is an NVIDIA Jetson Orin.
 
 **Read it:** the chapters are plain Markdown in [`content/`](content/), readable on GitHub or in any editor. The website is built from the same files.
 

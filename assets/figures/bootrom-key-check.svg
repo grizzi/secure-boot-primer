@@ -34,8 +34,8 @@
   <rect class="hw2" x="40" y="164" width="208" height="130" rx="6"/>
   <text class="t" x="56" y="189">Fuses</text>
   <rect class="key" x="56" y="202" width="176" height="34" rx="5"/>
-  <text x="66" y="224" style="font-size:13px">hash of Sam's firmware key</text>
-  <text class="s" x="56" y="260">burned once by Sam,</text>
+  <text x="66" y="224" style="font-size:13px">hash of Hari's firmware key</text>
+  <text class="s" x="56" y="260">burned once by Hari,</text>
   <text class="s" x="56" y="278">never changed afterwards</text>
 
   <!-- Steps -->

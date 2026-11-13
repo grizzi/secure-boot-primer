@@ -57,16 +57,16 @@
 
   <!-- Firmware key panel -->
   <rect class="key" x="372" y="112" width="544" height="124" rx="8"/>
-  <text class="t" x="388" y="136">Checked with Sam's firmware key</text>
+  <text class="t" x="388" y="136">Checked with Hari's firmware key</text>
   <text class="s" x="388" y="158">public key: its hash is burned into fuses, so it can never be replaced</text>
-  <text class="s" x="388" y="176">private key: with Sam, offline</text>
+  <text class="s" x="388" y="176">private key: with Hari, offline</text>
   <text class="s" x="388" y="194">checks done by: the BootROM, then each firmware stage</text>
   <rect class="tag" x="388" y="204" width="186" height="22" rx="4"/>
   <text class="tagt" x="398" y="219">on the Jetson: PKC key</text>
 
   <!-- UEFI keys panel -->
   <rect class="os" x="372" y="256" width="544" height="124" rx="8"/>
-  <text class="t" x="388" y="280">Checked with Sam's UEFI keys</text>
+  <text class="t" x="388" y="280">Checked with Hari's UEFI keys</text>
   <text class="s" x="388" y="302">owner key → update keys → allowed list, from the previous section</text>
   <text class="s" x="388" y="320">public keys: in UEFI variables in the flash chip; changed only by signed changes</text>
   <text class="s" x="388" y="338">checks done by: UEFI, then the boot loader, both against the allowed list</text>
@@ -75,6 +75,6 @@
 
   <!-- Message -->
   <rect class="w" x="24" y="394" width="892" height="52" rx="8"/>
-  <text class="m" x="40" y="416">Both belong to Sam, but they are different key pairs. The firmware key decides which UEFI runs,</text>
+  <text class="m" x="40" y="416">Both belong to Hari, but they are different key pairs. The firmware key decides which UEFI runs,</text>
   <text class="m" x="40" y="435">and that UEFI then enforces the UEFI keys. The UEFI keys are only as trustworthy as the UEFI that reads them.</text>
 </svg>

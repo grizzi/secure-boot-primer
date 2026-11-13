@@ -19,7 +19,7 @@
   <rect class="bg" x="0.75" y="0.75" width="938.5" height="368.5" rx="12"/>
 
   <rect class="head" x="24" y="20" width="300" height="40" rx="6"/>
-  <text class="t" x="40" y="45">Where Sam keeps the key</text>
+  <text class="t" x="40" y="45">Where Hari keeps the key</text>
   <rect class="head" x="336" y="20" width="284" height="40" rx="6"/>
   <text class="t" x="352" y="45">Thief takes only the disk</text>
   <rect class="head" x="632" y="20" width="284" height="40" rx="6"/>
@@ -65,5 +65,5 @@
   <text class="s" x="674" y="310">and Linux cannot read it</text>
 
   <rect class="warn" x="24" y="328" width="892" height="30" rx="6"/>
-  <text x="40" y="348" style="font-size:13px">Design 3 holds only as long as the secure world gives the key to Sam's software alone. That is the next step.</text>
+  <text x="40" y="348" style="font-size:13px">Design 3 holds only as long as the secure world gives the key to Hari's software alone. That is the next step.</text>
 </svg>

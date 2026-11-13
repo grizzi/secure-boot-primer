@@ -23,7 +23,7 @@
     </marker>
   </defs>
   <rect class="bg" x="0.75" y="0.75" width="938.5" height="358.5" rx="12"/>
-  <text class="h" x="24" y="34">Sam's first design: each program runs the next one, with no checks</text>
+  <text class="h" x="24" y="34">Hari's first design: each program runs the next one, with no checks</text>
 
   <!-- Boot sequence -->
   <rect class="hw" x="24" y="56" width="100" height="48" rx="6"/>

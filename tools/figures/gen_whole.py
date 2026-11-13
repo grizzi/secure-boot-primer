@@ -45,7 +45,7 @@ KIND = {
     "se": ("Secure RAM", "Secure RAM (secure world)"),
     "li": ("Linux RAM", "Linux RAM"),
     "dk": ("Disk", "Disk"),
-    "of": ("Off-robot", "Off the robot, with Sam"),
+    "of": ("Off-robot", "Off the robot, with Hari"),
 }
 LEGEND_X = [96, 240, 344, 534, 640, 706]
 

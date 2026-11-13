@@ -24,14 +24,14 @@
     </marker>
   </defs>
   <rect class="bg" x="0.75" y="0.75" width="938.5" height="398.5" rx="12"/>
-  <text class="h" x="24" y="34">What Sam's firmware stores, one problem at a time</text>
+  <text class="h" x="24" y="34">What Hari's firmware stores, one problem at a time</text>
 
   <!-- Column 1 -->
   <text class="t" x="24" y="68">1. Sign the boot files</text>
   <rect class="fw" x="24" y="80" width="208" height="232" rx="8"/>
   <text class="s" x="36" y="100">the firmware stores:</text>
   <rect class="key hl" x="36" y="110" width="184" height="40" rx="5"/>
-  <text class="t m" x="46" y="127">Sam's public key</text>
+  <text class="t m" x="46" y="127">Hari's public key</text>
   <text class="s" x="46" y="143">verifies boot files</text>
   <text class="m red" x="24" y="336">✗ An old boot loader with a</text>
   <text class="m red" x="40" y="353">hole is still signed, so it</text>
@@ -44,7 +44,7 @@
   <rect class="fw" x="252" y="80" width="208" height="232" rx="8"/>
   <text class="s" x="264" y="100">the firmware stores:</text>
   <rect class="key" x="264" y="110" width="184" height="40" rx="5"/>
-  <text class="t m" x="274" y="127">Sam's public key</text>
+  <text class="t m" x="274" y="127">Hari's public key</text>
   <text class="s" x="274" y="143">verifies boot files</text>
   <rect class="bad hl" x="264" y="156" width="184" height="40" rx="5"/>
   <text class="t m" x="274" y="173">Forbidden list</text>
@@ -63,7 +63,7 @@
   <text class="s" x="492" y="100">the firmware stores:</text>
   <rect class="ok" x="492" y="110" width="184" height="40" rx="5"/>
   <text class="t m" x="502" y="127">Allowed list</text>
-  <text class="s" x="502" y="143">Sam's release key, …</text>
+  <text class="s" x="502" y="143">Hari's release key, …</text>
   <rect class="bad" x="492" y="156" width="184" height="40" rx="5"/>
   <text class="t m" x="502" y="173">Forbidden list</text>
   <text class="s" x="502" y="189">hashes that must not run</text>
@@ -84,7 +84,7 @@
   <text class="s" x="720" y="100">the firmware stores:</text>
   <rect class="ok" x="720" y="110" width="184" height="40" rx="5"/>
   <text class="t m" x="730" y="127">Allowed list</text>
-  <text class="s" x="730" y="143">Sam's release key, …</text>
+  <text class="s" x="730" y="143">Hari's release key, …</text>
   <rect class="bad" x="720" y="156" width="184" height="40" rx="5"/>
   <text class="t m" x="730" y="173">Forbidden list</text>
   <text class="s" x="730" y="189">hashes that must not run</text>

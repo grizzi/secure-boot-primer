@@ -216,7 +216,7 @@ SPECS = {
         edges=[None, "ok", "ok", "ok", None], kernel_index=4,
         stage_notes={2: ("records PCR 7", "s")},
         source=dict(cls="key", new=True, title="TPM (fTPM on the Jetson)",
-                    lines=["unseals the key only if PCR 7 shows", "secure boot on, with Sam's keys"]),
+                    lines=["unseals the key only if PCR 7 shows", "secure boot on, with Hari's keys"]),
         score=[(ATTACKS[0], True, "stopped"), (ATTACKS[1], True, "works"),
                (ATTACKS[2], True, "stopped: bad signature"), (ATTACKS[3], True, "stopped: bad signature")],
         footer="Secure boot switched off, or other keys installed: PCR 7 differs, and the TPM keeps the key.",

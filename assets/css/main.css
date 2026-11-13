@@ -11,8 +11,7 @@
   --info: #3d68b0;      --info-bg: #f0f5fe;
   --example: #44804a;   --example-bg: #f1f8f1;
   --warning: #a8670f;   --warning-bg: #fdf6e8;
-  --text-width: 46rem;  /* paragraphs and lists */
-  --wide-width: 59rem;  /* figures, code and callouts: a figure at its drawn size of 940 px */
+  --content-width: 56rem;  /* one column for text, figures, code and callouts */
   color-scheme: light dark;
 }
 
@@ -67,7 +66,7 @@ a { color: var(--link); text-underline-offset: 0.15em; }
   margin: 0 auto;
   padding: 0 1rem;
 }
-main { min-width: 0; max-width: var(--wide-width); padding: 1.5rem 0 2rem; }
+main { min-width: 0; max-width: var(--content-width); padding: 1.5rem 0 2rem; }
 
 .chapters {
   border-top: 1px solid var(--line);
@@ -117,9 +116,12 @@ main { min-width: 0; max-width: var(--wide-width); padding: 1.5rem 0 2rem; }
 
 /* Text */
 
-.prose > *, .callout-body > * { max-width: var(--text-width); }
-.prose > .figure, .prose > .highlight, .prose > table, .prose > .callout,
-.callout-body > .figure, .callout-body > .highlight, .callout-body > table { max-width: none; }
+/* Paragraphs fill the column, justified. On a phone the column is too narrow for that,
+   so text stays left-aligned there. Hyphenation uses the page language (lang="en"). */
+.prose p, .prose li { text-wrap: pretty; }
+@media (min-width: 40rem) {
+  .prose p, .prose li { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+}
 
 h1, h2, h3, h4 { line-height: 1.25; font-weight: 680; }
 h1 { font-size: 2.1rem; margin: 0.6rem 0 1.2rem; letter-spacing: -0.01em; }
@@ -145,6 +147,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
 /* Caption: an italic line right after a figure */
 .figure + p:has(> em:only-child) {
   margin-top: -0.6rem;
+  text-align: left;
   font-size: 0.85rem;
   color: var(--muted);
 }
@@ -240,7 +243,7 @@ details.callout:not([open]) > summary { margin: 0; }
   justify-content: space-between;
   gap: 1rem;
   margin-top: 3rem;
-  max-width: var(--wide-width);
+  max-width: var(--content-width);
 }
 .prevnext a {
   flex: 1 1 0;

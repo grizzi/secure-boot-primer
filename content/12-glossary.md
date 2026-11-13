@@ -19,7 +19,7 @@ appendix: true
 - **EKB / EKS**: encrypted key blob / its partition.
 - **ESL**: EFI Signature List, the certificate format for UEFI key variables.
 - **ESP**: EFI System Partition (FAT).
-- **Firmware key**: Sam's key pair for signing the firmware (first boot programs, secure-world image, UEFI). The hash of its public key is burned into fuses and checked by the BootROM. On the Jetson: the PKC key.
+- **Firmware key**: Hari's key pair for signing the firmware (first boot programs, secure-world image, UEFI). The hash of its public key is burned into fuses and checked by the BootROM. On the Jetson: the PKC key.
 - **Flashing**: writing firmware into a device's flash chip, done with a flashing tool over USB in recovery mode.
 - **fTPM**: firmware TPM running as an OP-TEE TA.
 - **Fuse / eFuse**: a microscopic link in the SoC. Burning it with a current pulse breaks it, turning a 0 into a 1 for good.

@@ -3,12 +3,12 @@ slug: a-computer-that-boots
 ---
 # A computer that boots
 
-Sam's robot has a small computer: a processor, memory (RAM) and a disk. At power-on, the computer runs a sequence of programs, and each one loads the next:
+Hari's robot has a small computer: a processor, memory (RAM) and a disk. At power-on, the computer runs a sequence of programs, and each one loads the next:
 
 1. **Firmware**: the first program, stored in a flash memory chip on the board. It prepares the hardware and finds the disk.
 2. **Boot loader**: a small program on the disk that loads the kernel and the initrd into memory and starts the kernel.
 3. **Linux kernel and initrd**: the kernel is the core of the operating system: it drives the hardware and runs every other program. The initrd is a small temporary filesystem loaded together with it, holding the tools that find and prepare the root filesystem. Both are files on the disk, kept apart from the root filesystem.
-4. **Root filesystem**: the main filesystem, which the initrd mounts before handing over to it. It holds everything except the kernel and the initrd: the system programs and libraries, Sam's software, the configuration and the data.
+4. **Root filesystem**: the main filesystem, which the initrd mounts before handing over to it. It holds everything except the kernel and the initrd: the system programs and libraries, Hari's software, the configuration and the data.
 
 The boxes below explain flash memory, partitions and filesystems, and the kernel and the initrd in more detail.
 
@@ -35,11 +35,11 @@ The boxes below explain flash memory, partitions and filesystems, and the kernel
 >
 > ![The kernel and the initrd](../assets/figures/kernel-initrd.svg)
 
-Sam's first version is the simplest one that works. The firmware runs whatever boot loader it finds, the boot loader runs whatever kernel and initrd it finds in `/boot`, and the root filesystem is readable by anyone who has the disk.
+Hari's first version is the simplest one that works. The firmware runs whatever boot loader it finds, the boot loader runs whatever kernel and initrd it finds in `/boot`, and the root filesystem is readable by anyone who has the disk.
 
-![Sam's first design: each program runs the next one, with no checks](../assets/figures/naive-boot.svg)
+![Hari's first design: each program runs the next one, with no checks](../assets/figures/naive-boot.svg)
 
-The robot will spend its life in places Sam does not control. Someone can unplug it, carry it away, open the lid, pull out the disk, attach a USB cable, or plug into the debug serial header, a connector that gives a text console to the computer. The disk holds credentials, customer data such as images and maps, and Sam's software.
+The robot will spend its life in places Hari does not control. Someone can unplug it, carry it away, open the lid, pull out the disk, attach a USB cable, or plug into the debug serial header, a connector that gives a text console to the computer. The disk holds credentials, customer data such as images and maps, and Hari's software.
 
 > [!example] On the Jetson
 > The example computer in this primer is an NVIDIA Jetson Orin NX running JetPack 6, NVIDIA's software release for Jetson. Its Linux part is called L4T (Linux for Tegra). The disk is often an NVMe SSD. With NVIDIA's disk encryption, the kernel and initrd sit in `/boot` on a plain partition called `APP` (for example `nvme0n1p1`).

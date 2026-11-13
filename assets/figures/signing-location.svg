@@ -25,10 +25,10 @@
 
   <!-- Left: central signing -->
   <rect class="panel" x="24" y="52" width="436" height="312" rx="8"/>
-  <text class="t" x="40" y="76">Sam's design: sign centrally</text>
+  <text class="t" x="40" y="76">Hari's design: sign centrally</text>
   <text class="s" x="40" y="94">the robot only receives finished, signed files</text>
   <rect class="key" x="40" y="106" width="404" height="64" rx="6"/>
-  <text class="t m" x="54" y="126">Sam's build server</text>
+  <text class="t m" x="54" y="126">Hari's build server</text>
   <text class="s" x="54" y="144">builds the UKI: kernel, initrd and command line</text>
   <text class="s" x="54" y="160">signs it with the private release key</text>
   <path class="ar" d="M242,170 V206"/>

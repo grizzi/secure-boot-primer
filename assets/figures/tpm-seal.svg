@@ -27,7 +27,7 @@
 
   <!-- Left: sealing -->
   <rect class="panel" x="24" y="52" width="260" height="262" rx="8"/>
-  <text class="t" x="40" y="76">Once: Sam seals</text>
+  <text class="t" x="40" y="76">Once: Hari seals</text>
   <text class="s" x="40" y="94">when he prepares the robot</text>
   <rect class="key" x="40" y="106" width="228" height="196" rx="6"/>
   <text class="t m" x="54" y="126">TPM</text>
@@ -37,19 +37,19 @@
   <rect class="fw" x="54" y="194" width="200" height="96" rx="5"/>
   <text class="t m" x="66" y="213">released only if</text>
   <text class="s" x="66" y="233"><tspan class="t">PCR 7:</tspan> secure boot on,</text>
-  <text class="s" x="66" y="249">with Sam's keys and lists</text>
+  <text class="s" x="66" y="249">with Hari's keys and lists</text>
   <text class="s" x="66" y="271"><tspan class="t">PCR 15:</tspan> still zero</text>
 
   <!-- Row A: normal boot -->
   <rect class="w" x="304" y="106" width="180" height="86" rx="6"/>
   <text class="t m" x="316" y="126">Next boot</text>
   <text class="s" x="316" y="144">new kernel, signed with</text>
-  <text class="s" x="316" y="160">Sam's release key</text>
+  <text class="s" x="316" y="160">Hari's release key</text>
   <path class="ar" d="M484,149 H506"/>
   <rect class="fw" x="508" y="106" width="170" height="86" rx="6"/>
   <text class="t m" x="520" y="126">PCR values</text>
   <text class="s" x="520" y="144"><tspan class="t">7:</tspan> secure boot on,</text>
-  <text class="s" x="520" y="160">Sam's keys and lists</text>
+  <text class="s" x="520" y="160">Hari's keys and lists</text>
   <text class="s" x="520" y="178"><tspan class="t">15:</tspan> zero</text>
   <path class="ar" d="M678,149 H700"/>
   <rect class="ok" x="702" y="106" width="214" height="86" rx="6"/>

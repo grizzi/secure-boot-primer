@@ -33,7 +33,7 @@
   <rect class="lane-ok" x="14" y="16" width="912" height="118" rx="10"/>
   <text class="h green" x="28" y="40">Normal boot</text>
   <rect class="os" x="24" y="58" width="170" height="56" rx="6"/>
-  <text class="c t" x="109" y="82">Sam's initrd</text>
+  <text class="c t" x="109" y="82">Hari's initrd</text>
   <text class="c s" x="109" y="101">from /boot</text>
   <path class="ar" d="M194,86 H262"/>
   <text class="lbl" x="229" y="78">asks</text>

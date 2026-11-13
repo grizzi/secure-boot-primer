@@ -5,7 +5,7 @@ slug: someone-takes-the-disk
 
 **The attack.** A thief removes the disk, connects it to a laptop and reads every file.
 
-**The idea: disk encryption.** Sam stores the data encrypted. Without the key, the disk contains only random-looking bytes.
+**The idea: disk encryption.** Hari stores the data encrypted. Without the key, the disk contains only random-looking bytes.
 
 > [!info] Encryption and AES
 > **Encryption** turns readable data into unreadable data using a **key**: a random number known only to its owner. Decryption with the same key turns the data back. When one key does both, the encryption is called **symmetric**.
@@ -41,7 +41,7 @@ slug: someone-takes-the-disk
 > exec switch_root /newroot /sbin/init
 > ```
 
-With encryption, Sam's boot looks like this:
+With encryption, Hari's boot looks like this:
 
 ![With disk encryption: the root filesystem is encrypted](../assets/figures/e2e-1-encryption.svg)
 
@@ -51,4 +51,4 @@ With encryption, Sam's boot looks like this:
 > [!example] On the Jetson
 > NVIDIA's disk encryption puts the root filesystem on a LUKS2 partition (for example `nvme0n1p2`). NVIDIA's flash tools default to the cipher `aes-cbc-essiv:sha256` with a 128-bit key. The modern default elsewhere is `aes-xts-plain64` with a 512-bit key (two 256-bit halves). The Orin's processor has instructions that make AES fast, so either one costs little.
 
-**The new problem: the boot must be automatic.** At boot, the initrd needs the passphrase to open the root partition. On a laptop, the user types it. Sam's robot is a computer that boots automatically, with nobody present, so it must open its disk by itself.
+**The new problem: the boot must be automatic.** At boot, the initrd needs the passphrase to open the root partition. On a laptop, the user types it. Hari's robot is a computer that boots automatically, with nobody present, so it must open its disk by itself.

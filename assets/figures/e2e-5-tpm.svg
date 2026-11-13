@@ -64,7 +64,7 @@
   <rect class="key new" x="24" y="172" width="455.4" height="72" rx="6"/>
   <text class="t" x="38" y="196">TPM (fTPM on the Jetson)</text>
   <text class="s" x="38" y="216">unseals the key only if PCR 7 shows</text>
-  <text class="s" x="38" y="232">secure boot on, with Sam's keys</text>
+  <text class="s" x="38" y="232">secure boot on, with Hari's keys</text>
   <rect class="w" x="579.4" y="172" width="220" height="72" rx="6"/>
   <text class="c t" x="689.4" y="198">cryptsetup luksOpen</text>
   <text class="c s" x="689.4" y="218">run by the initrd</text>

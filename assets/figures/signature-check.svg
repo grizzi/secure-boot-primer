@@ -21,7 +21,7 @@
   <rect class="bg" x="0.75" y="0.75" width="898.5" height="318.5" rx="12"/>
 
   <!-- Signing -->
-  <text class="h" x="24" y="38">Signing: on Sam's computer, once per release</text>
+  <text class="h" x="24" y="38">Signing: on Hari's computer, once per release</text>
   <rect class="plain" x="24" y="54" width="120" height="40" rx="6"/>
   <text class="c" x="84" y="79">Boot file</text>
   <path class="ar" d="M144,74 H192"/>

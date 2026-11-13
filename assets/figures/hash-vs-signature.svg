@@ -25,7 +25,7 @@
     </marker>
   </defs>
   <rect class="bg" x="0.75" y="0.75" width="938.5" height="428.5" rx="12"/>
-  <text class="h" x="24" y="34">Two ways for the firmware to recognise Sam's boot files</text>
+  <text class="h" x="24" y="34">Two ways for the firmware to recognise Hari's boot files</text>
 
   <!-- Design 1 -->
   <rect class="panel" x="24" y="52" width="436" height="362" rx="8"/>
@@ -39,7 +39,7 @@
 
   <text class="s" x="40" y="212">At boot, each stage hashes the next file and looks it up:</text>
   <rect class="w" x="40" y="222" width="140" height="40" rx="5"/>
-  <text class="m" x="52" y="247">Sam's new kernel</text>
+  <text class="m" x="52" y="247">Hari's new kernel</text>
   <path class="ar" d="M180,242 H202"/>
   <rect class="w" x="204" y="222" width="90" height="40" rx="5"/>
   <text class="mono" x="214" y="247">d5e8 …</text>
@@ -58,27 +58,27 @@
   <text class="t red m" x="330" y="289">refused</text>
   <text class="s" x="330" y="305">not in the list</text>
 
-  <text class="m red" x="40" y="342">✗ Sam's own update is refused until the list</text>
+  <text class="m red" x="40" y="342">✗ Hari's own update is refused until the list</text>
   <text class="m red" x="56" y="360">is rewritten, on every robot.</text>
   <text class="m red" x="40" y="384">✗ Whoever can rewrite the list can add</text>
   <text class="m red" x="56" y="402">the hash of their own initrd.</text>
 
   <!-- Design 2 -->
   <rect class="panel" x="480" y="52" width="436" height="362" rx="8"/>
-  <text class="t" x="496" y="76">Design 2: Sam's public key</text>
+  <text class="t" x="496" y="76">Design 2: Hari's public key</text>
   <rect class="key" x="496" y="88" width="404" height="36" rx="6"/>
-  <text class="t m" x="510" y="111">Sam's computer</text>
+  <text class="t m" x="510" y="111">Hari's computer</text>
   <text class="s" x="626" y="111">keeps the private key, signs every release</text>
   <path class="ar" d="M698,124 V148"/>
   <text class="s" x="708" y="140">public key, installed once</text>
   <rect class="fw" x="496" y="150" width="404" height="40" rx="6"/>
   <text class="t m" x="510" y="175">Firmware</text>
-  <text class="s" x="580" y="175">holds Sam's public key</text>
+  <text class="s" x="580" y="175">holds Hari's public key</text>
 
   <text class="s" x="496" y="212">At boot, each stage verifies the next file's signature:</text>
   <rect class="w" x="496" y="222" width="150" height="40" rx="5"/>
-  <text class="m" x="508" y="239">Sam's new kernel</text>
-  <text class="s" x="508" y="255">+ Sam's signature</text>
+  <text class="m" x="508" y="239">Hari's new kernel</text>
+  <text class="s" x="508" y="255">+ Hari's signature</text>
   <path class="ar" d="M646,242 H668"/>
   <rect class="fw" x="670" y="222" width="96" height="40" rx="5"/>
   <text class="t m" x="682" y="239">verify</text>
@@ -102,6 +102,6 @@
 
   <text class="m green" x="496" y="342">✓ An update needs only a new signature;</text>
   <text class="m green" x="512" y="360">the firmware never changes.</text>
-  <text class="m green" x="496" y="384">✓ The private key never leaves Sam's</text>
+  <text class="m green" x="496" y="384">✓ The private key never leaves Hari's</text>
   <text class="m green" x="512" y="402">computer, so the thief cannot sign.</text>
 </svg>

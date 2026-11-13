@@ -3,13 +3,13 @@ slug: measuring-the-boot-with-a-tpm
 ---
 # Measuring the boot with a TPM
 
-**The attack.** On many computers, the firmware's setup menu, opened with a key during boot, can switch secure boot off or reset its keys, so that the owner can start another system. The thief opens that menu on the robot's screen or serial console, switches secure boot off, and boots their own initrd from a USB stick. The firmware is still Sam's, correctly signed, but it now runs anything. The thief's initrd asks the TA for the disk passphrase, and the TA answers: it hands the passphrase to the first program that asks, whatever booted. A password on the setup menu makes this harder, but the TA still trusts whatever booted.
+**The attack.** On many computers, the firmware's setup menu, opened with a key during boot, can switch secure boot off or reset its keys, so that the owner can start another system. The thief opens that menu on the robot's screen or serial console, switches secure boot off, and boots their own initrd from a USB stick. The firmware is still Hari's, correctly signed, but it now runs anything. The thief's initrd asks the TA for the disk passphrase, and the TA answers: it hands the passphrase to the first program that asks, whatever booted. A password on the setup menu makes this harder, but the TA still trusts whatever booted.
 
 Secure boot answers the question "is this program allowed to run?". Before handing out the passphrase, the robot needs the answer to a different question: "what exactly booted, and with which settings?".
 
-**Sam's idea: let the key depend on what actually booted.** Sam wants a vault that keeps a record of the boot, and opens only if the record shows the boot he expects. He builds it in three steps.
+**Hari's idea: let the key depend on what actually booted.** Hari wants a vault that keeps a record of the boot, and opens only if the record shows the boot he expects. He builds it in three steps.
 
-**Step 1: a record that cannot be rewritten.** Before starting the next stage, each stage records that stage's hash. The record cannot be an ordinary file or memory area: once the thief's code runs, it would simply rewrite it. So Sam keeps it in a small separate component with a special kind of register. At power-on the register is zero, and after that it can only be **extended**: its new value is the hash of its old value followed by the new measurement. Nothing can set it to a chosen value, or reset it before the next power-on. This has three consequences. One 32-byte value sums up the whole sequence of measurements. The same files in the same order always give the same final value. And a changed file, or a different order, gives a different value, which no later code can turn back into the expected one.
+**Step 1: a record that cannot be rewritten.** Before starting the next stage, each stage records that stage's hash. The record cannot be an ordinary file or memory area: once the thief's code runs, it would simply rewrite it. So Hari keeps it in a small separate component with a special kind of register. At power-on the register is zero, and after that it can only be **extended**: its new value is the hash of its old value followed by the new measurement. Nothing can set it to a chosen value, or reset it before the next power-on. This has three consequences. One 32-byte value sums up the whole sequence of measurements. The same files in the same order always give the same final value. And a changed file, or a different order, gives a different value, which no later code can turn back into the expected one.
 
 ![One register during a boot. Each stage is recorded before it runs:](../assets/figures/pcr-extend.svg)
 
@@ -23,7 +23,7 @@ Secure boot answers the question "is this program allowed to run?". Before handi
 > echo "$new" > pcr && echo "$new"
 > ```
 >
-> Two boots, one with Sam's UKI and one with the thief's edited copy:
+> Two boots, one with Hari's UKI and one with the thief's edited copy:
 >
 > ```console
 > $ printf '%064d' 0 > pcr          # power-on: the register starts at zero
@@ -41,9 +41,9 @@ Secure boot answers the question "is this program allowed to run?". Before handi
 >
 > Both boots give the same value after the boot loader. The edited UKI makes the final value differ, and no further extension can bring it back.
 
-**Step 2: a vault that checks the record.** Sam stores the disk passphrase in the same component, together with the register value he expects. The component releases the passphrase only while the register holds exactly that value. This is called **sealing**: the passphrase is sealed to the expected value, and unsealing it fails on any other boot. After the initrd has opened the disk, it extends the register once more, so the value no longer matches and nothing started later can unseal the passphrase again. This does the job of the TA's "stop answering".
+**Step 2: a vault that checks the record.** Hari stores the disk passphrase in the same component, together with the register value he expects. The component releases the passphrase only while the register holds exactly that value. This is called **sealing**: the passphrase is sealed to the expected value, and unsealing it fails on any other boot. After the initrd has opened the disk, it extends the register once more, so the value no longer matches and nothing started later can unseal the passphrase again. This does the job of the TA's "stop answering".
 
-**Step 3: measure the rules, not the files.** If Sam seals the passphrase to the hashes of the boot loader and the kernel, every kernel update changes the final value, and the disk no longer opens until Sam seals it again on every robot. That is the update problem of the list of hashes once more (see [Only signed software may run](04-only-signed-software-may-run.md)). Sam's way out is to record the rules the boot followed instead of the files. The firmware records whether secure boot is on, which keys and lists are installed, and which key in the allowed list approved the boot loader. A new kernel signed with Sam's release key leaves this register unchanged. Switching secure boot off, or installing other keys, changes it. Sealed to this register, the passphrase means: "release me only while secure boot is on, with Sam's keys". The thief's boot records "secure boot off", and the vault stays closed.
+**Step 3: measure the rules, not the files.** If Hari seals the passphrase to the hashes of the boot loader and the kernel, every kernel update changes the final value, and the disk no longer opens until Hari seals it again on every robot. That is the update problem of the list of hashes once more (see [Only signed software may run](04-only-signed-software-may-run.md)). Hari's way out is to record the rules the boot followed instead of the files. The firmware records whether secure boot is on, which keys and lists are installed, and which key in the allowed list approved the boot loader. A new kernel signed with Hari's release key leaves this register unchanged. Switching secure boot off, or installing other keys, changes it. Sealed to this register, the passphrase means: "release me only while secure boot is on, with Hari's keys". The thief's boot records "secure boot off", and the vault stays closed.
 
 > [!example]+ Toy example: sealing to the secure boot state
 > In the toy, the firmware records two things instead of files: whether secure boot is on, and the key that approved the boot loader. `unseal.sh` is the toy vault:
@@ -53,19 +53,19 @@ Secure boot answers the question "is this program allowed to run?". Before handi
 > if [ "$(cat pcr)" = "$(cat sealed/expected)" ]; then cat sealed/secret; else echo "refused: the boot differs"; fi
 > ```
 >
-> Sam seals the passphrase during a normal boot. The next boot, after a kernel update signed with the same key, records the same state and gets the passphrase. The thief's boot, with secure boot switched off, does not:
+> Hari seals the passphrase during a normal boot. The next boot, after a kernel update signed with the same key, records the same state and gets the passphrase. The thief's boot, with secure boot switched off, does not:
 >
 > ```console
 > $ printf '%064d' 0 > pcr
 > $ echo "secure boot: on" > state && sh extend.sh state
 > d672fe514bf439bbd293d225364c2cdc98a68af7a93546704f6d3c8129a2833c
-> $ sh extend.sh firmware/allowed/sam2.pub
+> $ sh extend.sh firmware/allowed/hari2.pub
 > 3d1c445c572719242ebe1e1e1f1a0d3925fd6aed7f8b8f35a955ace40a674b7e
-> $ mkdir sealed && cp pcr sealed/expected && echo "the disk passphrase" > sealed/secret   # Sam seals
+> $ mkdir sealed && cp pcr sealed/expected && echo "the disk passphrase" > sealed/secret   # Hari seals
 > $ printf '%064d' 0 > pcr                                   # next boot, with a new kernel
 > $ echo "secure boot: on" > state && sh extend.sh state
 > d672fe514bf439bbd293d225364c2cdc98a68af7a93546704f6d3c8129a2833c
-> $ sh extend.sh firmware/allowed/sam2.pub
+> $ sh extend.sh firmware/allowed/hari2.pub
 > 3d1c445c572719242ebe1e1e1f1a0d3925fd6aed7f8b8f35a955ace40a674b7e
 > $ sh unseal.sh
 > the disk passphrase
@@ -78,13 +78,13 @@ Secure boot answers the question "is this program allowed to run?". Before handi
 >
 > The new kernel does not appear in the register at all, so it changes nothing. In the toy, anyone can read `sealed/`. A real vault keeps the passphrase and the expected value inside itself, and nothing can set its registers.
 
-**Step 4: several registers, each with a number.** Sam now has records that do not belong together. The record of the files from step 1 is still worth keeping: it shows exactly which software booted, which is useful for other checks, such as proving to a server which kernel the robot runs. But in the register of the rules, it would bring back the problem of step 3: every kernel update would change the sealed value. The initrd's extension after opening the disk (step 2) does not belong there either: it is an event of the running system, not a rule of the boot. So Sam gives the component several registers, numbered from 0, and fixes in advance which stage extends which register:
+**Step 4: several registers, each with a number.** Hari now has records that do not belong together. The record of the files from step 1 is still worth keeping: it shows exactly which software booted, which is useful for other checks, such as proving to a server which kernel the robot runs. But in the register of the rules, it would bring back the problem of step 3: every kernel update would change the sealed value. The initrd's extension after opening the disk (step 2) does not belong there either: it is an event of the running system, not a rule of the boot. So Hari gives the component several registers, numbered from 0, and fixes in advance which stage extends which register:
 
 - the firmware extends register 4 with the hash of each boot program it starts (the record of step 1);
 - the firmware extends register 7 with the rules (the record of step 3);
 - the initrd extends register 15 right after it has opened the disk. Until then, register 15 is zero.
 
-A secret can be sealed to any choice of registers, each with its own expected value. Sam seals the passphrase to two of them: register 7 must show his rules, and register 15 must still be zero. Register 4 is left out, so kernel updates do not matter.
+A secret can be sealed to any choice of registers, each with its own expected value. Hari seals the passphrase to two of them: register 7 must show his rules, and register 15 must still be zero. Register 4 is left out, so kernel updates do not matter.
 
 > [!example]+ Toy example: sealing to two registers
 > The registers become three files, `pcr4`, `pcr7` and `pcr15`, and `extend.sh` takes the register as its first argument. The vault checks every register the secret was sealed to:
@@ -104,19 +104,19 @@ A secret can be sealed to any choice of registers, each with its own expected va
 > cat sealed/secret
 > ```
 >
-> Sam seals during a normal boot. Then come a boot with a new kernel, and the thief's boot:
+> Hari seals during a normal boot. Then come a boot with a new kernel, and the thief's boot:
 >
 > ```console
 > $ for r in pcr4 pcr7 pcr15; do printf '%064d' 0 > $r; done    # power-on: every register is zero
 > $ sh extend.sh pcr4 uki                                         # the firmware records the UKI's hash
 > $ echo "secure boot: on" > state && sh extend.sh pcr7 state     # ... and the rules
-> $ sh extend.sh pcr7 firmware/allowed/sam2.pub
-> $ mkdir sealed && cp pcr7 pcr15 sealed/ && echo "the disk passphrase" > sealed/secret   # Sam seals to 7 and 15
+> $ sh extend.sh pcr7 firmware/allowed/hari2.pub
+> $ mkdir sealed && cp pcr7 pcr15 sealed/ && echo "the disk passphrase" > sealed/secret   # Hari seals to 7 and 15
 > $ cp uki uki-v2 && echo "kernel 6.6.2" >> uki-v2                # a kernel update
 > $ for r in pcr4 pcr7 pcr15; do printf '%064d' 0 > $r; done    # next boot
 > $ sh extend.sh pcr4 uki-v2
 > $ echo "secure boot: on" > state && sh extend.sh pcr7 state
-> $ sh extend.sh pcr7 firmware/allowed/sam2.pub
+> $ sh extend.sh pcr7 firmware/allowed/hari2.pub
 > $ sh unseal.sh                                                  # the initrd asks for the passphrase
 > the disk passphrase
 > $ echo "root disk opened" > event && sh extend.sh pcr15 event   # the initrd, after opening the disk
@@ -131,10 +131,10 @@ A secret can be sealed to any choice of registers, each with its own expected va
 >
 > Register 4 changed with the new kernel, but the passphrase is not sealed to it. Register 15 locks the vault once the disk is open, and register 7 keeps it closed for the thief's boot.
 
-**This is a TPM.** Sam does not have to build this component: most computers have one, called a TPM.
+**This is a TPM.** Hari does not have to build this component: most computers have one, called a TPM.
 
 > [!info] TPM and PCRs
-> A **TPM** (Trusted Platform Module) is a small security chip, or a piece of firmware, with the three abilities Sam needed:
+> A **TPM** (Trusted Platform Module) is a small security chip, or a piece of firmware, with the three abilities Hari needed:
 >
 > - it keeps keys and secrets that never leave it;
 > - its registers, the **PCRs** (Platform Configuration Registers), start at zero at power-on and can only be extended. Recording the boot in them is called **measured boot**;
@@ -146,7 +146,7 @@ A secret can be sealed to any choice of registers, each with its own expected va
 > - PCRs 8 to 15 are extended by the operating system. On Linux, their meaning is agreed in a shared list, the Linux TPM PCR Registry.
 > - PCRs 16 to 23 are for debugging and special uses.
 >
-> The numbers in Sam's steps are the real ones. The PCRs that matter in this primer:
+> The numbers in Hari's steps are the real ones. The PCRs that matter in this primer:
 >
 > | PCR | Extended by | Records |
 > |---|---|---|
@@ -158,7 +158,7 @@ A secret can be sealed to any choice of registers, each with its own expected va
 
 ![Sealing the disk passphrase to PCR 7 and PCR 15](../assets/figures/tpm-seal.svg)
 
-On Linux, `systemd-cryptenroll` does Sam's sealing. It creates a new passphrase, seals it in the TPM, and adds it to a new LUKS keyslot. At boot, the systemd initrd unseals it and opens the disk. NixOS supports this with its systemd-based initrd. Sealed to PCR 7 only (step 3):
+On Linux, `systemd-cryptenroll` does Hari's sealing. It creates a new passphrase, seals it in the TPM, and adds it to a new LUKS keyslot. At boot, the systemd initrd unseals it and opens the disk. NixOS supports this with its systemd-based initrd. Sealed to PCR 7 only (step 3):
 
 ```sh
 systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7 /dev/nvme0n1p2
@@ -174,7 +174,7 @@ systemd-cryptenroll --tpm2-device=auto \
 
 For step 4, the initrd must also extend PCR 15 after opening the disk. The option `tpm2-measure-pcr=yes` on the disk's line in `/etc/crypttab` does that: it extends PCR 15 with a hash of the opened disk's volume key (on NixOS, through `boot.initrd.luks.devices.<name>.crypttabExtraOpts`).
 
-With a TPM in place of the TA, Sam's boot looks like this:
+With a TPM in place of the TA, Hari's boot looks like this:
 
 ![With a TPM: the key is released only for the expected boot](../assets/figures/e2e-5-tpm.svg)
 
@@ -185,4 +185,4 @@ With a TPM in place of the TA, Sam's boot looks like this:
 > - Without that, it falls back to an injected test seed. jetpack-nixos itself calls that "effectively a TPM backdoor".
 > - Its storage goes through tee-supplicant to files on the boot partition, because the module has no RPMB (a protected storage area some flash chips have) in that setup.
 
-**What is still missing.** Nothing more at boot: the disk passphrase is released only to Sam's signed software, booted with Sam's keys and settings. What remains are the limits that no boot protection covers.
+**What is still missing.** Nothing more at boot: the disk passphrase is released only to Hari's signed software, booted with Hari's keys and settings. What remains are the limits that no boot protection covers.
