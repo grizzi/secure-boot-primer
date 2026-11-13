@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 432" width="940" height="432">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .m { font-size: 13px; }
+    .red { fill: #b42318; }
+    .green { fill: #2f6b33; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .panel { fill: #f8fafc; stroke: #cbd5e1; }
+    .key { fill: #fff4e0; stroke: #c98a1b; }
+    .os { fill: #e8f5e9; stroke: #548c58; }
+    .w { fill: #ffffff; stroke: #64748b; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="430.5" rx="12"/>
+  <text class="h" x="24" y="34">Where the boot files are signed</text>
+
+  <!-- Left: central signing -->
+  <rect class="panel" x="24" y="52" width="436" height="312" rx="8"/>
+  <text class="t" x="40" y="76">Sam's design: sign centrally</text>
+  <text class="s" x="40" y="94">the robot only receives finished, signed files</text>
+  <rect class="key" x="40" y="106" width="404" height="64" rx="6"/>
+  <text class="t m" x="54" y="126">Sam's build server</text>
+  <text class="s" x="54" y="144">builds the UKI: kernel, initrd and command line</text>
+  <text class="s" x="54" y="160">signs it with the private release key</text>
+  <path class="ar" d="M242,170 V206"/>
+  <text class="s" x="252" y="192">update: the signed UKI</text>
+  <rect class="os" x="40" y="208" width="404" height="64" rx="6"/>
+  <text class="t m" x="54" y="228">Robot</text>
+  <text class="s" x="54" y="246">the updater only copies the UKI into place</text>
+  <text class="s" x="54" y="262">at boot, the firmware verifies it with the public key</text>
+  <text class="m green" x="40" y="300">✓ The private key never reaches the robot.</text>
+  <text class="s" x="40" y="324">The robot must not build boot files itself: its initrd</text>
+  <text class="s" x="40" y="340">and command line come from the build server too.</text>
+
+  <!-- Right: signing on the robot -->
+  <rect class="panel" x="480" y="52" width="436" height="312" rx="8"/>
+  <text class="t" x="496" y="76">Alternative: sign on the robot</text>
+  <text class="s" x="496" y="94">for robots that build their own boot files, such as NixOS</text>
+  <rect class="os" x="496" y="106" width="404" height="166" rx="6"/>
+  <text class="t m" x="510" y="126">Robot</text>
+  <text class="s" x="510" y="144">builds a new UKI at every update</text>
+  <rect class="key" x="510" y="156" width="376" height="50" rx="5"/>
+  <text class="t m" x="524" y="176">private key</text>
+  <text class="s" x="524" y="194">stored on the encrypted root filesystem</text>
+  <text class="s" x="510" y="228">signs each new UKI automatically</text>
+  <text class="s" x="510" y="246">at boot, the firmware verifies it with the public key</text>
+  <text class="m green" x="496" y="300">✓ Offline thief: the key is on the encrypted</text>
+  <text class="m green" x="512" y="317">disk, so edited boot files stay unsigned.</text>
+  <text class="m red" x="496" y="338">✗ Root on the running robot can read the key</text>
+  <text class="m red" x="512" y="355">and sign boot files of its own.</text>
+
+  <!-- Middle ground -->
+  <rect class="w" x="24" y="378" width="892" height="40" rx="8"/>
+  <text class="m" x="40" y="403"><tspan class="t">Middle ground:</tspan> keep the private key in the secure world or a TPM, where the robot can use it to sign but nobody can copy it out.</text>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 210" width="940" height="210">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .s { font-size: 12px; fill: #475569; }
+    .c { text-anchor: middle; }
+    .mono { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 12.5px; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .w { fill: #ffffff; stroke: #64748b; }
+    .fw { fill: #e8f0fe; stroke: #4a73b8; }
+    .key { fill: #fff4e0; stroke: #c98a1b; }
+    .enc { fill: #eef2f6; stroke: #64748b; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+    .ark { stroke: #c98a1b; stroke-width: 1.6; fill: none; marker-end: url(#k); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c98a1b"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="208.5" rx="12"/>
+
+  <rect class="key" x="204" y="22" width="530" height="38" rx="6"/>
+  <text class="c" x="469" y="46"><tspan class="t">One AES key</tspan> (128 or 256 random bits), used in both directions</text>
+  <path class="ark" d="M269,60 V96"/>
+  <path class="ark" d="M669,60 V96"/>
+
+  <rect class="w" x="24" y="98" width="140" height="56" rx="6"/>
+  <text class="c t" x="94" y="122">Readable data</text>
+  <text class="c mono" x="94" y="142">password=…</text>
+  <path class="ar" d="M164,126 H202"/>
+  <rect class="fw" x="204" y="98" width="130" height="56" rx="6"/>
+  <text class="c t" x="269" y="131">AES encrypt</text>
+  <path class="ar" d="M334,126 H372"/>
+  <rect class="enc" x="374" y="98" width="190" height="56" rx="6"/>
+  <text class="c t" x="469" y="122">On the disk</text>
+  <text class="c mono" x="469" y="142">9f 3a c1 07 e2 5b…</text>
+  <path class="ar" d="M564,126 H602"/>
+  <rect class="fw" x="604" y="98" width="130" height="56" rx="6"/>
+  <text class="c t" x="669" y="131">AES decrypt</text>
+  <path class="ar" d="M734,126 H772"/>
+  <rect class="w" x="774" y="98" width="142" height="56" rx="6"/>
+  <text class="c t" x="845" y="122">Readable data</text>
+  <text class="c mono" x="845" y="142">password=…</text>
+
+  <text x="24" y="190">Without the key, the bytes in the middle reveal nothing about the data.</text>
+</svg>

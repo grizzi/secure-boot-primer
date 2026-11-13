@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 876" width="940" height="876">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .sd { font-size: 12px; fill: #1e293b; }
+    .m { font-size: 13px; }
+    .col { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; fill: #64748b; }
+    .mono { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 11.5px; fill: #1e293b; }
+    .vert { font-size: 12px; font-weight: 600; fill: #64748b; }
+    rect { stroke-width: 1.3; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; }
+    .stage { fill: #ffffff; stroke: #475569; stroke-width: 1.5; }
+    .jet { fill: #f8fafc; stroke: #cbd5e1; }
+    .band { fill: #f1f5f9; stroke: none; }
+    .fz { fill: #fbd99a; stroke: #b7791f; stroke-width: 1.6; }
+    .fl { fill: #e3ecfd; stroke: #4a73b8; }
+    .se { fill: #f1e6fc; stroke: #8e5bb5; }
+    .li { fill: #fde8f1; stroke: #c2588f; }
+    .dk { fill: #e3f2e4; stroke: #548c58; }
+    .of { fill: #ffffff; stroke: #94a3b8; stroke-dasharray: 4 3; }
+    .sep { stroke: #e2e8f0; stroke-width: 1; }
+    .brk { stroke: #94a3b8; stroke-width: 1.5; fill: none; }
+    .dash { stroke: #94a3b8; stroke-width: 1.2; stroke-dasharray: 5 4; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="874.5" rx="12"/>
+  <text class="h" x="24" y="34">The boot, step by step: what runs, which keys it uses, and the Jetson names</text>
+  <text class="sd t" x="24" y="62">Stored in:</text>
+  <rect class="fz" x="96" y="50" width="16" height="16" rx="3"/>
+  <text class="sd" x="118" y="62">Fuses in the SoC</text>
+  <rect class="fl" x="240" y="50" width="16" height="16" rx="3"/>
+  <text class="sd" x="262" y="62">Flash chip</text>
+  <rect class="se" x="344" y="50" width="16" height="16" rx="3"/>
+  <text class="sd" x="366" y="62">Secure RAM (secure world)</text>
+  <rect class="li" x="534" y="50" width="16" height="16" rx="3"/>
+  <text class="sd" x="556" y="62">Linux RAM</text>
+  <rect class="dk" x="640" y="50" width="16" height="16" rx="3"/>
+  <text class="sd" x="662" y="62">Disk</text>
+  <rect class="of" x="706" y="50" width="16" height="16" rx="3"/>
+  <text class="sd" x="728" y="62">Off the robot, with Sam</text>
+  <text class="col" x="60" y="98">WHAT RUNS, IN BOOT ORDER</text>
+  <text class="col" x="418" y="98">KEYS AND WHERE THEY ARE STORED</text>
+  <text class="col" x="692" y="98">ON THE JETSON</text>
+  <rect class="stage" x="60" y="112" width="344" height="68" rx="6"/>
+  <text class="t m" x="72" y="131">BootROM<tspan class="s" font-weight="400">  in mask ROM, the first code to run</tspan></text>
+  <text class="sd" x="72" y="149"><tspan class="t">checks:</tspan> the first boot programs, with the firmware key</text>
+  <text class="sd" x="72" y="165"><tspan class="t">then:</tspan> decrypts them if encrypted, and starts them</text>
+  <rect class="fz" x="418" y="124.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="138.0"><tspan class="t">Fuses</tspan>  hash of the firmware key</text>
+  <rect class="fz" x="418" y="148.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="162.0"><tspan class="t">Fuses</tspan>  firmware encryption key, optional</text>
+  <rect class="jet" x="692" y="112" width="224" height="68" rx="6"/>
+  <text class="sd t" x="704" y="135.0">BootROM</text>
+  <text class="s" x="704" y="150.0">checks MB1 against PublicKeyHash</text>
+  <text class="s" x="704" y="165.0">decrypts with the SBK, if burned</text>
+  <path class="ar" d="M84,180 V195"/>
+  <rect class="stage" x="60" y="196" width="344" height="68" rx="6"/>
+  <text class="t m" x="72" y="215">First boot programs<tspan class="s" font-weight="400">  from the flash chip</tspan></text>
+  <text class="sd" x="72" y="233"><tspan class="t">checks:</tspan> the secure-world image and UEFI (firmware key)</text>
+  <text class="sd" x="72" y="249"><tspan class="t">then:</tspan> set up the gates, load the secure-world image</text>
+  <rect class="fz" x="418" y="220.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="234.0"><tspan class="t">Fuses</tspan>  hash of the firmware key, as above</text>
+  <rect class="jet" x="692" y="196" width="224" height="68" rx="6"/>
+  <text class="sd t" x="704" y="219.0">MB1, MB2</text>
+  <text class="s" x="704" y="234.0">in QSPI, signed with the PKC key</text>
+  <text class="s" x="704" y="249.0">load ATF + OP-TEE into TZDRAM</text>
+  <path class="ar" d="M84,264 V279"/>
+  <rect class="stage" x="60" y="280" width="344" height="84" rx="6"/>
+  <text class="t m" x="72" y="299">Secure world<tspan class="s" font-weight="400">  ATF and OP-TEE, in secure memory</tspan></text>
+  <text class="sd" x="72" y="317"><tspan class="t">checks:</tspan> nothing, the stage before checked it</text>
+  <text class="sd" x="72" y="333"><tspan class="t">then:</tspan> decrypts the key blob with a key derived</text>
+  <text class="sd" x="72" y="349">from the root key; the keys stay inside</text>
+  <rect class="fz" x="418" y="288.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="302.0"><tspan class="t">Fuses</tspan>  root key, secure world only</text>
+  <rect class="fl" x="418" y="312.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="326.0"><tspan class="t">Flash</tspan>  key blob, encrypted</text>
+  <rect class="se" x="418" y="336.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="350.0"><tspan class="t">Secure RAM</tspan>  decrypted keys, with the disk key</text>
+  <rect class="jet" x="692" y="280" width="224" height="84" rx="6"/>
+  <text class="sd t" x="704" y="303.5">OP-TEE</text>
+  <text class="mono" x="704" y="318.5">jetson_user_key_pta opens</text>
+  <text class="s" x="704" y="333.5">the EKB with keys from OEM_K1</text>
+  <text class="s" x="704" y="348.5">disk key: sym2</text>
+  <line class="dash" x1="56" y1="387" x2="916" y2="387"/>
+  <text class="s" x="418" y="382">the processor switches to the normal world</text>
+  <path class="ar" d="M84,364 V393"/>
+  <rect class="stage" x="60" y="394" width="344" height="68" rx="6"/>
+  <text class="t m" x="72" y="413">UEFI firmware<tspan class="s" font-weight="400">  from the flash chip</tspan></text>
+  <text class="sd" x="72" y="431"><tspan class="t">checks:</tspan> the boot loader, against the allowed list</text>
+  <text class="sd" x="72" y="447"><tspan class="t">then:</tspan> starts it (with a TPM: records PCR 7)</text>
+  <rect class="fl" x="418" y="406.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="420.0"><tspan class="t">Flash</tspan>  owner key, update keys</text>
+  <rect class="fl" x="418" y="430.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="444.0"><tspan class="t">Flash</tspan>  allowed and forbidden lists</text>
+  <rect class="jet" x="692" y="394" width="224" height="68" rx="6"/>
+  <text class="sd t" x="704" y="417.0">NVIDIA UEFI (EDK2)</text>
+  <text class="s" x="704" y="432.0">PK, KEK, db, dbx:</text>
+  <text class="s" x="704" y="447.0">UEFI variables in QSPI</text>
+  <path class="ar" d="M84,462 V477"/>
+  <rect class="stage" x="60" y="478" width="344" height="68" rx="6"/>
+  <text class="t m" x="72" y="497">Boot loader<tspan class="s" font-weight="400">  from the disk</tspan></text>
+  <text class="sd" x="72" y="515"><tspan class="t">checks:</tspan> kernel, initrd, command line (allowed list)</text>
+  <text class="sd" x="72" y="531"><tspan class="t">then:</tspan> starts the kernel with the initrd</text>
+  <rect class="fl" x="418" y="490.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="504.0"><tspan class="t">Flash</tspan>  allowed list, the release keys</text>
+  <rect class="dk" x="418" y="514.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="528.0"><tspan class="t">Disk</tspan>  signatures, or one signed UKI</text>
+  <rect class="jet" x="692" y="478" width="224" height="68" rx="6"/>
+  <text class="sd t" x="704" y="501.0">L4TLauncher</text>
+  <text class="s" x="704" y="516.0">.sig files next to Image, initrd</text>
+  <text class="s" x="704" y="531.0">and extlinux.conf, in /boot</text>
+  <path class="ar" d="M84,546 V561"/>
+  <rect class="stage" x="60" y="562" width="344" height="100" rx="6"/>
+  <text class="t m" x="72" y="581">initrd<tspan class="s" font-weight="400">  asks the TA for the disk passphrase</tspan></text>
+  <text class="sd" x="72" y="599"><tspan class="t">checks:</tspan> nothing, the TA answers whoever asks</text>
+  <text class="sd" x="72" y="615">(with a TPM: PCR 7 and PCR 15 must match)</text>
+  <text class="sd" x="72" y="631"><tspan class="t">then:</tspan> the TA derives the passphrase, hands it</text>
+  <text class="sd" x="72" y="647">over, and stops answering</text>
+  <rect class="se" x="418" y="590.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="604.0"><tspan class="t">Secure RAM</tspan>  disk key, chip ID, partition ID</text>
+  <rect class="li" x="418" y="614.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="628.0"><tspan class="t">Linux RAM</tspan>  disk passphrase, briefly</text>
+  <rect class="jet" x="692" y="562" width="224" height="100" rx="6"/>
+  <text class="sd t" x="704" y="593.5">nvluks-srv-app, luks-srv TA</text>
+  <text class="s" x="704" y="608.5">KDF over sym2, ECID and the</text>
+  <text class="s" x="704" y="623.5">partition UUID; then</text>
+  <text class="mono" x="704" y="638.5">nvluks-srv-app -n</text>
+  <path class="ar" d="M84,662 V677"/>
+  <rect class="stage" x="60" y="678" width="344" height="68" rx="6"/>
+  <text class="t m" x="72" y="697">initrd<tspan class="s" font-weight="400">  opens the disk</tspan></text>
+  <text class="sd" x="72" y="715"><tspan class="t">checks:</tspan> the passphrase, against a keyslot</text>
+  <text class="sd" x="72" y="731"><tspan class="t">then:</tspan> gives the volume key to dm-crypt, switches root</text>
+  <rect class="dk" x="418" y="690.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="704.0"><tspan class="t">Disk</tspan>  volume key, locked in the keyslots</text>
+  <rect class="li" x="418" y="714.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="728.0"><tspan class="t">Linux RAM</tspan>  volume key, in the kernel</text>
+  <rect class="jet" x="692" y="678" width="224" height="68" rx="6"/>
+  <text class="sd t" x="704" y="701.0">cryptsetup luksOpen</text>
+  <text class="mono" x="704" y="716.0">nvme0n1p2 → /dev/mapper/</text>
+  <text class="mono" x="704" y="731.0">crypt_root</text>
+  <path class="ar" d="M84,746 V761"/>
+  <rect class="stage" x="60" y="762" width="344" height="52" rx="6"/>
+  <text class="t m" x="72" y="781">Running system<tspan class="s" font-weight="400">  from the decrypted root filesystem</tspan></text>
+  <text class="sd" x="72" y="799">dm-crypt decrypts every read, encrypts every write</text>
+  <rect class="li" x="418" y="778.5" width="262" height="19" rx="4"/>
+  <text class="sd" x="426" y="792.0"><tspan class="t">Linux RAM</tspan>  volume key, until power-off</text>
+  <rect class="jet" x="692" y="762" width="224" height="52" rx="6"/>
+  <text class="sd t" x="704" y="784.5">root filesystem</text>
+  <text class="mono" x="704" y="799.5">/dev/mapper/crypt_root</text>
+  <path class="brk" d="M48,112 H42 V364 H48"/>
+  <text class="vert" x="30" y="238.0" text-anchor="middle" transform="rotate(-90 30 238.0)">secure world</text>
+  <path class="brk" d="M48,394 H42 V814 H48"/>
+  <text class="vert" x="30" y="604.0" text-anchor="middle" transform="rotate(-90 30 604.0)">normal world</text>
+  <text class="m" x="24" y="840">Each stage checks the next one before starting it. Fuses hold the only secret keys stored in the clear;</text>
+  <text class="m" x="24" y="858">decrypted keys exist only in memory, and only the passphrase and the volume key ever reach Linux.</text>
+</svg>

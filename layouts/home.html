@@ -1,0 +1,17 @@
+{{ define "main" }}
+<article class="prose">
+  {{ .Content }}
+  <h2 id="chapters-list">Chapters</h2>
+  <ol class="chapter-list">
+    {{- range where site.RegularPages "Params.appendix" "!=" true }}
+    <li><a href="{{ .RelPermalink }}">{{ partial "title.html" . }}</a></li>
+    {{- end }}
+  </ol>
+  <h3>Appendix</h3>
+  <ul class="chapter-list">
+    {{- range where site.RegularPages "Params.appendix" true }}
+    <li><a href="{{ .RelPermalink }}">{{ partial "title.html" . }}</a></li>
+    {{- end }}
+  </ul>
+</article>
+{{ end }}

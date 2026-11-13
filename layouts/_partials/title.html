@@ -1,0 +1,8 @@
+{{- /* A page's title: front matter `title`, or else the text of the page's first h1. */ -}}
+{{- $t := .Title -}}
+{{- if not $t -}}
+  {{- with findRESubmatch `<h1[^>]*>(.*?)</h1>` .Content 1 -}}
+    {{- $t = index (index . 0) 1 | plainify | htmlUnescape -}}
+  {{- end -}}
+{{- end -}}
+{{- return $t -}}

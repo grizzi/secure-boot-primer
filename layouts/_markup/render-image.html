@@ -1,0 +1,35 @@
+{{- /*
+  Figures. The Markdown points at ../assets/figures/x.svg (so Obsidian shows it too).
+  SVGs are placed into the page as code, so that CSS can animate them. Each figure's own
+  <style> is nested under the figure's id, and its ids get a prefix, so figures cannot
+  affect each other. Photos become resized <img> elements.
+*/ -}}
+{{- $dest := .Destination -}}
+{{- $name := path.Base $dest -}}
+{{- $alt := .PlainText -}}
+{{- if strings.HasSuffix $name ".svg" -}}
+  {{- with resources.Get (printf "figures/%s" $name) -}}
+    {{- $id := printf "fig-%s" (path.BaseName $name) -}}
+    {{- $svg := .Content -}}
+    {{- $svg = replaceRE `\sid="([\w-]+)"` (printf ` id="%s-$1"` $id) $svg -}}
+    {{- $svg = replaceRE `url\(#([\w-]+)\)` (printf `url(#%s-$1)` $id) $svg -}}
+    {{- $svg = replaceRE `href="#([\w-]+)"` (printf `href="#%s-$1"` $id) $svg -}}
+    {{- $svg = replaceRE `(?s)<style>(.*?)</style>` (printf `<style>#%s {$1}</style>` $id) $svg -}}
+    {{- $svg = replaceRE `<svg\s([^>]*?)\s*width="[\d.]+"\s*height="[\d.]+"` (printf `<svg id="%s" role="img" aria-label="%s" $1` $id ($alt | htmlEscape)) $svg 1 -}}
+<figure class="figure">
+{{ $svg | safeHTML }}
+</figure>
+  {{- else -}}
+    {{- errorf "figure %q not found in assets/figures (linked from %s)" $name $.Page.File.Path -}}
+  {{- end -}}
+{{- else -}}
+  {{- with resources.Get (printf "img/%s" $name) -}}
+    {{- $img := . -}}
+    {{- if gt .Width 1600 }}{{ $img = .Resize "1600x" }}{{ end -}}
+<figure class="figure photo">
+  <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+</figure>
+  {{- else -}}
+    {{- errorf "image %q not found in assets/img (linked from %s)" $name $.Page.File.Path -}}
+  {{- end -}}
+{{- end -}}

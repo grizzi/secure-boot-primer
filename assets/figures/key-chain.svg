@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 620" width="940" height="620">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .m { font-size: 13px; }
+    .c { text-anchor: middle; }
+    .col { font-size: 12px; font-weight: 600; fill: #64748b; letter-spacing: 0.04em; }
+    .mono { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 13px; font-weight: 600; fill: #1e293b; }
+    .green { fill: #2f6b33; }
+    .purple { fill: #6b3d91; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .bandS { fill: #faf5ff; stroke: #c4a5dd; stroke-dasharray: 5 4; }
+    .bandN { fill: #f4faf4; stroke: #9cc79f; stroke-dasharray: 5 4; }
+    .hw { fill: #eef2f6; stroke: #64748b; }
+    .sec { fill: #f3e8ff; stroke: #9160b8; }
+    .key { fill: #fff4e0; stroke: #c98a1b; }
+    .w { fill: #ffffff; stroke: #64748b; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="618.5" rx="12"/>
+  <text class="h" x="24" y="34">From the fused root key to the data: a chain of keys</text>
+
+  <!-- Column headers -->
+  <text class="col" x="60" y="62">STORED IN</text>
+  <text class="col" x="262" y="62">KEY</text>
+  <text class="col" x="612" y="62">ON THE JETSON</text>
+
+  <!-- Bands -->
+  <rect class="bandS" x="16" y="72" width="908" height="234" rx="8"/>
+  <text class="t c purple m" transform="translate(37,189) rotate(-90)">handled by the secure world</text>
+  <rect class="bandN" x="16" y="326" width="908" height="234" rx="8"/>
+  <text class="t c green m" transform="translate(37,443) rotate(-90)">handled by Linux</text>
+
+  <!-- Row 1: root key -->
+  <text class="t m" x="60" y="104">fuses in the SoC</text>
+  <text class="s" x="60" y="121">read only by the secure world</text>
+  <rect class="sec" x="262" y="84" width="250" height="48" rx="6"/>
+  <text class="t m" x="276" y="104">Root key</text>
+  <text class="s" x="276" y="121">256 bits, burned once</text>
+  <text class="mono" x="612" y="104">OEM_K1</text>
+  <text class="s" x="612" y="121">fuse holding a 256-bit AES key</text>
+  <path class="ar" d="M387,132 V164"/>
+  <text class="s" x="398" y="153">decrypts the blob</text>
+
+  <!-- Row 2: key blob -->
+  <text class="t m" x="60" y="186">flash chip</text>
+  <text class="s" x="60" y="203">readable by anyone</text>
+  <rect class="key" x="262" y="166" width="250" height="48" rx="6"/>
+  <text class="t m" x="276" y="186">Key blob</text>
+  <text class="s" x="276" y="203">many keys, encrypted; replaceable</text>
+  <text class="t m" x="612" y="186">EKB (Encrypted Key Blob)</text>
+  <text class="s" x="612" y="203">QSPI partitions A_eks and B_eks</text>
+  <path class="ar" d="M387,214 V246"/>
+  <text class="s" x="398" y="235">the TA takes out one key</text>
+
+  <!-- Row 3: disk key -->
+  <text class="t m" x="60" y="268">secure RAM</text>
+  <text class="s" x="60" y="285">while the TA runs</text>
+  <rect class="key" x="262" y="248" width="250" height="48" rx="6"/>
+  <text class="t m" x="276" y="268">Disk key</text>
+  <text class="s" x="276" y="285">one of the keys in the blob</text>
+  <text class="mono" x="612" y="268">sym2</text>
+  <text class="s" x="612" y="285">blob opened by jetson_user_key_pta</text>
+  <path class="ar" d="M387,296 V332"/>
+  <text class="s" x="398" y="320">KDF + chip ID + partition ID, in the TA</text>
+
+  <!-- Row 4: passphrase -->
+  <text class="t m" x="60" y="354">initrd's memory</text>
+  <text class="s" x="60" y="371">briefly, at boot</text>
+  <rect class="key" x="262" y="334" width="250" height="48" rx="6"/>
+  <text class="t m" x="276" y="354">Disk passphrase</text>
+  <text class="s" x="276" y="371">different for every device and disk</text>
+  <text class="t m" x="612" y="354">luks-srv TA output</text>
+  <text class="s" x="612" y="371">fetched by nvluks-srv-app</text>
+  <path class="ar" d="M387,382 V414"/>
+  <text class="s" x="398" y="403">argon2id, unlocks a keyslot</text>
+
+  <!-- Row 5: volume key -->
+  <text class="t m" x="60" y="436">LUKS header, locked</text>
+  <text class="s" x="60" y="453">kernel memory while open</text>
+  <rect class="key" x="262" y="416" width="250" height="48" rx="6"/>
+  <text class="t m" x="276" y="436">Volume key</text>
+  <text class="s" x="276" y="453">random, made with the partition</text>
+  <text class="t m" x="612" y="436">LUKS volume key</text>
+  <text class="s" x="612" y="453">opened with cryptsetup luksOpen</text>
+  <path class="ar" d="M387,464 V496"/>
+  <text class="s" x="398" y="485">dm-crypt, on every read and write</text>
+
+  <!-- Row 6: data -->
+  <text class="t m" x="60" y="518">disk</text>
+  <text class="s" x="60" y="535">the encrypted partition</text>
+  <rect class="hw" x="262" y="498" width="250" height="48" rx="6"/>
+  <text class="t m" x="276" y="518">Data</text>
+  <text class="s" x="276" y="535">encrypted with the volume key</text>
+  <text class="t m" x="612" y="518">root filesystem</text>
+  <text class="s" x="612" y="535">for example nvme0n1p2</text>
+
+  <!-- Footer -->
+  <text class="m" x="24" y="586">Only the root key sits in the clear, and only in the fuses. Every key below it is either stored encrypted</text>
+  <text class="m" x="24" y="605">(key blob, LUKS header) or computed at boot. Only the passphrase crosses into Linux, once per boot.</text>
+</svg>

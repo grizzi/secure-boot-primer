@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 456" width="940" height="456">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .m { font-size: 13px; }
+    .mono { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 12px; fill: #334155; }
+    .monot { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 13px; font-weight: 600; }
+    .green { fill: #2f6b33; }
+    .orange { fill: #8a5a00; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .hw { fill: #eef2f6; stroke: #64748b; }
+    .fw { fill: #e8f0fe; stroke: #4a73b8; }
+    .os { fill: #e8f5e9; stroke: #548c58; }
+    .key { fill: #fff4e0; stroke: #c98a1b; stroke-width: 2; }
+    .w { fill: #ffffff; stroke: #64748b; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="454.5" rx="12"/>
+  <text class="h" x="24" y="34">An opened LUKS partition: decrypted on the way up, encrypted on the way down</text>
+
+  <!-- Stack -->
+  <rect class="os" x="24" y="56" width="480" height="44" rx="6"/>
+  <text class="t m" x="38" y="75">A program reads /etc/hostname</text>
+  <text class="s" x="38" y="92">nothing changes for programs: they read and write files as usual</text>
+  <path class="ar" d="M160,100 V128"/>
+  <path class="ar" d="M380,128 V102"/>
+  <text class="mono green" x="390" y="119">robot-01</text>
+
+  <rect class="fw" x="24" y="130" width="480" height="232" rx="8"/>
+  <text class="t m" x="38" y="151">Linux kernel</text>
+  <rect class="w" x="40" y="162" width="448" height="46" rx="5"/>
+  <text class="t m" x="54" y="181">filesystem code (ext4)</text>
+  <text class="s" x="54" y="198">mounted from <tspan class="mono">/dev/mapper/crypt_root</tspan></text>
+  <path class="ar" d="M160,208 V230"/>
+  <text class="s" x="170" y="224">plain blocks</text>
+  <path class="ar" d="M380,230 V210"/>
+  <text class="mono green" x="390" y="224">robot-01</text>
+
+  <rect class="key" x="40" y="232" width="448" height="56" rx="5"/>
+  <text class="t m" x="54" y="253">dm-crypt</text>
+  <text class="s" x="54" y="272">holds the volume key in RAM</text>
+  <text class="s" x="300" y="253">reading: decrypts</text>
+  <text class="s" x="300" y="272">writing: encrypts</text>
+
+  <path class="ar" d="M160,288 V310"/>
+  <text class="s" x="170" y="304">encrypted blocks</text>
+  <path class="ar" d="M380,310 V290"/>
+  <text class="mono orange" x="390" y="304">4c e9 07 b1 …</text>
+  <rect class="w" x="40" y="312" width="448" height="40" rx="5"/>
+  <text class="t m" x="54" y="337">NVMe driver</text>
+  <text class="s" x="160" y="337">reads and writes <tspan class="mono">/dev/nvme0n1p2</tspan></text>
+
+  <path class="ar" d="M160,362 V386"/>
+  <path class="ar" d="M380,386 V364"/>
+  <rect class="hw" x="24" y="388" width="480" height="52" rx="6"/>
+  <text class="t m" x="38" y="409">LUKS partition on the disk</text>
+  <text class="s" x="38" y="427">header, then encrypted bytes only</text>
+
+  <!-- Right: names -->
+  <rect class="w" x="528" y="56" width="388" height="384" rx="8"/>
+  <text class="t" x="544" y="80">Two names for the same data</text>
+
+  <text class="monot" x="544" y="110">/dev/nvme0n1p2</text>
+  <text class="s" x="544" y="128">the real partition on the disk. Reading it</text>
+  <text class="s" x="544" y="144">directly gives only encrypted bytes.</text>
+
+  <text class="monot green" x="544" y="178">/dev/mapper/crypt_root</text>
+  <text class="s" x="544" y="196">the mapped device, created by cryptsetup open.</text>
+  <text class="s" x="544" y="212">It exists only while the partition is open and</text>
+  <text class="s" x="544" y="228">shows the decrypted contents. The filesystem</text>
+  <text class="s" x="544" y="244">is mounted from it.</text>
+
+  <text class="t m" x="544" y="280">Closing</text>
+  <text class="s" x="544" y="298">cryptsetup close, or switching the computer</text>
+  <text class="s" x="544" y="314">off, removes the mapped device and the</text>
+  <text class="s" x="544" y="330">volume key from RAM.</text>
+
+  <rect class="key" x="544" y="356" width="356" height="64" rx="6"/>
+  <text class="t m" x="558" y="380">Decrypted data exists only in RAM.</text>
+  <text class="s" x="558" y="400">The disk only ever holds encrypted bytes.</text>
+</svg>

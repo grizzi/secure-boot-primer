@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 572" width="940" height="572">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .c { text-anchor: middle; }
+    .e { text-anchor: end; }
+    .red { fill: #b42318; }
+    .green { fill: #2f6b33; }
+    .purple { fill: #6b3d91; }
+    .orange { fill: #8a5a00; }
+    .mono { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 13px; }
+    .ms { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 12px; fill: #334155; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .os { fill: #e8f5e9; stroke: #548c58; }
+    .sec { fill: #f3e8ff; stroke: #9160b8; }
+    .fw { fill: #e8f0fe; stroke: #4a73b8; }
+    .w { fill: #ffffff; stroke: #64748b; }
+    .field { fill: #f8fafc; stroke: #64748b; }
+    .nsf { fill: #fff4e0; stroke: #c98a1b; stroke-width: 2.5; }
+    .hit { fill: #fff4e0; stroke: none; }
+    .bad { fill: #fdecea; stroke: #c0392b; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+    .ark { stroke: #c98a1b; stroke-width: 1.6; fill: none; marker-end: url(#k); }
+    .pin { stroke: #c98a1b; stroke-width: 2.5; fill: none; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c98a1b"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="570.5" rx="12"/>
+  <text class="h" x="24" y="34">One memory read from Linux, as it travels through the chip</text>
+
+  <!-- Core -->
+  <rect class="os" x="24" y="56" width="190" height="96" rx="8"/>
+  <text class="t" x="38" y="80">CPU core</text>
+  <text class="s" x="38" y="100">running Linux, so its</text>
+  <text class="s" x="38" y="116">hardware state is</text>
+  <text class="t" x="38" y="138" style="fill:#2f6b33">normal world</text>
+
+  <!-- Transaction -->
+  <text class="t" x="262" y="70">The request on the interconnect</text>
+  <rect class="field" x="262" y="84" width="200" height="48" rx="4"/>
+  <text class="s" x="272" y="102">address</text>
+  <text class="mono" x="272" y="122">0x8000_1000</text>
+  <rect class="field" x="462" y="84" width="96" height="48" rx="4"/>
+  <text class="s" x="472" y="102">operation</text>
+  <text class="mono" x="472" y="122">read</text>
+  <rect class="field" x="558" y="84" width="96" height="48" rx="4"/>
+  <text class="s" x="568" y="102">size</text>
+  <text class="mono" x="568" y="122">64 bytes</text>
+  <rect class="nsf" x="654" y="84" width="96" height="48" rx="4"/>
+  <text class="s" x="664" y="102">NS bit</text>
+  <text class="mono t" x="664" y="122">1</text>
+  <path class="ar" d="M214,108 H260"/>
+  <path class="ark" d="M150,152 V176 H702 V136"/>
+  <text class="s orange" x="230" y="194">the core sets the NS bit from its world: normal = 1, secure = 0. No instruction lets normal-world code set it to 0.</text>
+
+  <!-- Gate -->
+  <path class="ar" d="M750,108 H866 V226"/>
+  <rect class="fw" x="24" y="228" width="892" height="262" rx="8"/>
+  <text class="t" x="40" y="252">Memory gate: two checks on every request</text>
+  <text class="s" x="40" y="270">Its region table splits the addresses into ranges (example values, written at boot by secure firmware).</text>
+
+  <!-- Check 1: address map -->
+  <text class="t" x="40" y="300">1. Which range contains the address?</text>
+  <text class="mono t c" x="84" y="324" style="fill:#8a5a00">0x8000_1000</text>
+  <path class="ark" d="M84,330 V346"/>
+  <rect class="sec" x="40" y="350" width="270" height="38" rx="4"/>
+  <rect class="os" x="310" y="350" width="270" height="38" rx="4"/>
+  <path class="pin" d="M84,350 V388"/>
+  <text class="t c purple" x="200" y="374" style="font-size:13px">range 1: secure only</text>
+  <text class="t c green" x="445" y="374" style="font-size:13px">range 2: normal and secure</text>
+  <text class="ms" x="40" y="406">0x8000_0000</text>
+  <text class="ms e" x="303" y="406">0x87ff_ffff</text>
+  <text class="ms" x="319" y="406">0x8800_0000</text>
+  <text class="ms e" x="580" y="406">0xffff_ffff</text>
+  <text class="s" x="40" y="424">addresses increase to the right (not to scale); each range runs from its first to its last address</text>
+
+  <!-- Check 1: digit by digit -->
+  <rect class="w" x="608" y="284" width="292" height="146" rx="6"/>
+  <text class="s t" x="622" y="304">The same check, digit by digit</text>
+  <text class="s" x="622" y="330">first of range 1</text>
+  <text class="mono" x="770" y="330">0x8000_0000</text>
+  <rect class="hit" x="614" y="338" width="280" height="22" rx="3"/>
+  <text class="s orange t" x="622" y="354">requested</text>
+  <text class="mono t" x="770" y="354" style="fill:#8a5a00">0x8000_1000</text>
+  <text class="s" x="622" y="378">last of range 1</text>
+  <text class="mono" x="770" y="378">0x87ff_ffff</text>
+  <text class="s" x="622" y="402">first ≤ requested ≤ last,</text>
+  <text class="s t purple" x="622" y="420">so the address is in range 1</text>
+
+  <!-- Check 2: NS bit -->
+  <text class="t" x="40" y="454">2. Does the NS bit satisfy that range's rule?</text>
+  <text x="40" y="476" style="font-size:13px">Range 1 accepts only NS = 0. This request has NS = 1.</text>
+  <rect class="bad" x="608" y="444" width="292" height="34" rx="5"/>
+  <text class="t red" x="622" y="466">refused</text>
+  <text class="s" x="690" y="466">(with NS = 0 it would pass)</text>
+
+  <!-- Outcome -->
+  <path class="ar" d="M470,490 V510"/>
+  <rect class="bad" x="24" y="512" width="892" height="44" rx="8"/>
+  <text x="40" y="539" style="font-size:13px">The request never reaches the memory chips. Depending on the chip, the read returns zeros or a bus error, and a write would be dropped.</text>
+</svg>

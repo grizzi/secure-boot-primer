@@ -1,0 +1,25 @@
+{{- /*
+  Links. [text](04-only-signed-software-may-run.md#Some%20heading) is the form Obsidian
+  writes; it becomes the page's address plus Hugo's id for that heading. A link to a page
+  that does not exist stops the build.
+*/ -}}
+{{- $u := urls.Parse .Destination -}}
+{{- $href := .Destination -}}
+{{- $external := false -}}
+{{- if $u.IsAbs -}}
+  {{- $external = true -}}
+{{- else if not (strings.HasPrefix .Destination "mailto:") -}}
+  {{- $frag := "" -}}
+  {{- with $u.Fragment }}{{ $frag = printf "#%s" (anchorize .) }}{{ end -}}
+  {{- with $u.Path -}}
+    {{- with $.PageInner.GetPage (strings.TrimSuffix ".md" .) -}}
+      {{- $href = printf "%s%s" .RelPermalink $frag -}}
+    {{- else -}}
+      {{- errorf "broken link %q in %s" $.Destination $.Page.File.Path -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $href = $frag -}}
+  {{- end -}}
+{{- end -}}
+<a href="{{ $href | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $external }} rel="noopener"{{ end }}>{{ .Text }}</a>
+{{- /* chomp trailing newline */ -}}

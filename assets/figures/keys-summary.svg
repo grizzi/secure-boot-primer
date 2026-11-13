@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 916" width="940" height="916">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .sd { font-size: 12px; fill: #1e293b; }
+    .m { font-size: 13px; }
+    .col { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; fill: #64748b; }
+    .mono { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 11.5px; fill: #1e293b; }
+    .vert { font-size: 12px; font-weight: 600; fill: #64748b; }
+    rect { stroke-width: 1.3; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; }
+    .stage { fill: #ffffff; stroke: #475569; stroke-width: 1.5; }
+    .jet { fill: #f8fafc; stroke: #cbd5e1; }
+    .band { fill: #f1f5f9; stroke: none; }
+    .fz { fill: #fbd99a; stroke: #b7791f; stroke-width: 1.6; }
+    .fl { fill: #e3ecfd; stroke: #4a73b8; }
+    .se { fill: #f1e6fc; stroke: #8e5bb5; }
+    .li { fill: #fde8f1; stroke: #c2588f; }
+    .dk { fill: #e3f2e4; stroke: #548c58; }
+    .of { fill: #ffffff; stroke: #94a3b8; stroke-dasharray: 4 3; }
+    .sep { stroke: #e2e8f0; stroke-width: 1; }
+    .brk { stroke: #94a3b8; stroke-width: 1.5; fill: none; }
+    .dash { stroke: #94a3b8; stroke-width: 1.2; stroke-dasharray: 5 4; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="914.5" rx="12"/>
+  <text class="h" x="24" y="34">Every key: what it does, where it is stored, and its Jetson name</text>
+  <text class="sd t" x="24" y="62">Stored in:</text>
+  <rect class="fz" x="96" y="50" width="16" height="16" rx="3"/>
+  <text class="sd" x="118" y="62">Fuses in the SoC</text>
+  <rect class="fl" x="240" y="50" width="16" height="16" rx="3"/>
+  <text class="sd" x="262" y="62">Flash chip</text>
+  <rect class="se" x="344" y="50" width="16" height="16" rx="3"/>
+  <text class="sd" x="366" y="62">Secure RAM (secure world)</text>
+  <rect class="li" x="534" y="50" width="16" height="16" rx="3"/>
+  <text class="sd" x="556" y="62">Linux RAM</text>
+  <rect class="dk" x="640" y="50" width="16" height="16" rx="3"/>
+  <text class="sd" x="662" y="62">Disk</text>
+  <rect class="of" x="706" y="50" width="16" height="16" rx="3"/>
+  <text class="sd" x="728" y="62">Off the robot, with Sam</text>
+  <text class="col" x="24" y="98">KEY</text>
+  <text class="col" x="356" y="98">STORED</text>
+  <text class="col" x="660" y="98">ON THE JETSON</text>
+  <rect class="band" x="16" y="108" width="908" height="24" rx="5"/>
+  <text class="t m" x="24" y="125">Keys that check software: signatures</text>
+  <text class="t m" x="24" y="155">Firmware key</text>
+  <text class="s" x="24" y="171">signs the first boot programs, the secure-</text>
+  <rect class="fz" x="356" y="146.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="160.0"><tspan class="t">Fuses</tspan>  hash of the public key</text>
+  <rect class="of" x="356" y="170.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="184.0"><tspan class="t">Off-robot</tspan>  private key</text>
+  <text class="sd t" x="660" y="164.5">PKC key</text>
+  <text class="s" x="660" y="179.5">hash in the PublicKeyHash fuse</text>
+  <text class="s" x="24" y="185">world image and UEFI</text>
+  <line class="sep" x1="24" y1="200" x2="916" y2="200"/>
+  <text class="t m" x="24" y="219">Firmware encryption key</text>
+  <text class="s" x="24" y="235">optional: keeps the firmware unreadable</text>
+  <rect class="fz" x="356" y="210.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="224.0"><tspan class="t">Fuses</tspan>  the secret key</text>
+  <rect class="of" x="356" y="234.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="248.0"><tspan class="t">Off-robot</tspan>  a copy, to encrypt firmware</text>
+  <text class="sd t" x="660" y="228.5">SBK</text>
+  <text class="s" x="660" y="243.5">fuse</text>
+  <text class="s" x="24" y="249">in the flash chip</text>
+  <line class="sep" x1="24" y1="264" x2="916" y2="264"/>
+  <text class="t m" x="24" y="283">Owner key</text>
+  <text class="s" x="24" y="299">approves changes to the update keys,</text>
+  <rect class="fl" x="356" y="274.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="288.0"><tspan class="t">Flash</tspan>  public key, a UEFI variable</text>
+  <rect class="of" x="356" y="298.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="312.0"><tspan class="t">Off-robot</tspan>  private key</text>
+  <text class="sd t" x="660" y="292.5">PK</text>
+  <text class="s" x="660" y="307.5">UEFI variable in QSPI</text>
+  <text class="s" x="24" y="313">and to itself</text>
+  <line class="sep" x1="24" y1="328" x2="916" y2="328"/>
+  <text class="t m" x="24" y="347">Update keys</text>
+  <text class="s" x="24" y="363">approve changes to the allowed and</text>
+  <rect class="fl" x="356" y="338.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="352.0"><tspan class="t">Flash</tspan>  public keys, UEFI variables</text>
+  <rect class="of" x="356" y="362.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="376.0"><tspan class="t">Off-robot</tspan>  private keys</text>
+  <text class="sd t" x="660" y="356.5">KEK</text>
+  <text class="s" x="660" y="371.5">UEFI variable in QSPI</text>
+  <text class="s" x="24" y="377">forbidden lists</text>
+  <line class="sep" x1="24" y1="392" x2="916" y2="392"/>
+  <text class="t m" x="24" y="411">Release keys</text>
+  <text class="s" x="24" y="427">sign the boot loader, kernel, initrd</text>
+  <rect class="fl" x="356" y="402.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="416.0"><tspan class="t">Flash</tspan>  public keys, in the allowed list</text>
+  <rect class="of" x="356" y="426.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="440.0"><tspan class="t">Off-robot</tspan>  private keys, build server</text>
+  <text class="sd t" x="660" y="420.5">keys in db</text>
+  <text class="s" x="660" y="435.5">sign the .sig files, or a UKI</text>
+  <text class="s" x="24" y="441">and command line</text>
+  <line class="sep" x1="24" y1="456" x2="916" y2="456"/>
+  <text class="t m" x="24" y="475">Forbidden list</text>
+  <text class="s" x="24" y="491">hashes and keys that no longer count</text>
+  <rect class="fl" x="356" y="471.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="485.0"><tspan class="t">Flash</tspan>  a UEFI variable</text>
+  <text class="sd t" x="660" y="477.5">dbx</text>
+  <text class="s" x="660" y="492.5">UEFI variable in QSPI</text>
+  <rect class="band" x="16" y="514" width="908" height="24" rx="5"/>
+  <text class="t m" x="24" y="531">Keys that protect the disk: encryption</text>
+  <text class="t m" x="24" y="561">Root key</text>
+  <text class="s" x="24" y="577">burned once; decrypts the key blob,</text>
+  <rect class="fz" x="356" y="564.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="578.0"><tspan class="t">Fuses</tspan>  256-bit AES key, secure world only</text>
+  <text class="sd t" x="660" y="570.5">OEM_K1</text>
+  <text class="s" x="660" y="585.5">fuse (OemK1 in the fuse file)</text>
+  <text class="s" x="24" y="591">and never leaves the secure world</text>
+  <line class="sep" x1="24" y1="606" x2="916" y2="606"/>
+  <text class="t m" x="24" y="625">Key blob</text>
+  <text class="s" x="24" y="641">many keys, encrypted with a key</text>
+  <rect class="fl" x="356" y="616.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="630.0"><tspan class="t">Flash</tspan>  encrypted</text>
+  <rect class="se" x="356" y="640.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="654.0"><tspan class="t">Secure RAM</tspan>  decrypted at boot</text>
+  <text class="sd t" x="660" y="627.0">EKB</text>
+  <text class="mono" x="660" y="642.0">A_eks, B_eks; opened by</text>
+  <text class="mono" x="660" y="657.0">jetson_user_key_pta</text>
+  <text class="s" x="24" y="655">derived from the root key</text>
+  <line class="sep" x1="24" y1="670" x2="916" y2="670"/>
+  <text class="t m" x="24" y="689">Disk key</text>
+  <text class="s" x="24" y="705">one key from the key blob</text>
+  <rect class="se" x="356" y="685.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="699.0"><tspan class="t">Secure RAM</tspan>  never leaves the secure world</text>
+  <text class="sd t" x="660" y="691.5">sym2</text>
+  <text class="s" x="660" y="706.5">a key in the EKB</text>
+  <line class="sep" x1="24" y1="720" x2="916" y2="720"/>
+  <text class="t m" x="24" y="739">Disk passphrase</text>
+  <text class="s" x="24" y="755">derived from the disk key, the chip ID</text>
+  <rect class="se" x="356" y="730.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="744.0"><tspan class="t">Secure RAM</tspan>  computed by the TA</text>
+  <rect class="li" x="356" y="754.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="768.0"><tspan class="t">Linux RAM</tspan>  briefly, in the initrd</text>
+  <text class="sd t" x="660" y="748.5">luks-srv TA output</text>
+  <text class="s" x="660" y="763.5">fetched by nvluks-srv-app</text>
+  <text class="s" x="24" y="769">and the partition ID</text>
+  <line class="sep" x1="24" y1="784" x2="916" y2="784"/>
+  <text class="t m" x="24" y="803">Volume key</text>
+  <text class="s" x="24" y="819">encrypts the data on the disk</text>
+  <rect class="dk" x="356" y="787.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="801.0"><tspan class="t">Disk</tspan>  locked in the LUKS keyslots</text>
+  <rect class="li" x="356" y="811.5" width="288" height="19" rx="4"/>
+  <text class="sd" x="364" y="825.0"><tspan class="t">Linux RAM</tspan>  in the kernel, while open</text>
+  <text class="sd t" x="660" y="805.5">LUKS volume key</text>
+  <text class="s" x="660" y="820.5">cryptsetup luksOpen, dm-crypt</text>
+  <text class="m" x="24" y="860">On the robot, secret keys are stored in the clear only in fuses. The flash chip and the disk</text>
+  <text class="m" x="24" y="878">hold public keys or encrypted keys; decrypted keys exist only in memory, while they are used.</text>
+  <text class="s" x="24" y="898">With a TPM in place of the TA, the disk passphrase is sealed in the TPM instead (on the Jetson: the fTPM).</text>
+</svg>

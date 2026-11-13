@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 410" width="940" height="410">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .m { font-size: 13px; }
+    .red { fill: #b42318; }
+    .green { fill: #2f6b33; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .panel { fill: #f8fafc; stroke: #cbd5e1; }
+    .key { fill: #fff4e0; stroke: #c98a1b; }
+    .fw { fill: #e8f0fe; stroke: #4a73b8; }
+    .w { fill: #ffffff; stroke: #64748b; }
+    .ok { fill: #e8f5e9; stroke: #548c58; }
+    .bad { fill: #fdecea; stroke: #c0392b; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="408.5" rx="12"/>
+  <text class="h" x="24" y="34">Sealing the disk passphrase to PCR 7 and PCR 15</text>
+
+  <!-- Left: sealing -->
+  <rect class="panel" x="24" y="52" width="260" height="262" rx="8"/>
+  <text class="t" x="40" y="76">Once: Sam seals</text>
+  <text class="s" x="40" y="94">when he prepares the robot</text>
+  <rect class="key" x="40" y="106" width="228" height="196" rx="6"/>
+  <text class="t m" x="54" y="126">TPM</text>
+  <rect class="w" x="54" y="136" width="200" height="48" rx="5"/>
+  <text class="t m" x="66" y="155">disk passphrase</text>
+  <text class="s" x="66" y="172">kept inside the TPM</text>
+  <rect class="fw" x="54" y="194" width="200" height="96" rx="5"/>
+  <text class="t m" x="66" y="213">released only if</text>
+  <text class="s" x="66" y="233"><tspan class="t">PCR 7:</tspan> secure boot on,</text>
+  <text class="s" x="66" y="249">with Sam's keys and lists</text>
+  <text class="s" x="66" y="271"><tspan class="t">PCR 15:</tspan> still zero</text>
+
+  <!-- Row A: normal boot -->
+  <rect class="w" x="304" y="106" width="180" height="86" rx="6"/>
+  <text class="t m" x="316" y="126">Next boot</text>
+  <text class="s" x="316" y="144">new kernel, signed with</text>
+  <text class="s" x="316" y="160">Sam's release key</text>
+  <path class="ar" d="M484,149 H506"/>
+  <rect class="fw" x="508" y="106" width="170" height="86" rx="6"/>
+  <text class="t m" x="520" y="126">PCR values</text>
+  <text class="s" x="520" y="144"><tspan class="t">7:</tspan> secure boot on,</text>
+  <text class="s" x="520" y="160">Sam's keys and lists</text>
+  <text class="s" x="520" y="178"><tspan class="t">15:</tspan> zero</text>
+  <path class="ar" d="M678,149 H700"/>
+  <rect class="ok" x="702" y="106" width="214" height="86" rx="6"/>
+  <text class="t green m" x="714" y="126">both match</text>
+  <text class="s" x="714" y="144">the TPM releases the passphrase,</text>
+  <text class="s" x="714" y="160">the initrd opens the disk,</text>
+  <text class="s" x="714" y="176">then extends PCR 15</text>
+
+  <!-- Row B: thief's boot -->
+  <rect class="w" x="304" y="216" width="180" height="86" rx="6"/>
+  <text class="t m" x="316" y="236">Thief's boot</text>
+  <text class="s" x="316" y="254">secure boot switched off</text>
+  <text class="s" x="316" y="270">in the setup menu</text>
+  <path class="ar" d="M484,259 H506"/>
+  <rect class="fw" x="508" y="216" width="170" height="86" rx="6"/>
+  <text class="t m" x="520" y="236">PCR values</text>
+  <text class="s" x="520" y="254"><tspan class="t">7:</tspan> secure boot off</text>
+  <text class="s" x="520" y="272"><tspan class="t">15:</tspan> zero</text>
+  <path class="ar" d="M678,259 H700"/>
+  <rect class="bad" x="702" y="216" width="214" height="86" rx="6"/>
+  <text class="t red m" x="714" y="236">PCR 7 differs</text>
+  <text class="s" x="714" y="254">the TPM refuses,</text>
+  <text class="s" x="714" y="270">the disk stays closed</text>
+
+  <!-- Bottom -->
+  <rect class="w" x="24" y="330" width="892" height="62" rx="8"/>
+  <text class="m" x="40" y="352">PCR 4 (the hashes of the boot programs) is left out, so a kernel update does not matter.</text>
+  <text class="m" x="40" y="372">Once the disk is open, PCR 15 is no longer zero, so nothing started later can unseal the passphrase.</text>
+</svg>

@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 400" width="940" height="400">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .m { font-size: 13px; }
+    .red { fill: #b42318; }
+    .green { fill: #2f6b33; }
+    .new { font-size: 10px; font-weight: 600; fill: #8a5a00; text-anchor: middle; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .fw { fill: #e8f0fe; stroke: #4a73b8; }
+    .key { fill: #fff4e0; stroke: #c98a1b; }
+    .ok { fill: #e8f5e9; stroke: #548c58; }
+    .bad { fill: #fdecea; stroke: #c0392b; }
+    .hl { stroke-width: 3; }
+    .pill { fill: #ffffff; stroke: #c98a1b; stroke-width: 1; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="398.5" rx="12"/>
+  <text class="h" x="24" y="34">What Sam's firmware stores, one problem at a time</text>
+
+  <!-- Column 1 -->
+  <text class="t" x="24" y="68">1. Sign the boot files</text>
+  <rect class="fw" x="24" y="80" width="208" height="232" rx="8"/>
+  <text class="s" x="36" y="100">the firmware stores:</text>
+  <rect class="key hl" x="36" y="110" width="184" height="40" rx="5"/>
+  <text class="t m" x="46" y="127">Sam's public key</text>
+  <text class="s" x="46" y="143">verifies boot files</text>
+  <text class="m red" x="24" y="336">✗ An old boot loader with a</text>
+  <text class="m red" x="40" y="353">hole is still signed, so it</text>
+  <text class="m red" x="40" y="370">still runs.</text>
+
+  <path class="ar" d="M234,196 H250"/>
+
+  <!-- Column 2 -->
+  <text class="t" x="252" y="68">2. Block bad files</text>
+  <rect class="fw" x="252" y="80" width="208" height="232" rx="8"/>
+  <text class="s" x="264" y="100">the firmware stores:</text>
+  <rect class="key" x="264" y="110" width="184" height="40" rx="5"/>
+  <text class="t m" x="274" y="127">Sam's public key</text>
+  <text class="s" x="274" y="143">verifies boot files</text>
+  <rect class="bad hl" x="264" y="156" width="184" height="40" rx="5"/>
+  <text class="t m" x="274" y="173">Forbidden list</text>
+  <text class="s" x="274" y="189">hashes that must not run</text>
+  <rect class="pill" x="408" y="161" width="34" height="15" rx="7"/>
+  <text class="new" x="425" y="172">new</text>
+  <text class="m red" x="252" y="336">✗ The list must be writable,</text>
+  <text class="m red" x="268" y="353">so an attacker can empty it</text>
+  <text class="m red" x="268" y="370">or add their own key.</text>
+
+  <path class="ar" d="M462,196 H478"/>
+
+  <!-- Column 3 -->
+  <text class="t" x="480" y="68">3. Guard the lists</text>
+  <rect class="fw" x="480" y="80" width="208" height="232" rx="8"/>
+  <text class="s" x="492" y="100">the firmware stores:</text>
+  <rect class="ok" x="492" y="110" width="184" height="40" rx="5"/>
+  <text class="t m" x="502" y="127">Allowed list</text>
+  <text class="s" x="502" y="143">Sam's release key, …</text>
+  <rect class="bad" x="492" y="156" width="184" height="40" rx="5"/>
+  <text class="t m" x="502" y="173">Forbidden list</text>
+  <text class="s" x="502" y="189">hashes that must not run</text>
+  <rect class="key hl" x="492" y="202" width="184" height="40" rx="5"/>
+  <text class="t m" x="502" y="219">Update key</text>
+  <text class="s" x="502" y="235">verifies list changes</text>
+  <rect class="pill" x="636" y="207" width="34" height="15" rx="7"/>
+  <text class="new" x="653" y="218">new</text>
+  <text class="m red" x="480" y="336">✗ The update key is used</text>
+  <text class="m red" x="496" y="353">on a server: it can leak</text>
+  <text class="m red" x="496" y="370">too.</text>
+
+  <path class="ar" d="M690,196 H706"/>
+
+  <!-- Column 4 -->
+  <text class="t" x="708" y="68">4. Guard the guard</text>
+  <rect class="fw" x="708" y="80" width="208" height="232" rx="8"/>
+  <text class="s" x="720" y="100">the firmware stores:</text>
+  <rect class="ok" x="720" y="110" width="184" height="40" rx="5"/>
+  <text class="t m" x="730" y="127">Allowed list</text>
+  <text class="s" x="730" y="143">Sam's release key, …</text>
+  <rect class="bad" x="720" y="156" width="184" height="40" rx="5"/>
+  <text class="t m" x="730" y="173">Forbidden list</text>
+  <text class="s" x="730" y="189">hashes that must not run</text>
+  <rect class="key" x="720" y="202" width="184" height="40" rx="5"/>
+  <text class="t m" x="730" y="219">Update key</text>
+  <text class="s" x="730" y="235">verifies list changes</text>
+  <rect class="key hl" x="720" y="248" width="184" height="56" rx="5"/>
+  <text class="t m" x="730" y="265">Owner key</text>
+  <text class="s" x="730" y="281">verifies update-key changes</text>
+  <text class="s" x="730" y="295">and its own replacement</text>
+  <rect class="pill" x="864" y="253" width="34" height="15" rx="7"/>
+  <text class="new" x="881" y="264">new</text>
+  <text class="m green" x="708" y="336">✓ Kept offline and used</text>
+  <text class="m green" x="724" y="353">almost never. Nothing</text>
+  <text class="m green" x="724" y="370">stands above it.</text>
+</svg>

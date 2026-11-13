@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 400" width="940" height="400">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .c { text-anchor: middle; }
+    .red { fill: #b42318; }
+    .green { fill: #2f6b33; }
+    .mono { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 15px; font-weight: 600; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .panel { fill: #f8fafc; stroke: #cbd5e1; }
+    .pad { fill: #cbd5e1; stroke: #64748b; }
+    .link { fill: #94a3b8; stroke: #64748b; stroke-width: 1; }
+    .hot { fill: #f59e0b; stroke: #c2410c; stroke-width: 1; }
+    .sense { fill: #ffffff; stroke: #94a3b8; }
+    .wire { stroke: #64748b; stroke-width: 1.5; fill: none; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+    .zap { stroke: #c2410c; stroke-width: 2; fill: none; marker-end: url(#z); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="z" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="398.5" rx="12"/>
+  <text class="h" x="24" y="34">One fuse: a microscopic link inside the chip</text>
+
+  <!-- Panel 1: intact -->
+  <rect class="panel" x="24" y="50" width="270" height="200" rx="8"/>
+  <text class="t" x="40" y="74">Intact link</text>
+  <rect class="pad" x="54" y="100" width="54" height="44" rx="4"/>
+  <rect class="link" x="108" y="117" width="102" height="10"/>
+  <rect class="pad" x="210" y="100" width="54" height="44" rx="4"/>
+  <path class="wire" d="M81,144 V170 M237,144 V170"/>
+  <rect class="sense" x="60" y="170" width="198" height="34" rx="5"/>
+  <text class="c s" x="159" y="191">sense circuit: current flows</text>
+  <text class="c green t" x="159" y="234">reads 0</text>
+
+  <path class="ar" d="M298,150 H330"/>
+
+  <!-- Panel 2: burning -->
+  <rect class="panel" x="335" y="50" width="270" height="200" rx="8"/>
+  <text class="t" x="351" y="74">Burning it</text>
+  <rect class="pad" x="365" y="100" width="54" height="44" rx="4"/>
+  <rect class="hot" x="419" y="117" width="102" height="10"/>
+  <rect class="pad" x="521" y="100" width="54" height="44" rx="4"/>
+  <path class="zap" d="M392,146 L392,158 L548,158 L548,148"/>
+  <text class="c s" x="470" y="176" style="fill:#c2410c">short, strong current pulse</text>
+  <text class="c s" x="470" y="200">the link heats up and breaks,</text>
+  <text class="c s" x="470" y="216">like an overloaded</text>
+  <text class="c s" x="470" y="232">household fuse</text>
+
+  <path class="ar" d="M609,150 H641"/>
+
+  <!-- Panel 3: burned -->
+  <rect class="panel" x="646" y="50" width="270" height="200" rx="8"/>
+  <text class="t" x="662" y="74">Burned link</text>
+  <rect class="pad" x="676" y="100" width="54" height="44" rx="4"/>
+  <path class="link" d="M730,117 H766 L772,121 L766,124 L770,127 H730 Z"/>
+  <path class="link" d="M832,117 H796 L790,120 L796,123 L792,127 H832 Z"/>
+  <rect class="pad" x="832" y="100" width="54" height="44" rx="4"/>
+  <path class="wire" d="M703,144 V170 M859,144 V170"/>
+  <rect class="sense" x="682" y="170" width="198" height="34" rx="5"/>
+  <text class="c s" x="781" y="191">sense circuit: no current</text>
+  <text class="c red t" x="781" y="234">reads 1, for ever</text>
+
+  <!-- Row of fuses -->
+  <text class="h" x="24" y="290">A row of fuses stores a value</text>
+  <!-- 16 fuses: pattern 0110 1001 1100 0101 -->
+  <g>
+    <rect class="link" x="40" y="306" width="30" height="6"/><text class="c mono green" x="55" y="340">0</text>
+    <rect class="link" x="94" y="306" width="11" height="6"/><rect class="link" x="113" y="306" width="11" height="6"/><text class="c mono red" x="109" y="340">1</text>
+    <rect class="link" x="148" y="306" width="11" height="6"/><rect class="link" x="167" y="306" width="11" height="6"/><text class="c mono red" x="163" y="340">1</text>
+    <rect class="link" x="202" y="306" width="30" height="6"/><text class="c mono green" x="217" y="340">0</text>
+
+    <rect class="link" x="270" y="306" width="11" height="6"/><rect class="link" x="289" y="306" width="11" height="6"/><text class="c mono red" x="285" y="340">1</text>
+    <rect class="link" x="324" y="306" width="30" height="6"/><text class="c mono green" x="339" y="340">0</text>
+    <rect class="link" x="378" y="306" width="30" height="6"/><text class="c mono green" x="393" y="340">0</text>
+    <rect class="link" x="432" y="306" width="11" height="6"/><rect class="link" x="451" y="306" width="11" height="6"/><text class="c mono red" x="447" y="340">1</text>
+
+    <rect class="link" x="500" y="306" width="11" height="6"/><rect class="link" x="519" y="306" width="11" height="6"/><text class="c mono red" x="515" y="340">1</text>
+    <rect class="link" x="554" y="306" width="11" height="6"/><rect class="link" x="573" y="306" width="11" height="6"/><text class="c mono red" x="569" y="340">1</text>
+    <rect class="link" x="608" y="306" width="30" height="6"/><text class="c mono green" x="623" y="340">0</text>
+    <rect class="link" x="662" y="306" width="30" height="6"/><text class="c mono green" x="677" y="340">0</text>
+  </g>
+  <text class="s" x="716" y="314">… 256 fuses hold</text>
+  <text class="s" x="716" y="330">a 256-bit key</text>
+  <text x="24" y="380" style="font-size:13px">The programming circuit sits on the same chip and is switched on only while the device is prepared. Bits can go from 0 to 1, never back.</text>
+</svg>

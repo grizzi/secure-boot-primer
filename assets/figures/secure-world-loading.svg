@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 534" width="940" height="534">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .m { font-size: 13px; }
+    .c { text-anchor: middle; }
+    .green { fill: #2f6b33; }
+    .purple { fill: #6b3d91; }
+    .grey { fill: #94a3b8; font-style: italic; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .panel { fill: #f8fafc; stroke: #cbd5e1; }
+    .hw { fill: #eef2f6; stroke: #64748b; }
+    .fw { fill: #e8f0fe; stroke: #4a73b8; }
+    .os { fill: #e8f5e9; stroke: #548c58; }
+    .sec { fill: #f3e8ff; stroke: #9160b8; }
+    .w { fill: #ffffff; stroke: #64748b; }
+    .laneS { fill: #faf5ff; stroke: #c4a5dd; stroke-dasharray: 5 4; }
+    .laneN { fill: #f4faf4; stroke: #9cc79f; stroke-dasharray: 5 4; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+    .arp { stroke: #9160b8; stroke-width: 1.8; fill: none; stroke-dasharray: 6 4; marker-end: url(#p); }
+    .smc { stroke: #9160b8; stroke-width: 1.8; fill: none; marker-end: url(#p); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9160b8"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="532.5" rx="12"/>
+  <text class="h" x="24" y="34">How the trusted program gets into the secure world</text>
+
+  <!-- Left panel: flashing -->
+  <rect class="panel" x="24" y="52" width="316" height="392" rx="8"/>
+  <text class="t" x="40" y="76">Once, when the device is prepared</text>
+  <text class="s" x="40" y="94">writing the flash chip: flashing</text>
+
+  <rect class="w" x="40" y="108" width="284" height="46" rx="6"/>
+  <text class="t m" x="54" y="127">Sam's computer</text>
+  <text class="s" x="54" y="145">flashing tool with all firmware images</text>
+  <path class="ar" d="M182,154 V190"/>
+  <text class="s" x="192" y="176">USB, recovery mode</text>
+
+  <rect class="hw" x="40" y="192" width="284" height="236" rx="8"/>
+  <text class="t m" x="54" y="214">Flash chip on the board</text>
+  <rect class="fw" x="54" y="226" width="256" height="36" rx="5"/>
+  <text class="m" x="66" y="249">first boot programs</text>
+  <rect class="sec" x="54" y="270" width="256" height="74" rx="5"/>
+  <text class="t m" x="66" y="292">secure-world image</text>
+  <text class="s" x="66" y="310">ATF + OP-TEE</text>
+  <text class="s" x="66" y="326">+ built-in TAs (the disk-key TA)</text>
+  <rect class="fw" x="54" y="352" width="256" height="36" rx="5"/>
+  <text class="m" x="66" y="375">rest of the firmware</text>
+  <text class="s" x="54" y="412">rewritable later: updates, root, a cable</text>
+
+  <!-- Right panel: loading -->
+  <rect class="panel" x="356" y="52" width="560" height="392" rx="8"/>
+  <text class="t" x="372" y="76">At every power-on: loading</text>
+  <text class="s" x="372" y="94">time runs downward</text>
+
+  <rect class="laneS" x="372" y="104" width="258" height="326" rx="6"/>
+  <text class="t purple m" x="386" y="124">Secure world (NS = 0)</text>
+  <rect class="laneN" x="644" y="104" width="258" height="326" rx="6"/>
+  <text class="t green m" x="658" y="124">Normal world (NS = 1)</text>
+
+  <rect class="w" x="386" y="136" width="230" height="44" rx="6"/>
+  <text class="t m" x="398" y="154">1. Power-on</text>
+  <text class="s" x="398" y="171">the cores start in the secure world</text>
+  <path class="ar" d="M501,180 V188"/>
+  <rect class="w" x="386" y="190" width="230" height="44" rx="6"/>
+  <text class="t m" x="398" y="208">2. Set up RAM and the gates</text>
+  <text class="s" x="398" y="225">region table marks the secure RAM</text>
+  <path class="ar" d="M501,234 V242"/>
+  <rect class="sec" x="386" y="244" width="230" height="44" rx="6"/>
+  <text class="t m" x="398" y="262">3. Load the secure-world image</text>
+  <text class="s" x="398" y="279">copy it from flash into secure RAM</text>
+  <path class="ar" d="M501,288 V338"/>
+
+  <text class="s c grey" x="773" y="196">nothing runs here yet:</text>
+  <text class="s c grey" x="773" y="212">no boot loader, no Linux</text>
+
+  <path class="ar" d="M616,266 H637 V322 H656"/>
+  <text class="t m" x="658" y="290">4. Switch to normal world</text>
+  <text class="s" x="658" y="306">one way: back only through SMC</text>
+  <rect class="fw" x="658" y="314" width="230" height="30" rx="6"/>
+  <text class="m" x="670" y="334">boot loader, in normal RAM</text>
+  <path class="ar" d="M773,344 V354"/>
+  <rect class="os" x="658" y="356" width="230" height="60" rx="6"/>
+  <text class="t m" x="670" y="376">5. Linux kernel and initrd</text>
+  <text class="s" x="670" y="394">ask the trusted program,</text>
+  <text class="s" x="670" y="409">cannot read or change it</text>
+
+  <rect class="sec" x="386" y="340" width="230" height="76" rx="6"/>
+  <text class="t m" x="398" y="360">ATF + OP-TEE + TAs</text>
+  <text class="s" x="398" y="378">stay in secure RAM and</text>
+  <text class="s" x="398" y="394">answer requests from Linux</text>
+  <path class="smc" d="M656,398 H618"/>
+  <text class="t c purple" x="637" y="390" style="font-size:12px">SMC</text>
+
+  <!-- Flash -> load link -->
+  <path class="arp" d="M310,300 H348 V266 H384"/>
+
+  <!-- Message -->
+  <rect class="w" x="24" y="458" width="892" height="60" rx="8"/>
+  <text class="m" x="40" y="482">The secure world is filled before the normal world exists. Afterwards, Linux can only send requests (SMC), never write to secure RAM.</text>
+  <text class="m" x="40" y="503">But the image is copied from the flash chip at every boot: whoever rewrites the flash chip changes what runs at the next boot.</text>
+</svg>

@@ -1,0 +1,17 @@
+{{- $pages := site.RegularPages }}
+{{- $prev := "" }}{{ $next := "" }}{{ $found := false }}
+{{- range $pages }}
+  {{- if $found }}{{ if not $next }}{{ $next = . }}{{ end }}
+  {{- else if eq . $ }}{{ $found = true }}
+  {{- else }}{{ $prev = . }}{{ end }}
+{{- end }}
+<nav class="prevnext" aria-label="Previous and next chapter">
+  {{- with $prev }}
+  <a class="prev" href="{{ .RelPermalink }}"><span>Previous</span>{{ partial "title.html" . }}</a>
+  {{- else }}
+  <a class="prev" href="{{ site.Home.RelPermalink }}"><span>Previous</span>Introduction</a>
+  {{- end }}
+  {{- with $next }}
+  <a class="next" href="{{ .RelPermalink }}"><span>Next</span>{{ partial "title.html" . }}</a>
+  {{- end }}
+</nav>

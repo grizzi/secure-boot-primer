@@ -1,0 +1,13 @@
+{{- $current := . }}
+<p class="nav-head">Chapters</p>
+<ol>
+  {{- range where site.RegularPages "Params.appendix" "!=" true }}
+  <li><a href="{{ .RelPermalink }}"{{ if eq . $current }} aria-current="page"{{ end }}>{{ partial "title.html" . }}</a></li>
+  {{- end }}
+</ol>
+<p class="nav-head">Appendix</p>
+<ul>
+  {{- range where site.RegularPages "Params.appendix" true }}
+  <li><a href="{{ .RelPermalink }}"{{ if eq . $current }} aria-current="page"{{ end }}>{{ partial "title.html" . }}</a></li>
+  {{- end }}
+</ul>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 410" width="940" height="410">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .c { text-anchor: middle; }
+    .red { fill: #b42318; }
+    .green { fill: #2f6b33; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .lane-ok { fill: #f6fbf6; stroke: #b7d3b9; }
+    .lane-bad { fill: #fef6f5; stroke: #efb8b1; }
+    .os { fill: #e8f5e9; stroke: #548c58; }
+    .sec { fill: #f3e8ff; stroke: #9160b8; }
+    .w { fill: #ffffff; stroke: #64748b; }
+    .bad { fill: #fdecea; stroke: #c0392b; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+    .arr { stroke: #c0392b; stroke-width: 1.6; fill: none; marker-end: url(#r); }
+    .lbl { font-size: 12px; fill: #475569; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="408.5" rx="12"/>
+
+  <!-- Lane 1: our boot -->
+  <rect class="lane-ok" x="14" y="16" width="912" height="118" rx="10"/>
+  <text class="h green" x="28" y="40">Normal boot</text>
+  <rect class="os" x="24" y="58" width="170" height="56" rx="6"/>
+  <text class="c t" x="109" y="82">Sam's initrd</text>
+  <text class="c s" x="109" y="101">from /boot</text>
+  <path class="ar" d="M194,86 H262"/>
+  <text class="lbl" x="229" y="78">asks</text>
+  <rect class="sec" x="264" y="58" width="170" height="56" rx="6"/>
+  <text class="c t" x="349" y="82">luks-srv TA</text>
+  <text class="c s" x="349" y="101">secure world</text>
+  <path class="ar" d="M434,86 H502"/>
+  <text class="lbl" x="469" y="78">passphrase</text>
+  <rect class="w" x="504" y="58" width="170" height="56" rx="6"/>
+  <text class="c" x="589" y="91">cryptsetup luksOpen</text>
+  <path class="ar" d="M674,86 H742"/>
+  <rect class="os" x="744" y="58" width="166" height="56" rx="6"/>
+  <text class="c" x="827" y="82">Root filesystem open</text>
+  <text class="c s" x="827" y="101">then the TA stops answering</text>
+
+  <!-- Lane 2: modified initrd -->
+  <rect class="lane-bad" x="14" y="148" width="912" height="190" rx="10"/>
+  <text class="h red" x="28" y="172">Modified initrd, written to /boot on another computer</text>
+  <rect class="bad" x="24" y="190" width="170" height="56" rx="6"/>
+  <text class="c t" x="109" y="214">Modified initrd</text>
+  <text class="c s" x="109" y="233">one extra line</text>
+  <path class="ar" d="M194,218 H262"/>
+  <text class="lbl" x="229" y="210">asks</text>
+  <rect class="sec" x="264" y="190" width="170" height="56" rx="6"/>
+  <text class="c t" x="349" y="214">luks-srv TA</text>
+  <text class="c s" x="349" y="233">same answer</text>
+  <path class="ar" d="M434,218 H502"/>
+  <text class="lbl" x="469" y="210">passphrase</text>
+  <rect class="w" x="504" y="190" width="170" height="56" rx="6"/>
+  <text class="c" x="589" y="223">cryptsetup luksOpen</text>
+  <path class="ar" d="M674,218 H742"/>
+  <rect class="os" x="744" y="190" width="166" height="56" rx="6"/>
+  <text class="c" x="827" y="223">Root filesystem open</text>
+
+  <path class="arr" d="M469,218 V276"/>
+  <circle cx="469" cy="218" r="3.5" fill="#c0392b"/>
+  <rect class="bad" x="354" y="278" width="230" height="44" rx="6"/>
+  <text class="c red" x="469" y="305">Copy saved to /boot/stolen</text>
+
+  <!-- Footer -->
+  <text x="24" y="366">The TA answers the <tspan class="t">first caller</tspan> after power-on and cannot tell which initrd is asking.</text>
+  <text x="24" y="388">With secure boot, a modified initrd fails the signature check and never runs.</text>
+</svg>

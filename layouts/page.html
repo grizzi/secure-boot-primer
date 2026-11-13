@@ -1,0 +1,13 @@
+{{ define "main" }}
+{{- $content := .Content }}
+{{- with .TableOfContents }}
+  {{- if findRE `<li>` . 3 | len | lt 2 }}
+    {{- $toc := printf `<details class="toc"><summary>On this page</summary>%s</details>` . }}
+    {{- $content = replaceRE `(</h1>)` (printf "$1\n%s" $toc) $content 1 }}
+  {{- end }}
+{{- end }}
+<article class="prose">
+  {{ $content | safeHTML }}
+</article>
+{{ partial "prevnext.html" . }}
+{{ end }}

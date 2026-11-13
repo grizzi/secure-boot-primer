@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 492" width="940" height="492">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .m { font-size: 13px; }
+    .c { text-anchor: middle; }
+    .orange { fill: #8a5a00; }
+    .mono { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 13px; font-weight: 600; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .os { fill: #e8f5e9; stroke: #548c58; }
+    .sec { fill: #f3e8ff; stroke: #9160b8; }
+    .fw { fill: #e8f0fe; stroke: #4a73b8; }
+    .w { fill: #ffffff; stroke: #64748b; }
+    .key { fill: #fff4e0; stroke: #c98a1b; }
+    .nsf { fill: #fff4e0; stroke: #c98a1b; stroke-width: 2; }
+    .bus { fill: #dbe4ee; stroke: #64748b; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+    .ns { stroke: #c98a1b; stroke-width: 2.2; fill: none; }
+    .dot { fill: #c98a1b; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="490.5" rx="12"/>
+  <text class="h" x="24" y="34">Where the NS bit of each request comes from: fixed when the chip is designed</text>
+
+  <!-- Interconnect -->
+  <rect class="bus" x="640" y="56" width="44" height="356" rx="6"/>
+  <text class="t c" transform="translate(667,234) rotate(-90)" style="font-size:13px">on-chip interconnect</text>
+
+  <!-- Row 1: CPU core -->
+  <rect class="os" x="24" y="64" width="250" height="96" rx="8"/>
+  <text class="t" x="38" y="86">CPU core</text>
+  <text class="s" x="38" y="104">Linux, or the trusted program</text>
+  <rect class="key" x="38" y="114" width="168" height="34" rx="5"/>
+  <text class="s" x="50" y="136">world state: <tspan class="t" style="fill:#2f6b33">normal</tspan></text>
+  <path class="ar" d="M274,94 H638"/>
+  <text class="s" x="290" y="88">address, data</text>
+  <path class="ns" d="M206,131 H520 V94"/>
+  <circle class="dot" cx="520" cy="94" r="4"/>
+  <text class="s orange" x="290" y="152">the core copies its world state into every request;</text>
+  <text class="s orange" x="290" y="168">only a world switch, done by ATF, changes that state</text>
+  <rect class="nsf" x="548" y="82" width="84" height="24" rx="4"/>
+  <text class="mono c" x="590" y="99">NS = 1</text>
+
+  <!-- Row 2: GPU, PCIe, USB -->
+  <rect class="w" x="24" y="190" width="250" height="96" rx="8"/>
+  <text class="t" x="38" y="212">GPU, PCIe and USB</text>
+  <text class="s" x="38" y="230">controllers: no secure mode,</text>
+  <text class="s" x="38" y="246">no NS output of their own;</text>
+  <text class="s" x="38" y="262">a PCIe card's requests enter here</text>
+  <path class="ar" d="M274,220 H638"/>
+  <text class="s" x="290" y="214">address, data</text>
+  <path class="ns" d="M520,220 V262 M500,262 H540"/>
+  <circle class="dot" cx="520" cy="220" r="4"/>
+  <text class="s c orange" x="520" y="280">supply voltage</text>
+  <text class="s orange" x="290" y="250">wire tied to the supply voltage:</text>
+  <text class="s orange" x="290" y="266">always 1, fixed in the silicon,</text>
+  <text class="s orange" x="290" y="282">no register, no software</text>
+  <rect class="nsf" x="548" y="208" width="84" height="24" rx="4"/>
+  <text class="mono c" x="590" y="225">NS = 1</text>
+
+  <!-- Row 3: DMA / crypto engine -->
+  <rect class="w" x="24" y="316" width="250" height="96" rx="8"/>
+  <text class="t" x="38" y="338">DMA or crypto engine</text>
+  <text class="s" x="38" y="356">can work for either world, for</text>
+  <text class="s" x="38" y="372">example copying data for the</text>
+  <text class="s" x="38" y="388">trusted program or for Linux</text>
+  <path class="ar" d="M274,346 H638"/>
+  <text class="s" x="290" y="340">address, data</text>
+  <rect class="sec" x="456" y="372" width="128" height="40" rx="5"/>
+  <text class="s c t" x="520" y="389" style="fill:#6b3d91">security setting</text>
+  <text class="s c" x="520" y="405">a register</text>
+  <path class="ns" d="M520,372 V346"/>
+  <circle class="dot" cx="520" cy="346" r="4"/>
+  <text class="s orange" x="290" y="376">chosen by a register that</text>
+  <text class="s orange" x="290" y="392">only NS = 0 can write,</text>
+  <text class="s orange" x="290" y="408">set at boot</text>
+  <rect class="nsf" x="548" y="334" width="84" height="24" rx="4"/>
+  <text class="mono c" x="590" y="351">0 or 1</text>
+
+  <!-- Right side -->
+  <path class="ar" d="M684,140 H698"/>
+  <rect class="fw" x="700" y="64" width="216" height="140" rx="8"/>
+  <text class="t" x="714" y="88">The gates</text>
+  <text class="s" x="714" y="108">read the NS bit of every</text>
+  <text class="s" x="714" y="124">request, whatever its source,</text>
+  <text class="s" x="714" y="140">and refuse NS = 1 for</text>
+  <text class="s" x="714" y="156">secure memory and</text>
+  <text class="s" x="714" y="172">secure devices</text>
+  <rect class="w" x="700" y="222" width="216" height="190" rx="8"/>
+  <text class="t" x="714" y="246">Also stamped by hardware</text>
+  <text class="s" x="714" y="266">The interconnect adds the ID</text>
+  <text class="s" x="714" y="282">of the entry point each request</text>
+  <text class="s" x="714" y="298">came in through. A gate can</text>
+  <text class="s" x="714" y="314">then also allow or refuse</text>
+  <text class="s" x="714" y="330">access per device, for</text>
+  <text class="s" x="714" y="346">example: only the crypto</text>
+  <text class="s" x="714" y="362">engine may use this</text>
+  <text class="s" x="714" y="378">memory range.</text>
+
+  <!-- Message -->
+  <rect class="w" x="24" y="428" width="892" height="50" rx="8"/>
+  <text class="m" x="40" y="449">Each NS bit is decided by the chip's wiring: the core's world state, a wire tied to 1, or a register only the secure world can write.</text>
+  <text class="m" x="40" y="468">None of these gives Linux, the GPU or a PCIe card a way to send a request with NS = 0.</text>
+</svg>

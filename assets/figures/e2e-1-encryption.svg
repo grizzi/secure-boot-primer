@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 400" width="940" height="400">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .c { text-anchor: middle; }
+    .red { fill: #b42318; }
+    .green { fill: #2f6b33; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .hw { fill: #eef2f6; stroke: #64748b; }
+    .fw { fill: #e8f0fe; stroke: #4a73b8; }
+    .os { fill: #e8f5e9; stroke: #548c58; }
+    .sec { fill: #f3e8ff; stroke: #9160b8; }
+    .key { fill: #fff4e0; stroke: #c98a1b; }
+    .w { fill: #ffffff; stroke: #64748b; }
+    .bad { fill: #fdecea; stroke: #c0392b; }
+    .ok { fill: #e8f5e9; stroke: #548c58; }
+    .new { stroke: #c98a1b; stroke-width: 3; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+    .lbl { font-size: 12px; fill: #334155; }
+  </style>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="398.5" rx="12"/>
+  <text class="h" x="24" y="34">With disk encryption: the root filesystem is encrypted</text>
+  <text class="s" x="862" y="34">no check</text>
+  <circle cx="849" cy="30" r="8" fill="#fdecea" stroke="#c0392b" stroke-width="1.5"/>
+  <text class="c t" x="849" y="34" style="font-size:11px;fill:#c0392b">✗</text>
+  <text class="s" x="708" y="34">signature checked</text>
+  <circle cx="694" cy="30" r="8" fill="#e8f5e9" stroke="#548c58" stroke-width="1.5"/>
+  <text class="c t" x="694" y="34" style="font-size:11px;fill:#548c58">✓</text>
+  <rect class="hw" x="24.0" y="56" width="70.0" height="60" rx="6"/>
+  <text class="c t" x="59.0" y="91" style="font-size:14px">Power on</text>
+  <rect class="fw" x="134.0" y="56" width="165.5" height="60" rx="6"/>
+  <text class="c t" x="216.8" y="82" style="font-size:14px">Firmware</text>
+  <text class="c s" x="216.8" y="101">in flash</text>
+  <rect class="os" x="339.5" y="56" width="165.5" height="60" rx="6"/>
+  <text class="c t" x="422.2" y="82" style="font-size:14px">Boot loader</text>
+  <text class="c s" x="422.2" y="101">on /boot</text>
+  <rect class="os" x="545.0" y="56" width="165.5" height="60" rx="6"/>
+  <text class="c t" x="627.8" y="82" style="font-size:14px">Kernel + initrd</text>
+  <text class="c s" x="627.8" y="101">on /boot, plain</text>
+  <rect class="os new" x="750.5" y="56" width="165.5" height="60" rx="6"/>
+  <text class="c t" x="833.2" y="82" style="font-size:14px">Root filesystem</text>
+  <text class="c s" x="833.2" y="101">LUKS, encrypted</text>
+  <path class="ar" d="M94.0,86.0 H132.0"/>
+  <circle cx="114.0" cy="71.0" r="9" fill="#fdecea" stroke="#c0392b" stroke-width="1.5"/>
+  <text class="c t" x="114.0" y="75.0" style="font-size:11px;fill:#c0392b">✗</text>
+  <path class="ar" d="M299.5,86.0 H337.5"/>
+  <circle cx="319.5" cy="71.0" r="9" fill="#fdecea" stroke="#c0392b" stroke-width="1.5"/>
+  <text class="c t" x="319.5" y="75.0" style="font-size:11px;fill:#c0392b">✗</text>
+  <path class="ar" d="M505.0,86.0 H543.0"/>
+  <circle cx="525.0" cy="71.0" r="9" fill="#fdecea" stroke="#c0392b" stroke-width="1.5"/>
+  <text class="c t" x="525.0" y="75.0" style="font-size:11px;fill:#c0392b">✗</text>
+  <path class="ar" d="M710.5,86.0 H748.5"/>
+  <text class="c red" x="422.2" y="134" style="font-size:12px">cannot be encrypted</text>
+  <text class="c red" x="627.8" y="134" style="font-size:12px">cannot be encrypted</text>
+  <rect class="w" x="24" y="172" width="393.8" height="72" rx="6"/>
+  <text class="t" x="38" y="196">A person</text>
+  <text class="s" x="38" y="216">types the passphrase</text>
+  <text class="s" x="38" y="232">at every boot</text>
+  <rect class="w" x="517.8" y="172" width="220" height="72" rx="6"/>
+  <text class="c t" x="627.8" y="198">cryptsetup luksOpen</text>
+  <text class="c s" x="627.8" y="218">run by the initrd</text>
+  <text class="c s" x="627.8" y="234">passphrase → keyslot → volume key</text>
+  <path class="ar" d="M417.8,208 H515.8"/>
+  <text class="lbl c" x="467.8" y="200">passphrase</text>
+  <path class="ar" d="M627.8,116 V170"/>
+  <path class="ar" d="M737.8,208 H833.2 V118"/>
+  <text class="lbl" x="841.2" y="162">opens</text>
+  <text class="t" x="24" y="278">With this design:</text>
+  <rect class="ok" x="24.0" y="290" width="214.0" height="64" rx="6"/>
+  <text class="t green" x="36.0" y="318" style="font-size:18px">✓</text>
+  <text class="t" x="58.0" y="315">Disk read on a laptop</text>
+  <text class="s" x="58.0" y="335">stopped</text>
+  <rect class="bad" x="250.0" y="290" width="214.0" height="64" rx="6"/>
+  <text class="t red" x="262.0" y="318" style="font-size:18px">✗</text>
+  <text class="t" x="284.0" y="315">Automatic boot</text>
+  <text class="s" x="284.0" y="335">needs a person</text>
+  <rect class="bad" x="476.0" y="290" width="214.0" height="64" rx="6"/>
+  <text class="t red" x="488.0" y="318" style="font-size:18px">✗</text>
+  <text class="t" x="510.0" y="315">Edited /boot</text>
+  <text class="s" x="510.0" y="335">still works</text>
+  <rect class="bad" x="702.0" y="290" width="214.0" height="64" rx="6"/>
+  <text class="t red" x="714.0" y="318" style="font-size:18px">✗</text>
+  <text class="t" x="736.0" y="315">Replaced firmware</text>
+  <text class="s" x="736.0" y="335">still works</text>
+  <text x="24" y="384" style="font-size:13px">An edited initrd can also record the passphrase the person types.</text>
+</svg>

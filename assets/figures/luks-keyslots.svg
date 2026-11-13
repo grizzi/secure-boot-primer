@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 330" width="940" height="330">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .c { text-anchor: middle; }
+    .mono { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 13px; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .hdr { fill: #f8fafc; stroke: #64748b; }
+    .key { fill: #fff4e0; stroke: #c98a1b; }
+    .enc { fill: #eef2f6; stroke: #64748b; }
+    .fw { fill: #e8f0fe; stroke: #4a73b8; }
+    .os { fill: #e8f5e9; stroke: #548c58; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+    .ard { stroke: #475569; stroke-width: 1.4; fill: none; stroke-dasharray: 4 3; marker-end: url(#a); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="328.5" rx="12"/>
+  <text class="h" x="24" y="34">A LUKS partition</text>
+  <text class="s mono" x="160" y="34">/dev/nvme0n1p2</text>
+
+  <rect class="hdr" x="24" y="48" width="430" height="176" rx="8"/>
+  <text class="t" x="40" y="72">Header</text>
+  <text class="s" x="104" y="72">cipher, UUID, …</text>
+  <rect class="key" x="40" y="86" width="398" height="38" rx="5"/>
+  <text x="54" y="110"><tspan class="t">Keyslot 0</tspan>: volume key, locked with passphrase A</text>
+  <rect class="key" x="40" y="132" width="398" height="38" rx="5"/>
+  <text x="54" y="156"><tspan class="t">Keyslot 1</tspan>: volume key, locked with passphrase B</text>
+  <text class="s" x="54" y="196">Keyslots 2 to 31: empty. Any one filled keyslot opens the partition.</text>
+
+  <rect class="enc" x="470" y="48" width="446" height="176" rx="8"/>
+  <text class="t" x="486" y="72">Encrypted data</text>
+  <text class="mono" x="486" y="108" style="fill:#64748b">4c e9 07 b1 5a 3f 88 d2 0c 71 …</text>
+  <text class="mono" x="486" y="130" style="fill:#64748b">a2 19 fe 63 c4 0b 9d 2e 57 e8 …</text>
+  <text class="s" x="486" y="172">encrypted with the volume key,</text>
+  <text class="s" x="486" y="190">unreadable without it</text>
+
+  <!-- unlock flow -->
+  <text class="h" x="24" y="262">Opening it</text>
+  <rect class="key" x="24" y="274" width="130" height="40" rx="6"/>
+  <text class="c" x="89" y="299">Passphrase A</text>
+  <path class="ar" d="M154,294 H186"/>
+  <rect class="fw" x="188" y="274" width="164" height="40" rx="6"/>
+  <text class="c" x="270" y="292" style="font-size:13px">slow KDF (argon2id)</text>
+  <text class="c s" x="270" y="307">about 2 s per try</text>
+  <path class="ar" d="M352,294 H384"/>
+  <rect class="hdr" x="386" y="274" width="150" height="40" rx="6"/>
+  <text class="c" x="461" y="299">unlocks keyslot 0</text>
+  <path class="ard" d="M462,272 V105 H442"/>
+  <path class="ar" d="M536,294 H568"/>
+  <rect class="key" x="570" y="274" width="120" height="40" rx="6"/>
+  <text class="c" x="630" y="299">Volume key</text>
+  <path class="ar" d="M690,294 H722"/>
+  <rect class="os" x="724" y="274" width="192" height="40" rx="6"/>
+  <text class="c" x="820" y="299">handed to dm-crypt</text>
+</svg>

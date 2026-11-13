@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 430" width="940" height="430">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .c { text-anchor: middle; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .osp { fill: #f3f9f3; stroke: #548c58; }
+    .secp { fill: #f8f2fd; stroke: #9160b8; }
+    .os { fill: #ffffff; stroke: #548c58; }
+    .sec { fill: #ffffff; stroke: #9160b8; }
+    .key { fill: #fff4e0; stroke: #c98a1b; }
+    .fw { fill: #e8f0fe; stroke: #4a73b8; }
+    .hw { fill: #eef2f6; stroke: #64748b; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+    .ard { stroke: #475569; stroke-width: 1.4; fill: none; stroke-dasharray: 4 3; marker-end: url(#a); }
+    .lbl { font-size: 12px; fill: #475569; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="428.5" rx="12"/>
+
+  <!-- Normal world -->
+  <rect class="osp" x="24" y="24" width="430" height="270" rx="10"/>
+  <text class="h" x="40" y="50">Normal world</text>
+  <text class="s" x="148" y="50">Linux and all its programs, root included</text>
+  <rect class="os" x="44" y="66" width="390" height="40" rx="6"/>
+  <text x="58" y="91">Applications and services</text>
+  <rect class="os" x="44" y="122" width="390" height="48" rx="6"/>
+  <text x="58" y="143"><tspan class="t">nvluks-srv-app</tspan></text>
+  <text class="s" x="58" y="160">client application (CA): asks the luks-srv TA</text>
+  <rect class="os" x="244" y="186" width="190" height="48" rx="6"/>
+  <text x="256" y="207"><tspan class="t">tee-supplicant</tspan></text>
+  <text class="s" x="256" y="224">file storage for OP-TEE</text>
+  <rect class="os" x="44" y="242" width="390" height="40" rx="6"/>
+  <text x="58" y="267">Linux kernel: TEE driver, <tspan class="t">/dev/tee0</tspan></text>
+  <path class="ar" d="M140,170 V240"/>
+
+  <!-- Secure world -->
+  <rect class="secp" x="486" y="24" width="430" height="270" rx="10"/>
+  <text class="h" x="502" y="50">Secure world (TrustZone)</text>
+  <text class="s" x="692" y="50">Linux cannot read or change it</text>
+  <rect class="sec" x="506" y="66" width="390" height="48" rx="6"/>
+  <text x="520" y="87">Trusted applications (TAs)</text>
+  <text class="s" x="520" y="104">luks-srv · fTPM · hwkey-agent</text>
+  <rect class="key" x="660" y="140" width="236" height="74" rx="6"/>
+  <text x="674" y="162" class="t">EKB keys</text>
+  <text class="s" x="674" y="181">decrypted at boot with OEM_K1;</text>
+  <text class="s" x="674" y="198">TAs derive keys from them</text>
+  <rect class="sec" x="506" y="242" width="390" height="40" rx="6"/>
+  <text x="520" y="267">OP-TEE OS · <tspan class="s">jetson_user_key_pta</tspan></text>
+  <path class="ar" d="M600,242 V116"/>
+  <text class="lbl" x="608" y="186">calls TA</text>
+  <text class="lbl" x="608" y="202">by UUID</text>
+  <path class="ard" d="M712,140 V116"/>
+  <path class="ard" d="M712,242 V216"/>
+
+  <!-- ATF + hardware -->
+  <rect class="fw" x="24" y="310" width="892" height="44" rx="8"/>
+  <text x="40" y="337"><tspan class="t">ATF (BL31)</tspan>: switches the CPU between the two worlds. Every call from Linux to OP-TEE passes here.</text>
+  <path class="ar" d="M140,282 V308"/>
+  <path class="ar" d="M600,310 V284"/>
+
+  <rect class="hw" x="24" y="368" width="892" height="44" rx="8"/>
+  <text x="40" y="395"><tspan class="t">SoC hardware</tspan>: memory and devices reserved for the secure world · fuses (OEM_K1 readable only from here)</text>
+</svg>

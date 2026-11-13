@@ -1,0 +1,12 @@
+{
+  "useMarkdownLinks": true,
+  "newLinkFormat": "relative",
+  "showInlineTitle": false,
+  "attachmentFolderPath": "assets/img",
+  "userIgnoreFilters": [
+    "public/",
+    "resources/",
+    "layouts/",
+    "tools/"
+  ]
+}

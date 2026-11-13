@@ -1,0 +1,31 @@
+/*
+  Figures. Each SVG keeps its own <style>, nested under its id (see render-image.html),
+  so this file only places figures on the page. Animations will live here too: a figure
+  without this CSS always shows its complete final state.
+*/
+
+.figure { margin: 1.75rem 0; }
+
+.figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 940px;
+}
+
+.photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* On a phone, a figure keeps a readable size and scrolls sideways instead of shrinking. */
+@media (max-width: 40rem) {
+  .figure { overflow-x: auto; }
+  .figure svg { min-width: 620px; }
+}
+
+@media (prefers-color-scheme: dark) {
+  .figure svg, .photo img { filter: brightness(0.93); }
+}

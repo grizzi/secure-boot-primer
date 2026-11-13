@@ -1,0 +1,56 @@
+---
+slug: glossary
+appendix: true
+---
+# Glossary
+
+- **A/B slots**: two copies of each firmware partition. Updates go to the inactive one, and boot falls back if it fails.
+- **AES**: the standard symmetric encryption; keys of 128 or 256 bits.
+- **ATF / BL31**: Arm Trusted Firmware, the code that switches between the normal and secure worlds.
+- **BCT**: Boot Configuration Table: memory, pinmux and GPIO setup read by the early bootloaders.
+- **BootROM**: immutable first code in the SoC, stored in mask ROM.
+- **Mask ROM**: read-only memory whose contents are fixed by the chip's manufacturing masks; identical on every chip and unchangeable.
+- **Capsule**: signed UEFI firmware update package.
+- **CA (OP-TEE)**: client application in the normal world. **CA (PKI)**: certificate authority. Context tells which.
+- **Cold boot attack**: reading keys from RAM chips that were cooled and moved to another computer before their contents faded.
+- **dm-crypt**: kernel block-device encryption layer used by LUKS.
+- **Driver**: the part of the kernel that talks to one kind of device.
+- **ECID**: unique, non-secret chip ID.
+- **EKB / EKS**: encrypted key blob / its partition.
+- **ESL**: EFI Signature List, the certificate format for UEFI key variables.
+- **ESP**: EFI System Partition (FAT).
+- **Firmware key**: Sam's key pair for signing the firmware (first boot programs, secure-world image, UEFI). The hash of its public key is burned into fuses and checked by the BootROM. On the Jetson: the PKC key.
+- **Flashing**: writing firmware into a device's flash chip, done with a flashing tool over USB in recovery mode.
+- **fTPM**: firmware TPM running as an OP-TEE TA.
+- **Fuse / eFuse**: a microscopic link in the SoC. Burning it with a current pulse breaks it, turning a 0 into a 1 for good.
+- **IOMMU**: a unit between devices and memory that limits which memory each device may access.
+- **Hash**: a short fingerprint of a file (SHA-256: 32 bytes); any change to the file changes it completely.
+- **initrd / initramfs**: small root filesystem loaded with the kernel. It unlocks and mounts the real root.
+- **Key blob**: a file of keys, encrypted and authenticated with a key derived from the root key, stored in flash. On the Jetson, the EKB.
+- **KDF**: key derivation function, which turns a key or passphrase plus a context into another key.
+- **L4T**: Linux for Tegra, NVIDIA's BSP. JetPack 6.2.3 = L4T 36.5.2.
+- **LUKS**: the standard format for encrypted Linux partitions.
+- **Mapped device**: the decrypted view of an opened LUKS partition, under `/dev/mapper`; the filesystem is mounted from it.
+- **MB1 / MB2**: NVIDIA's first and second stage bootloaders.
+- **NS bit**: the "non-secure" signal that travels with every access on the chip's interconnect. Cores set it from their world state; for other devices the chip's wiring fixes it, usually to 1.
+- **OEM / ODM**: original equipment manufacturer / original design manufacturer: the company that builds a product around the chip. NVIDIA uses both names, as in the OEM key fuses and `odmfuse.sh`.
+- **OP-TEE**: the small operating system that runs in the secure world.
+- **PCR**: Platform Configuration Register, a TPM register that can only be extended. A TPM has 24, numbered 0 to 23, each with a fixed meaning (PCR 4: boot programs, PCR 7: secure boot state, PCR 15: opened disks).
+- **PK / KEK / db / dbx**: the UEFI secure boot key hierarchy: owner key, key-exchange key, allowed list, forbidden list.
+- **PKC**: public key cryptography; on the Jetson, the name of the firmware key, which signs the bootloader stages.
+- **QSPI**: Quad SPI, a four-wire variant of the SPI chip-to-chip interface; on the Jetson, the module's flash chip holding all firmware.
+- **RCM**: recovery mode over USB, selected with a jumper or button on the carrier board. Flashing tools talk to the BootROM through it.
+- **Root key**: the one key burned into fuses; all other device keys are derived from it or encrypted with it.
+- **SBK**: secure boot key, for AES encryption of firmware images.
+- **Secure world / TrustZone**: the protected processor mode, enforced in hardware, with memory and devices Linux cannot access.
+- **Signature**: a value computed from a file's hash with a private key; anyone with the matching public key can verify it.
+- **shim**: a small first boot loader used by Linux distributions on PCs; signed with a key in db, it checks the distribution's kernel with the distribution's own public key.
+- **SMC**: Secure Monitor Call, the only instruction that enters the secure world.
+- **Setup Mode / User Mode**: UEFI without an enrolled PK (runs anything) / with one (enforces signatures).
+- **SoC**: system on a chip. CPU, GPU, controllers, BootROM and fuses on one chip; on Orin, the T234.
+- **TA / PTA**: trusted application / pseudo-TA inside OP-TEE.
+- **TCG**: Trusted Computing Group, the industry group that writes the TPM standard.
+- **TOS / secure-world image**: the image holding ATF, OP-TEE and its built-in TAs, copied from flash into secure memory at every boot.
+- **TZASC / TZPC**: Arm's reference gates in front of memory and devices; they refuse normal-world accesses to secure resources. On the Jetson, NVIDIA's memory controller carveouts (such as TZDRAM) do the same job.
+- **TPM**: a chip or firmware that records boot measurements and releases sealed secrets only for the expected boot.
+- **UKI**: unified kernel image, kernel + initrd + cmdline in one signed EFI file.

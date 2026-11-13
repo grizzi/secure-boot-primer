@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 370" width="940" height="370">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .c { text-anchor: middle; }
+    .red { fill: #b42318; }
+    .green { fill: #2f6b33; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .head { fill: #f1f5f9; stroke: #cbd5e1; }
+    .q { fill: #ffffff; stroke: #94a3b8; }
+    .bad { fill: #fdecea; stroke: #c0392b; }
+    .ok { fill: #e8f5e9; stroke: #548c58; }
+    .warn { fill: #fff4e0; stroke: #c98a1b; }
+    .big { font-size: 20px; font-weight: 700; }
+  </style>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="368.5" rx="12"/>
+
+  <rect class="head" x="24" y="20" width="300" height="40" rx="6"/>
+  <text class="t" x="40" y="45">Where Sam keeps the key</text>
+  <rect class="head" x="336" y="20" width="284" height="40" rx="6"/>
+  <text class="t" x="352" y="45">Thief takes only the disk</text>
+  <rect class="head" x="632" y="20" width="284" height="40" rx="6"/>
+  <text class="t" x="648" y="45">Thief takes the whole robot</text>
+
+  <!-- Row 1 -->
+  <rect class="q" x="24" y="70" width="300" height="76" rx="6"/>
+  <text class="t" x="40" y="98">1. A key file in the initrd</text>
+  <text class="s" x="40" y="120">on the plain /boot partition</text>
+  <rect class="bad" x="336" y="70" width="284" height="76" rx="6"/>
+  <text class="big red" x="352" y="104">✗</text>
+  <text x="378" y="102">reads the key file</text>
+  <text class="s" x="378" y="122">and opens the disk on a laptop</text>
+  <rect class="bad" x="632" y="70" width="284" height="76" rx="6"/>
+  <text class="big red" x="648" y="104">✗</text>
+  <text x="674" y="102">same</text>
+
+  <!-- Row 2 -->
+  <rect class="q" x="24" y="156" width="300" height="76" rx="6"/>
+  <text class="t" x="40" y="184">2. A key in the board's flash chip</text>
+  <text class="s" x="40" y="206">off the disk, but on the board</text>
+  <rect class="ok" x="336" y="156" width="284" height="76" rx="6"/>
+  <text class="big green" x="352" y="190">✓</text>
+  <text x="378" y="188">stopped</text>
+  <text class="s" x="378" y="208">the key is not on the disk</text>
+  <rect class="bad" x="632" y="156" width="284" height="76" rx="6"/>
+  <text class="big red" x="648" y="190">✗</text>
+  <text x="674" y="188">reads the chip</text>
+  <text class="s" x="674" y="208">with a flash programmer, or boots</text>
+  <text class="s" x="674" y="224">another OS that reads it</text>
+
+  <!-- Row 3 -->
+  <rect class="q" x="24" y="242" width="300" height="76" rx="6"/>
+  <text class="t" x="40" y="270">3. A root key in the SoC's fuses</text>
+  <text class="s" x="40" y="292">readable only by the secure world</text>
+  <rect class="ok" x="336" y="242" width="284" height="76" rx="6"/>
+  <text class="big green" x="352" y="276">✓</text>
+  <text x="378" y="274">stopped</text>
+  <rect class="ok" x="632" y="242" width="284" height="76" rx="6"/>
+  <text class="big green" x="648" y="276">✓</text>
+  <text x="674" y="274">stopped</text>
+  <text class="s" x="674" y="294">the key never leaves the SoC,</text>
+  <text class="s" x="674" y="310">and Linux cannot read it</text>
+
+  <rect class="warn" x="24" y="328" width="892" height="30" rx="6"/>
+  <text x="40" y="348" style="font-size:13px">Design 3 holds only as long as the secure world gives the key to Sam's software alone. That is the next step.</text>
+</svg>

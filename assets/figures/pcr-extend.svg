@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 250" width="940" height="250">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .c { text-anchor: middle; }
+    .mono { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 13px; }
+    .red { fill: #b42318; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .pcr { fill: #fff4e0; stroke: #c98a1b; }
+    .m { fill: #e8f0fe; stroke: #4a73b8; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="248.5" rx="12"/>
+  <text class="h" x="24" y="38">One register during a boot. Each stage is recorded before it runs:</text>
+  <text class="mono" x="560" y="38">reg ← hash(reg ‖ hash(stage))</text>
+
+  <!-- measurements -->
+  <rect class="m" x="196" y="58" width="150" height="40" rx="6"/>
+  <text class="c" x="271" y="83">UEFI firmware</text>
+  <rect class="m" x="418" y="58" width="150" height="40" rx="6"/>
+  <text class="c" x="493" y="83">Boot loader</text>
+  <rect class="m" x="640" y="58" width="150" height="40" rx="6"/>
+  <text class="c" x="715" y="83">Kernel + initrd</text>
+  <path class="ar" d="M271,98 V128"/>
+  <path class="ar" d="M493,98 V128"/>
+  <path class="ar" d="M715,98 V128"/>
+
+  <!-- PCR values -->
+  <rect class="pcr" x="24" y="130" width="120" height="48" rx="6"/>
+  <text class="c t" x="84" y="152">register = 0</text>
+  <text class="c s" x="84" y="170">at power-on</text>
+  <path class="ar" d="M144,154 H194"/>
+  <rect class="pcr" x="196" y="130" width="150" height="48" rx="6"/>
+  <text class="c mono" x="271" y="159">3f9a…</text>
+  <path class="ar" d="M346,154 H416"/>
+  <rect class="pcr" x="418" y="130" width="150" height="48" rx="6"/>
+  <text class="c mono" x="493" y="159">b27c…</text>
+  <path class="ar" d="M568,154 H638"/>
+  <rect class="pcr" x="640" y="130" width="150" height="48" rx="6"/>
+  <text class="c mono" x="715" y="159">e041…</text>
+  <path class="ar" d="M790,154 H822"/>
+  <text class="t" x="828" y="150">final</text>
+  <text class="t" x="828" y="168">value</text>
+
+  <text x="24" y="210">Same software in the same order: same final value.</text>
+  <text class="red" x="24" y="232">Any stage changed: a different final value. The register can only be extended, never set.</text>
+</svg>

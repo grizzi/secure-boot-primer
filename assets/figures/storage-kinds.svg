@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 288" width="940" height="288">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .m { font-size: 13px; }
+    .c { text-anchor: middle; }
+    .mono { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 14px; font-weight: 600; text-anchor: middle; fill: #334155; }
+    .red { fill: #b42318; }
+    .green { fill: #2f6b33; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .panel { fill: #f8fafc; stroke: #cbd5e1; }
+    .fw { fill: #e8f0fe; stroke: #4a73b8; }
+    .key { fill: #fff4e0; stroke: #c98a1b; }
+    .hw { fill: #eef2f6; stroke: #64748b; }
+    .cell { fill: #ffffff; stroke: #94a3b8; stroke-width: 1; }
+    .dot { fill: #334155; }
+    .nodot { fill: none; stroke: #94a3b8; stroke-width: 1.2; }
+  </style>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="286.5" rx="12"/>
+  <text class="h" x="24" y="34">Three kinds of storage, from easiest to hardest to change</text>
+
+  <!-- Flash -->
+  <rect class="panel" x="24" y="50" width="284" height="222" rx="8"/>
+  <rect class="fw" x="24" y="50" width="284" height="56" rx="8"/>
+  <text class="t" x="40" y="74">Flash chip</text>
+  <text class="s" x="40" y="94">rewritable, many times</text>
+  <g>
+    <rect class="cell" x="40" y="118" width="28" height="28"/><text class="mono" x="54" y="137">1</text>
+    <rect class="cell" x="68" y="118" width="28" height="28"/><text class="mono" x="82" y="137">0</text>
+    <rect class="cell" x="96" y="118" width="28" height="28"/><text class="mono" x="110" y="137">1</text>
+    <rect class="cell" x="124" y="118" width="28" height="28"/><text class="mono" x="138" y="137">1</text>
+    <rect class="cell" x="152" y="118" width="28" height="28"/><text class="mono" x="166" y="137">0</text>
+    <rect class="cell" x="180" y="118" width="28" height="28"/><text class="mono" x="194" y="137">0</text>
+  </g>
+  <text class="s" x="218" y="130">erase and</text>
+  <text class="s" x="218" y="144">write again</text>
+  <text class="s" x="40" y="178"><tspan class="t">Written:</tspan> by software, at any time</text>
+  <text class="s" x="40" y="198"><tspan class="t">Holds:</tspan> firmware, key blob, UEFI keys</text>
+  <text class="m red" x="40" y="236">✗ Whoever can write it</text>
+  <text class="m red" x="54" y="254">can change it.</text>
+
+  <!-- Fuses -->
+  <rect class="panel" x="328" y="50" width="284" height="222" rx="8"/>
+  <rect class="key" x="328" y="50" width="284" height="56" rx="8"/>
+  <text class="t" x="344" y="74">Fuses in the SoC</text>
+  <text class="s" x="344" y="94">each bit written once, from 0 to 1</text>
+  <g>
+    <rect class="cell" x="344" y="118" width="28" height="28"/><text class="mono" x="358" y="137">0</text>
+    <rect class="cell" x="372" y="118" width="28" height="28"/><text class="mono" x="386" y="137">0</text>
+    <rect class="cell" x="400" y="118" width="28" height="28"/><text class="mono" x="414" y="137">1</text>
+    <rect class="cell" x="428" y="118" width="28" height="28"/><text class="mono" x="442" y="137">0</text>
+    <rect class="cell" x="456" y="118" width="28" height="28"/><text class="mono" x="470" y="137">1</text>
+    <rect class="cell" x="484" y="118" width="28" height="28"/><text class="mono" x="498" y="137">1</text>
+  </g>
+  <text class="s" x="522" y="130">0 → 1 only,</text>
+  <text class="s" x="522" y="144">never back</text>
+  <text class="s" x="344" y="178"><tspan class="t">Written:</tspan> once, when preparing the device</text>
+  <text class="s" x="344" y="198"><tspan class="t">Holds:</tspan> keys and settings, per device</text>
+  <text class="m green" x="344" y="236">✓ Fixed once burned, and</text>
+  <text class="m green" x="358" y="254">different on every device.</text>
+
+  <!-- Mask ROM -->
+  <rect class="panel" x="632" y="50" width="284" height="222" rx="8"/>
+  <rect class="hw" x="632" y="50" width="284" height="56" rx="8"/>
+  <text class="t" x="648" y="74">Mask ROM in the SoC</text>
+  <text class="s" x="648" y="94">fixed when the chip is made</text>
+  <g>
+    <rect class="cell" x="648" y="118" width="28" height="28"/><circle class="dot" cx="662" cy="132" r="6"/>
+    <rect class="cell" x="676" y="118" width="28" height="28"/><circle class="nodot" cx="690" cy="132" r="6"/>
+    <rect class="cell" x="704" y="118" width="28" height="28"/><circle class="dot" cx="718" cy="132" r="6"/>
+    <rect class="cell" x="732" y="118" width="28" height="28"/><circle class="dot" cx="746" cy="132" r="6"/>
+    <rect class="cell" x="760" y="118" width="28" height="28"/><circle class="nodot" cx="774" cy="132" r="6"/>
+    <rect class="cell" x="788" y="118" width="28" height="28"/><circle class="dot" cx="802" cy="132" r="6"/>
+  </g>
+  <text class="s" x="826" y="130">a connection,</text>
+  <text class="s" x="826" y="144">or none</text>
+  <text class="s" x="648" y="178"><tspan class="t">Written:</tspan> when the chip is manufactured</text>
+  <text class="s" x="648" y="198"><tspan class="t">Holds:</tspan> BootROM code, same on every chip</text>
+  <text class="m" x="648" y="236">Nobody can change it,</text>
+  <text class="m" x="648" y="254">not even to fix a bug.</text>
+</svg>

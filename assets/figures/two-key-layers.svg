@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 460" width="940" height="460">
+  <style>
+    text { font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; fill: #1e293b; }
+    .t { font-weight: 600; }
+    .h { font-weight: 600; font-size: 15px; }
+    .s { font-size: 12px; fill: #475569; }
+    .m { font-size: 13px; }
+    .tagt { font-family: "JetBrains Mono", "DejaVu Sans Mono", Menlo, monospace; font-size: 12px; font-weight: 600; fill: #2c4f8f; }
+    rect { stroke-width: 1.5; }
+    .bg { fill: #ffffff; stroke: #cbd5e1; }
+    .hw { fill: #eef2f6; stroke: #64748b; }
+    .fw { fill: #e8f0fe; stroke: #4a73b8; }
+    .os { fill: #e8f5e9; stroke: #548c58; }
+    .key { fill: #fff4e0; stroke: #c98a1b; }
+    .w { fill: #ffffff; stroke: #64748b; }
+    .tag { fill: #e8f0fe; stroke: #4a73b8; stroke-width: 1; }
+    .ar { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+    .brK { stroke: #c98a1b; stroke-width: 2; fill: none; }
+    .brU { stroke: #548c58; stroke-width: 2; fill: none; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0.75" y="0.75" width="938.5" height="458.5" rx="12"/>
+  <text class="h" x="24" y="34">Two layers, two kinds of keys, one owner</text>
+
+  <!-- Stages -->
+  <rect class="hw" x="24" y="56" width="300" height="44" rx="6"/>
+  <text class="t m" x="38" y="75">BootROM</text>
+  <text class="s" x="38" y="92">in mask ROM, runs first</text>
+  <path class="ar" d="M174,100 V118"/>
+  <text class="s" x="184" y="113">checks</text>
+  <rect class="fw" x="24" y="120" width="300" height="44" rx="6"/>
+  <text class="t m" x="38" y="139">First boot programs</text>
+  <text class="s" x="38" y="156">in the flash chip; load the secure-world image</text>
+  <path class="ar" d="M174,164 V182"/>
+  <text class="s" x="184" y="177">checks</text>
+  <rect class="fw" x="24" y="184" width="300" height="44" rx="6"/>
+  <text class="t m" x="38" y="203">UEFI firmware</text>
+  <text class="s" x="38" y="220">in the flash chip</text>
+  <path class="ar" d="M174,228 V262"/>
+  <text class="s" x="184" y="250">checks</text>
+  <rect class="os" x="24" y="264" width="300" height="44" rx="6"/>
+  <text class="t m" x="38" y="283">Boot loader</text>
+  <text class="s" x="38" y="300">on the disk</text>
+  <path class="ar" d="M174,308 V326"/>
+  <text class="s" x="184" y="321">checks</text>
+  <rect class="os" x="24" y="328" width="300" height="44" rx="6"/>
+  <text class="t m" x="38" y="347">Kernel and initrd, or a UKI</text>
+  <text class="s" x="38" y="364">on the disk</text>
+
+  <!-- Brackets -->
+  <path class="brK" d="M332,120 H342 V228 H332 M342,174 H370"/>
+  <path class="brU" d="M332,264 H342 V372 H332 M342,318 H370"/>
+
+  <!-- Firmware key panel -->
+  <rect class="key" x="372" y="112" width="544" height="124" rx="8"/>
+  <text class="t" x="388" y="136">Checked with Sam's firmware key</text>
+  <text class="s" x="388" y="158">public key: its hash is burned into fuses, so it can never be replaced</text>
+  <text class="s" x="388" y="176">private key: with Sam, offline</text>
+  <text class="s" x="388" y="194">checks done by: the BootROM, then each firmware stage</text>
+  <rect class="tag" x="388" y="204" width="186" height="22" rx="4"/>
+  <text class="tagt" x="398" y="219">on the Jetson: PKC key</text>
+
+  <!-- UEFI keys panel -->
+  <rect class="os" x="372" y="256" width="544" height="124" rx="8"/>
+  <text class="t" x="388" y="280">Checked with Sam's UEFI keys</text>
+  <text class="s" x="388" y="302">owner key → update keys → allowed list, from the previous section</text>
+  <text class="s" x="388" y="320">public keys: in UEFI variables in the flash chip; changed only by signed changes</text>
+  <text class="s" x="388" y="338">checks done by: UEFI, then the boot loader, both against the allowed list</text>
+  <rect class="tag" x="388" y="348" width="226" height="22" rx="4"/>
+  <text class="tagt" x="398" y="363">UEFI names: PK → KEK → db</text>
+
+  <!-- Message -->
+  <rect class="w" x="24" y="394" width="892" height="52" rx="8"/>
+  <text class="m" x="40" y="416">Both belong to Sam, but they are different key pairs. The firmware key decides which UEFI runs,</text>
+  <text class="m" x="40" y="435">and that UEFI then enforces the UEFI keys. The UEFI keys are only as trustworthy as the UEFI that reads them.</text>
+</svg>

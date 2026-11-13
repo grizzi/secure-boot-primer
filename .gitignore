@@ -1,0 +1,11 @@
+# Hugo output and cache
+public/
+resources/_gen/
+.hugo_build.lock
+
+# Obsidian: keep only the shared settings (app.json), not each person's workspace
+.obsidian/*
+!.obsidian/app.json
+
+.DS_Store
+__pycache__/

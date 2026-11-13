@@ -1,0 +1,25 @@
+baseURL = "http://localhost:1313/"   # the GitHub Pages workflow passes the real address
+languageCode = "en"
+title = "Linux (Jetson) security primer"
+disableKinds = ["taxonomy", "term", "rss"]
+enableRobotsTXT = true
+
+[params]
+  description = "How a Linux computer protects its disk and its boot software, told as a story: one attack, one protection at a time."
+
+[markup.goldmark.parser]
+  # A figure on its own line is a block, not an image inside a paragraph.
+  wrapStandAloneImageWithinParagraph = false
+
+[markup.goldmark.extensions.typographer]
+  disable = true    # keep the text exactly as written: straight quotes, "--" stays "--"
+
+[markup.highlight]
+  noClasses = false # colours come from assets/css/syntax.css, so they follow dark mode
+
+[markup.tableOfContents]
+  startLevel = 2
+  endLevel = 2
+
+[build.buildStats]
+  enable = false
