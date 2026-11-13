@@ -11,6 +11,7 @@
   --info: #3d68b0;      --info-bg: #f0f5fe;
   --example: #44804a;   --example-bg: #f1f8f1;
   --warning: #a8670f;   --warning-bg: #fdf6e8;
+  --bad: #b42318;       --bad-bg: #fdecea;
   --content-width: 56rem;  /* one column for text, figures, code and callouts */
   color-scheme: light dark;
 }
@@ -27,6 +28,7 @@
     --info: #86a9e6;      --info-bg: #152031;
     --example: #86bf8c;   --example-bg: #13221a;
     --warning: #e3aa52;   --warning-bg: #2a2114;
+    --bad: #f1867b;       --bad-bg: #2c1716;
   }
 }
 
@@ -256,3 +258,54 @@ details.callout:not([open]) > summary { margin: 0; }
 .prevnext a:hover { border-color: var(--link); }
 .prevnext .next { text-align: right; }
 .prevnext span { display: block; font-size: 0.8rem; color: var(--muted); }
+
+/* Quizzes: > [!quiz] callouts at the end of each chapter (see render-blockquote.html).
+   Picking an option reveals the right answer and the explanation; no JavaScript. */
+
+.quiz {
+  margin: 1rem 0 1.25rem;
+  padding: 0.8rem 1.1rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  min-width: 0;
+}
+.quiz legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 0.6rem;
+  font-weight: 650;
+}
+.quiz-options { clear: both; }
+.quiz-option {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0.35rem 0;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.quiz-option:hover { border-color: var(--link); }
+.quiz-option input { accent-color: var(--link); flex: none; }
+.quiz:has(input:checked) .quiz-option[data-correct] { border-color: var(--example); background: var(--example-bg); }
+.quiz-option:not([data-correct]):has(input:checked) { border-color: var(--bad); background: var(--bad-bg); }
+
+.quiz-feedback { display: none; margin-top: 0.7rem; }
+.quiz:has(input:checked) .quiz-feedback { display: block; }
+.quiz-feedback p:last-child { margin-bottom: 0.2rem; }
+.quiz-verdict { display: none; margin: 0 0 0.3rem; font-weight: 650; }
+.quiz:has([data-correct] input:checked) .quiz-right { display: block; color: var(--example); }
+.quiz:has(.quiz-option:not([data-correct]) input:checked) .quiz-wrong { display: block; color: var(--bad); }
+
+/* Running score, counted by CSS counters in document order. */
+.prose { counter-reset: quiz-total quiz-right; }
+.quiz { counter-increment: quiz-total; }
+.quiz:has([data-correct] input:checked) { counter-increment: quiz-total quiz-right; }
+.quiz-score { font-weight: 650; }
+.quiz-score::after { content: "Your score: " counter(quiz-right) " of " counter(quiz-total) " correct."; }
+.prose:not(:has(.quiz input:checked)) .quiz-score { display: none; }

@@ -162,3 +162,33 @@ With the key in the secure world, Hari's boot looks like this:
 ![With the key in the secure world: the TA supplies the passphrase](../assets/figures/e2e-2-secure-world.svg)
 
 **What is still missing.** The TA answers the first program that asks after power-on. It cannot tell whether that program is Hari's initrd or a modified one, and the initrd still sits on the plain `/boot` partition. The secure-world image is also copied from the flash chip at every boot, so whoever rewrites the flash chip changes the secure world too (see [Who checks the firmware](05-who-checks-the-firmware.md)).
+
+## Test your knowledge
+
+> [!quiz]- Why does Hari burn a root key into fuses instead of storing the disk key in the flash chip?
+> - [ ] Fuses can hold more data
+> - [x] Fuses sit inside the SoC, the key never travels over the board's wires, and only the secure world can read it
+> - [ ] The flash chip is erased at every boot
+>
+> Anyone with a flash programmer can read the flash chip. A key in fuses stays inside the processor chip, and the gates let only the secure world read it.
+
+> [!quiz]- What does the NS bit of a memory request tell the memory gate?
+> - [ ] How many bytes the request reads
+> - [x] Whether the request comes from the normal world (NS = 1) or the secure world (NS = 0)
+> - [ ] Whether the address exists
+>
+> The core sets the NS bit from its world, and normal-world code cannot change it. The gate refuses normal-world requests to secure-only ranges, so Linux cannot read the secure world's memory.
+
+> [!quiz]- Why is the disk passphrase computed from the disk key, the chip ID and the partition ID?
+> - [ ] To make it shorter
+> - [x] So it differs for every robot and every disk, even when several robots share the same disk key
+> - [ ] So that Linux can compute it as well
+>
+> The KDF mixes a context into the key. With the chip's unique ID and the partition's ID as context, one disk key gives a different passphrase on every device and disk.
+
+> [!quiz]- What is still missing at the end of this chapter?
+> - [ ] The disk key is stored in the clear in the flash chip
+> - [x] The TA gives the passphrase to the first program that asks, even an initrd the thief edited
+> - [ ] Linux can read the secure world's memory
+>
+> The TA cannot tell Hari's initrd from a modified one, and the initrd still sits on the plain `/boot` partition.

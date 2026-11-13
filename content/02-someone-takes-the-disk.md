@@ -52,3 +52,33 @@ With encryption, Hari's boot looks like this:
 > NVIDIA's disk encryption puts the root filesystem on a LUKS2 partition (for example `nvme0n1p2`). NVIDIA's flash tools default to the cipher `aes-cbc-essiv:sha256` with a 128-bit key. The modern default elsewhere is `aes-xts-plain64` with a 512-bit key (two 256-bit halves). The Orin's processor has instructions that make AES fast, so either one costs little.
 
 **The new problem: the boot must be automatic.** At boot, the initrd needs the passphrase to open the root partition. On a laptop, the user types it. Hari's robot is a computer that boots automatically, with nobody present, so it must open its disk by itself.
+
+## Test your knowledge
+
+> [!quiz]- What does a LUKS keyslot hold?
+> - [ ] The data, encrypted with the passphrase
+> - [x] A copy of the volume key, encrypted with one passphrase
+> - [ ] The passphrase, in readable form
+>
+> The data is encrypted once, with the volume key. Each keyslot locks a copy of that key with a different passphrase, so a passphrase can be added or replaced without re-encrypting the data.
+
+> [!quiz]- Why does LUKS pass the passphrase through a slow key derivation function (argon2id)?
+> - [ ] To make the data's encryption stronger than AES
+> - [x] So that every guess costs an attacker about two seconds
+> - [ ] Because the disk is slow anyway
+>
+> A passphrase chosen by a person is far easier to guess than a random key. The owner waits two seconds once per boot; an attacker waits two seconds for every passphrase on their list.
+
+> [!quiz]- The partition is open. Where does the decrypted data exist?
+> - [ ] On the disk, next to the encrypted data
+> - [x] Only in RAM: dm-crypt decrypts each block as it is read
+> - [ ] In the LUKS header
+>
+> The disk only ever holds encrypted bytes. The mapped device under `/dev/mapper` shows the decrypted contents, while dm-crypt holds the volume key in RAM.
+
+> [!quiz]- Why can `/boot` not be encrypted in this design?
+> - [ ] Its files are too small to encrypt
+> - [x] The kernel and the initrd open the encrypted disk, so they must be readable before any key is available
+> - [ ] FAT filesystems cannot be encrypted
+>
+> The firmware and the boot loader must read the kernel and the initrd before anything can decrypt. So anyone who has the disk can read and change them, a problem the following chapters solve.

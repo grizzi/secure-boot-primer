@@ -8,6 +8,9 @@
 {{- end }}
 <article class="prose">
   {{ $content | safeHTML }}
+  {{- if strings.Contains $content `class="quiz"` }}
+  <p class="quiz-score" aria-live="polite"></p>
+  {{- end }}
 </article>
 {{ partial "prevnext.html" . }}
 {{ end }}

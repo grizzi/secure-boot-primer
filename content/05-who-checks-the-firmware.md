@@ -63,3 +63,33 @@ The two layers use different keys and are switched on in different ways:
 With both layers on, the chain is unbroken from the BootROM to the kernel. UEFI secure boot alone is only as strong as the firmware that runs it: on a module without fuses, recovery mode can replace UEFI with one that checks nothing.
 
 **What is still missing.** Every program is now checked before it runs, but only while secure boot is switched on with Hari's keys. The TA that hands out the disk passphrase does not check that: it still answers the first program that asks.
+
+## Test your knowledge
+
+> [!quiz]- Why can the BootROM start the chain of checks?
+> - [ ] It is signed with Hari's firmware key
+> - [x] It sits in mask ROM, fixed when the chip is made, so nobody can change it
+> - [ ] It is stored encrypted in the flash chip
+>
+> Every other program can be rewritten. The BootROM cannot, so the chain of checks can start from it.
+
+> [!quiz]- How does the BootROM know that the firmware's public key is Hari's?
+> - [ ] It trusts any key inside a signed file
+> - [x] It hashes the public key in the firmware file and compares the result with the hash burned into the fuses
+> - [ ] It asks UEFI
+>
+> The fuses hold the hash of Hari's firmware key. A file with any other key gives a different hash, and the BootROM stops.
+
+> [!quiz]- Which statement about the firmware key and the UEFI keys is true?
+> - [ ] They are the same key pair
+> - [x] The firmware key decides which UEFI runs, and that UEFI then enforces the UEFI keys
+> - [ ] The UEFI keys check the BootROM
+>
+> Both belong to Hari, but they are different key pairs in two layers. The UEFI keys are only as trustworthy as the UEFI that reads them.
+
+> [!quiz]- What is still missing at the end of this chapter?
+> - [ ] The BootROM can be replaced
+> - [x] The TA answers even when secure boot has been switched off
+> - [ ] The firmware key is stored in the flash chip
+>
+> Every program is checked, but only while secure boot is on with Hari's keys. The TA does not check that.

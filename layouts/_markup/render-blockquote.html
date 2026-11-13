@@ -1,5 +1,27 @@
 {{- /* Obsidian callouts: > [!info] Title. A + or - after the type makes the box foldable (open or closed). */ -}}
-{{- if eq .Type "alert" -}}
+{{- if and (eq .Type "alert") (eq .AlertType "quiz") -}}
+  {{- /*
+    Quiz question: > [!quiz]- Question?, then a task list whose [x] item is the right answer,
+    then the explanation. The options become radio buttons; figures.css shows the result
+    and the explanation once an answer is picked. The "-" keeps it folded in Obsidian.
+  */ -}}
+  {{- $name := printf "quiz-%d" .Ordinal -}}
+  {{- $text := string .Text -}}
+  {{- $explain := replaceRE `(?s)^.*?</ul>\s*` "" $text 1 -}}
+<fieldset class="quiz">
+  <legend class="quiz-q">{{ .AlertTitle }}</legend>
+  <div class="quiz-options">
+  {{- range findRESubmatch `(?s)<li><input([^>]*)>\s*(.*?)</li>` $text }}
+    <label class="quiz-option"{{ if strings.Contains (index . 1) "checked" }} data-correct{{ end }}><input type="radio" name="{{ $name }}"><span>{{ index . 2 | safeHTML }}</span></label>
+  {{- end }}
+  </div>
+  <div class="quiz-feedback">
+    <p class="quiz-verdict quiz-right">Correct.</p>
+    <p class="quiz-verdict quiz-wrong">Not quite: the right answer is marked in green.</p>
+    {{ $explain | safeHTML }}
+  </div>
+</fieldset>
+{{- else if eq .Type "alert" -}}
   {{- $type := .AlertType -}}
   {{- $title := or .AlertTitle (title $type) -}}
   {{- if .AlertSign }}

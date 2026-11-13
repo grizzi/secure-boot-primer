@@ -341,3 +341,33 @@ With signed boot software, Hari's boot looks like this:
 ![With signed boot software: the firmware checks what it loads](../assets/figures/e2e-3-signed-boot.svg)
 
 **What is still missing.** The checks run in the firmware, and the firmware is stored in a flash chip. Whoever can replace the firmware can install one that checks nothing.
+
+## Test your knowledge
+
+> [!quiz]- Which step needs Hari's private key?
+> - [ ] Computing the hash of a boot file
+> - [ ] Verifying a signature at boot
+> - [x] Signing a release, on Hari's computer
+>
+> Hashing needs no key, and verifying needs only the public key. Only signing needs the private key, and it never leaves Hari's computer.
+
+> [!quiz]- Why is a public key in the firmware better than a list of hashes?
+> - [ ] A key takes less space
+> - [x] A new kernel only needs a new signature, so the firmware does not change at every update
+> - [ ] Hashes are easy to forge
+>
+> With a list of hashes, every update must rewrite the list on every robot, and whoever can rewrite the list can add the hash of their own initrd.
+
+> [!quiz]- In UEFI secure boot, what is db?
+> - [ ] The owner key
+> - [ ] The forbidden list
+> - [x] The allowed list: the keys and hashes whose software may run
+>
+> PK is the owner key, KEK holds the update keys, db is the allowed list and dbx the forbidden list.
+
+> [!quiz]- Why does Hari sign the kernel, the initrd and the command line together, as one UKI?
+> - [ ] So that the robot boots faster
+> - [x] So that nobody can swap the initrd or change the command line, for example to add `init=/bin/sh`, without breaking the signature
+> - [ ] Because UEFI can only load one file
+>
+> The command line matters as much as the files. Signed as one bundle, no part can be changed on its own.

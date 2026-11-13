@@ -12,6 +12,7 @@ The repository is also an Obsidian vault: open this folder in Obsidian and edit 
 - Callouts use Obsidian's syntax: `> [!info] Title`, `> [!example]`, `> [!warning]`. A `+` or `-` after the type (`> [!example]+`) makes the box foldable, open or closed.
 - Each file starts with a `slug` (the page's address) and its title as a `# ` heading. Chapters are ordered by their file names; `appendix: true` puts a page under "Appendix".
 - Figures are SVG files in `assets/figures/`, linked as `![description](../assets/figures/name.svg)`. Photos go in `assets/img/`.
+- Each chapter ends with a "Test your knowledge" quiz. A question is a folded callout: `> [!quiz]- Question?`, then a task list whose `[x]` item is the right answer, then the explanation. The site turns the options into clickable answers and keeps a score; Obsidian keeps the answer folded.
 - To animate a figure, wrap each part of the SVG in `<g data-step="N" data-caption="…">` (N from 1 to at most 9). The site then shows ▶ Play and step buttons above the figure and the current step's caption below it. Parts outside any group are always visible, and Obsidian shows the complete figure.
 
 ## Building
@@ -31,7 +32,7 @@ Pushing to `main` publishes the site through GitHub Actions (`.github/workflows/
 | Part | File |
 |---|---|
 | Page frame, chapter list, previous/next | `layouts/baseof.html`, `page.html`, `home.html`, `layouts/_partials/` |
-| Callouts | `layouts/_markup/render-blockquote.html` |
+| Callouts and quizzes | `layouts/_markup/render-blockquote.html` (styles at the end of `assets/css/main.css`) |
 | Figures: each SVG is placed into the page as code; step controls and captions for animated figures | `layouts/_markup/render-image.html` |
 | Step animations (no JavaScript: radio buttons, `:has()` and a CSS custom property) | `assets/css/figures.css` |
 | Links to other pages and headings | `layouts/_markup/render-link.html` |

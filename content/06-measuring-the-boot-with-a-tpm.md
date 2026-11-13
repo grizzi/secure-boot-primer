@@ -186,3 +186,33 @@ With a TPM in place of the TA, Hari's boot looks like this:
 > - Its storage goes through tee-supplicant to files on the boot partition, because the module has no RPMB (a protected storage area some flash chips have) in that setup.
 
 **What is still missing.** Nothing more at boot: the disk passphrase is released only to Hari's signed software, booted with Hari's keys and settings. What remains are the limits that no boot protection covers.
+
+## Test your knowledge
+
+> [!quiz]- A register starts at zero and can only be extended. Which statement is true?
+> - [ ] Any program can set it back to the expected value
+> - [x] The same stages in the same order always give the same final value, and any changed stage gives a different one
+> - [ ] It stores the full list of measurements
+>
+> Each extension hashes the old value together with the new measurement. One value sums up the whole boot, and no later code can turn a wrong value back into the expected one.
+
+> [!quiz]- What does sealing a secret do?
+> - [ ] It encrypts the disk
+> - [x] It keeps the secret inside the TPM and releases it only while chosen PCRs hold their expected values
+> - [ ] It signs the kernel
+>
+> The TPM compares the PCRs with the values the secret was sealed to. Any other boot gets nothing.
+
+> [!quiz]- Why does Hari seal the passphrase to PCR 7 rather than to the hashes of the boot files?
+> - [ ] PCR 7 is faster to read
+> - [x] PCR 7 records the secure boot rules, so a kernel update signed with Hari's key leaves it unchanged
+> - [ ] PCR 7 stores the passphrase
+>
+> Sealing to file hashes would bring back the update problem. PCR 7 changes only when secure boot is switched off or other keys are installed.
+
+> [!quiz]- Why is the passphrase also sealed to PCR 15 at zero?
+> - [ ] PCR 15 holds the firmware's hash
+> - [x] The initrd extends PCR 15 right after it opens the disk, so nothing started later can unseal the passphrase
+> - [ ] PCR 15 records whether secure boot is on
+>
+> Before the disk is open, PCR 15 is zero and the TPM releases the passphrase. Once the initrd extends PCR 15, the value no longer matches.

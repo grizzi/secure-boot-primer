@@ -74,3 +74,26 @@ A failure reported on NVIDIA's forums: OP-TEE cannot decrypt the EKB and the dev
 A related trap: after fusing, NVIDIA's tools refuse to update a single partition such as `A_eks`. Every change needs a full flash with the keys. A quick "just re-flash the EKB" retry would therefore fail too, and look like the same problem.
 
 The lesson: burn the fuses in stages on a spare module, with a serial console attached. Put `BootSecurityInfo` in the same fuse XML as `OemK1`, and run `odmfuse.sh --test` first. Signatures are only enforced once `SecurityMode` is burned (see [Fuses on the Orin](10-reference.md#Fuses%20on%20the%20Orin)), so a mistake in the *signed images* is still recoverable before that last step. A mismatch between the EKB and OEM_K1 is not, because OP-TEE depends on it from the moment OEM_K1 is valid.
+
+## Test your knowledge
+
+> [!quiz]- In NVIDIA's default setup (disk encryption, but no fuses and no UEFI keys), what is the weak point?
+> - [ ] The LUKS cipher can be broken
+> - [x] The initrd on the plain `APP` partition decides who receives the passphrase
+> - [ ] The secure world gives the disk key to Linux
+>
+> The secure world guards the key well, but anyone who edits the initrd, or boots their own over USB recovery, receives the passphrase.
+
+> [!quiz]- Why can anyone decrypt the EKB while OEM_K1 is not burned?
+> - [ ] The EKB is stored unencrypted
+> - [x] OP-TEE then uses a test key of all zeros, and NVIDIA's EKB tools are public
+> - [ ] Linux keeps a copy of the EKB key
+>
+> With the test key, `gen_ekb.py` and the other public tools are all it takes.
+
+> [!quiz]- Which measures together close the gap?
+> - [ ] A longer LUKS passphrase
+> - [x] Bootloader secure boot (fuses), UEFI secure boot with a signed UKI, and a burned OEM_K1
+> - [ ] Encrypting the `APP` partition with the same passphrase
+>
+> With all three, the first program that asks the TA can only be Hari's signed initrd, and the EKB is useless outside the device.

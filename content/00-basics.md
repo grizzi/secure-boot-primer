@@ -252,3 +252,41 @@ A kernel with the right drivers built in can mount a simple root filesystem by i
 | systemd and everything else | the root filesystem | `/init`, through `switch_root` | Ubuntu (L4T) |
 
 None of these programs checks anything: each one runs whatever it finds, and anyone who holds the disk can read every file. The story starts from there.
+
+## Test your knowledge
+
+> [!quiz]- Where is the firmware stored?
+> - [ ] On the disk, in `/boot`
+> - [x] In the flash chip on the board
+> - [ ] In RAM
+>
+> The firmware is the first program of the boot, so it must sit where the processor can read it directly at power-on: the flash chip. Reading the disk needs a program that already runs, and RAM is empty at power-on.
+
+> [!quiz]- Which program copies the kernel and the initrd into RAM?
+> - [ ] The firmware
+> - [x] The boot loader
+> - [ ] The initrd
+> - [ ] systemd
+>
+> The firmware loads the boot loader. The boot loader reads its configuration, loads the kernel and the initrd into RAM, and starts the kernel with the kernel command line.
+
+> [!quiz]- What does `mount /dev/nvme0n1p1 /boot` do?
+> - [ ] It erases the first partition and creates a new filesystem on it
+> - [x] It makes the files of the first partition appear under `/boot`
+> - [ ] It copies the folder `/boot` onto the first partition
+>
+> Mounting attaches a partition's filesystem to a folder of the single folder tree. Nothing is copied or erased.
+
+> [!quiz]- A program wants to read a file. How does it get the file's contents?
+> - [ ] It reads the disk blocks itself
+> - [x] It asks the kernel, with system calls such as open and read
+> - [ ] It asks the firmware
+>
+> Only the kernel talks to the hardware. Its filesystem code finds the file's blocks, the disk's driver fetches them, and the kernel copies the bytes into the program's memory.
+
+> [!quiz]- Why does Linux need an initrd?
+> - [ ] It keeps the kernel's drivers while the computer is off
+> - [x] Preparing the root filesystem can take extra steps, such as loading drivers or decrypting the disk
+> - [ ] It holds the users' files
+>
+> The initrd is a temporary root filesystem in RAM. Its program `/init` prepares the real root filesystem, and `switch_root` then hands over to it.
