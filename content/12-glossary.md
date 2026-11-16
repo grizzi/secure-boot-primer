@@ -20,7 +20,10 @@ appendix: true
 - **Capsule**: signed UEFI firmware update package.
 - **Cipher**: a method of encryption, such as AES. A **mode** (XTS, CBC) is the rule for using it on more than one block; `cryptsetup` names both together, as in `aes-xts-plain64`.
 - **CA (OP-TEE)**: client application in the normal world. **CA (PKI)**: certificate authority. Context tells which.
+- **Carveout / TZDRAM**: on the Jetson, an address range reserved by the early boot stages, with its own access rules. The secure world runs from the carveout TZDRAM.
 - **Cold boot attack**: reading keys from RAM chips that were cooled and moved to another computer before their contents faded.
+- **Disk key**: the key in the key blob from which the disk passphrase is derived. On the Jetson: `sym2` in the EKB.
+- **DMA**: direct memory access: a device reads or writes memory by itself, without going through the processor.
 - **dm-crypt**: kernel block-device encryption layer used by LUKS.
 - **Driver**: the part of the kernel that talks to one kind of device.
 - **ECID**: unique, non-secret chip ID.
@@ -28,34 +31,41 @@ appendix: true
 - **ESL**: EFI Signature List, the certificate format for UEFI key variables.
 - **ESP**: EFI System Partition (FAT).
 - **Firmware key**: Hari's key pair for signing the firmware (first boot programs, secure-world image, UEFI). The hash of its public key is burned into fuses and checked by the BootROM. On the Jetson: the PKC key.
+- **Flash programmer**: a tool that clips onto the pins of a flash chip and reads or writes its contents, without the computer running.
 - **Flashing**: writing firmware into a device's flash chip, done with a flashing tool over USB in recovery mode.
 - **fTPM**: firmware TPM running as an OP-TEE TA.
 - **Fuse / eFuse**: a microscopic link in the SoC. Burning it with a current pulse breaks it, turning a 0 into a 1 for good.
+- **Interconnect**: the on-chip network that carries every memory and device access between the parts of a SoC.
 - **IOMMU**: a unit between devices and memory that limits which memory each device may access.
+- **Gate**: hardware in front of memory or a device that checks the NS bit of every access and refuses normal-world accesses to secure resources.
 - **Hash**: a short fingerprint of a file (SHA-256: 32 bytes); any change to the file changes it completely.
 - **initrd / initramfs**: small root filesystem loaded with the kernel. It unlocks and mounts the real root.
+- **Keyslot**: a place in the LUKS header that holds one copy of the volume key, encrypted with a key computed from one passphrase.
 - **Key blob**: a file of keys, encrypted and authenticated with a key derived from the root key, stored in flash. On the Jetson, the EKB.
-- **KDF**: key derivation function, which turns a key or passphrase plus a context into another key.
+- **KDF / key derivation function**: a calculation that turns a key or passphrase plus a context into another key.
 - **L4T**: Linux for Tegra, NVIDIA's BSP. JetPack 6.2.3 = L4T 36.5.2.
 - **LUKS**: the standard format for encrypted Linux partitions.
 - **Mapped device**: the decrypted view of an opened LUKS partition, under `/dev/mapper`; the filesystem is mounted from it.
 - **MB1 / MB2**: NVIDIA's first and second stage bootloaders.
 - **Mounting**: attaching a partition's filesystem to a folder of the single folder tree.
+- **Normal world / normal mode**: the processor mode that runs Linux and every ordinary program. Hari calls it the normal mode; normal world is Arm's name.
 - **NS bit**: the "non-secure" signal that travels with every access on the chip's interconnect. Cores set it from their world state; for other devices the chip's wiring fixes it, usually to 1.
 - **NVMe**: Non-Volatile Memory Express, the usual way to connect a fast SSD; such disks appear as `/dev/nvme0n1`.
 - **OEM / ODM**: original equipment manufacturer / original design manufacturer: the company that builds a product around the chip. NVIDIA uses both names, as in the OEM key fuses and `odmfuse.sh`.
 - **OP-TEE**: the small operating system that runs in the secure world.
+- **Passphrase**: the secret that unlocks a LUKS keyslot. A person types it, or, on Hari's robot, the secure world computes it at boot.
 - **Partition**: a separate area of a disk, with its own filesystem.
 - **PCR**: Platform Configuration Register, a TPM register that can only be extended. A TPM has 24, numbered 0 to 23, each with a fixed meaning (PCR 4: boot programs, PCR 7: secure boot state, PCR 15: opened disks).
 - **PK / KEK / db / dbx**: the UEFI secure boot key hierarchy: owner key, key-exchange key, allowed list, forbidden list.
 - **PKC**: public key cryptography; on the Jetson, the name of the firmware key, which signs the bootloader stages.
 - **QSPI**: Quad SPI, a four-wire variant of the SPI chip-to-chip interface; on the Jetson, the module's flash chip holding all firmware.
 - **RAM**: the working memory; holds the running programs and their data, and is empty at power-on.
-- **RCM**: recovery mode over USB, selected with a jumper or button on the carrier board. Flashing tools talk to the BootROM through it.
+- **RCM / recovery mode**: a start mode in which the chip accepts software over USB, selected with a jumper or button on the carrier board. Flashing tools talk to the BootROM through it.
+- **Region table**: the memory gate's table of address ranges, with the world that may access each one.
 - **Root filesystem**: the filesystem mounted at `/`, holding the system programs, the configuration and the data.
 - **Root key**: the one key burned into fuses; all other device keys are derived from it or encrypted with it.
 - **SBK**: secure boot key, for AES encryption of firmware images.
-- **Secure world / TrustZone**: the protected processor mode, enforced in hardware, with memory and devices Linux cannot access.
+- **Secure world / protected mode**: the processor mode for trusted code. The hardware refuses every access from Linux to its memory and devices. Hari calls it the protected mode; secure world is Arm's name.
 - **Signature**: a value computed from a file's hash with a private key; anyone with the matching public key can verify it.
 - **shim**: a small first boot loader used by Linux distributions on PCs; signed with a key in db, it checks the distribution's kernel with the distribution's own public key.
 - **SMC**: Secure Monitor Call, the only instruction that enters the secure world.
@@ -64,10 +74,13 @@ appendix: true
 - **SSD**: solid-state drive: a disk made of flash memory.
 - **System call**: a request from a program to the kernel, such as opening or reading a file.
 - **systemd**: the first program of most Linux systems (process 1); it starts everything else.
-- **TA / PTA**: trusted application / pseudo-TA inside OP-TEE.
+- **TA / PTA / trusted application**: a program that runs inside OP-TEE, in the secure world. A PTA (pseudo-TA) is built into OP-TEE itself.
 - **TCG**: Trusted Computing Group, the industry group that writes the TPM standard.
 - **TOS / secure-world image**: the image holding ATF, OP-TEE and its built-in TAs, copied from flash into secure memory at every boot.
+- **Trusted program**: the small program that runs in the secure world and keeps the key; on real devices, OP-TEE and its trusted applications.
+- **TrustZone**: Arm's hardware feature that divides a processor into a normal world and a secure world.
 - **TZASC / TZPC**: Arm's reference gates in front of memory and devices; they refuse normal-world accesses to secure resources. On the Jetson, NVIDIA's memory controller carveouts (such as TZDRAM) do the same job.
 - **TPM**: a chip or firmware that records boot measurements and releases sealed secrets only for the expected boot.
+- **Volume key**: the random AES key that encrypts the data of a LUKS partition; stored only in encrypted form, in the keyslots.
 - **UEFI**: Unified Extensible Firmware Interface, the standard that modern firmware follows.
 - **UKI**: unified kernel image, kernel + initrd + cmdline in one signed EFI file.

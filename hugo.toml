@@ -7,6 +7,15 @@ enableRobotsTXT = true
 [params]
   description = "How a Linux computer protects its disk and its boot software, told as a story: one attack, one protection at a time."
 
+# Term notes: glossary terms are marked in the text and explained on hover
+# (layouts/_partials/terms.html). A term listed under "colours" is marked at every
+# mention, in the colour main.css gives to .term-<name>.
+[params.terms]
+  glossary = "12-glossary.md"
+  [params.terms.colours]
+    "secure world" = "secure"
+    "normal world" = "normal"
+
 [markup.goldmark.parser]
   # A figure on its own line is a block, not an image inside a paragraph.
   wrapStandAloneImageWithinParagraph = false

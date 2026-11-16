@@ -13,6 +13,7 @@ The repository is also an Obsidian vault: open this folder in Obsidian and edit 
 - Each file starts with a `slug` (the page's address) and its title as a `# ` heading. Chapters are ordered by their file names; `appendix: true` puts a page under "Appendix".
 - Figures are SVG files in `assets/figures/`, linked as `![description](../assets/figures/name.svg)`. Photos go in `assets/img/`.
 - Each chapter ends with a "Test your knowledge" quiz. A question is a folded callout: `> [!quiz]- Question?`, then a task list whose `[x]` item is the right answer, then the explanation. The site turns the options into clickable answers and keeps a score; Obsidian keeps the answer folded.
+- Terms explain themselves on the site: the first mention of a glossary term in each section gets a colour and a dotted underline, and its glossary entry appears when the pointer is on it. Nothing is written in the chapters for this. To add a term, add a line `- **Term**: explanation` to `content/12-glossary.md`; other spellings of the same term go into the name, separated by ` / ` (`**Fuse / eFuse**`). A mention in bold is taken as the place that defines the term and stays unmarked. Obsidian shows plain text.
 - To animate a figure, wrap each part of the SVG in `<g data-step="N" data-caption="…">` (N from 1 to at most 9). The site then shows ▶ Play and step buttons above the figure and the current step's caption below it. Parts outside any group are always visible, and Obsidian shows the complete figure.
 
 ## Building
@@ -35,6 +36,7 @@ Pushing to `main` publishes the site through GitHub Actions (`.github/workflows/
 | Callouts and quizzes | `layouts/_markup/render-blockquote.html` (styles at the end of `assets/css/main.css`) |
 | Figures: each SVG is placed into the page as code; step controls and captions for animated figures | `layouts/_markup/render-image.html` |
 | Step animations (no JavaScript: radio buttons, `:has()` and a CSS custom property) | `assets/css/figures.css` |
+| Term notes: glossary terms marked in the text and explained on hover (no JavaScript) | `layouts/_partials/terms.html` and `terms-index.html`, styles in `assets/css/main.css`, settings under `[params.terms]` in `hugo.toml` |
 | Links to other pages and headings | `layouts/_markup/render-link.html` |
 | Styles | `assets/css/main.css` (text and layout), `figures.css`, `syntax.css` (code colours) |
 

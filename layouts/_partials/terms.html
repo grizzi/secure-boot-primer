@@ -1,0 +1,80 @@
+{{- /*
+  Term notes. Takes a page's HTML and returns it with glossary terms wrapped in
+    <span class="term" tabindex="0" data-tip="the glossary explanation">term</span>
+  main.css gives such a span a colour and a dotted underline, and shows the explanation
+  while the pointer is on it or it has keyboard focus. No JavaScript.
+
+  Which mentions are marked:
+  - the first mention of a term in each section (a new <h2> starts a section);
+  - not a mention in bold. A few words in bold are a definition ("a **fuse** is ..."), and
+    mentions after it in the same section stay unmarked; a whole sentence in bold is a
+    lead-in, and has no effect;
+  - nothing inside links, code, headings, figures, callout titles and quizzes;
+  - a term with a colour in params.terms.colours is marked at every mention, so the colour
+    can be followed through the text.
+
+  The page is cut into tags and pieces of text, so that only text is ever changed.
+*/ -}}
+{{- $index := partialCached "terms-index.html" site -}}
+{{- $re := $index.re -}}
+{{- $terms := $index.terms -}}
+{{- $skipTags := slice "a" "code" "pre" "h1" "h2" "h3" "h4" "h5" "h6" "svg" "figure" "summary" "fieldset" "th" "label" "button" -}}
+{{- $out := slice -}}
+{{- $skip := 0 -}}
+{{- $bold := 0 -}}
+{{- $inTitle := false -}}
+{{- $seen := dict -}}
+{{- range findRE `(?s)<(?:[^>"']|"[^"]*"|'[^']*')*>|[^<]+` . -}}
+  {{- $tok := . -}}
+  {{- if hasPrefix $tok "<" -}}
+    {{- with findRESubmatch `^<(/?)([A-Za-z][A-Za-z0-9]*)` $tok 1 -}}
+      {{- $closing := index (index . 0) 1 -}}
+      {{- $name := lower (index (index . 0) 2) -}}
+      {{- if in $skipTags $name -}}
+        {{- if $closing }}{{ $skip = sub $skip 1 }}{{ else if not (hasSuffix $tok "/>") }}{{ $skip = add $skip 1 }}{{ end -}}
+      {{- else if eq $name "strong" -}}
+        {{- if $closing }}{{ $bold = sub $bold 1 }}{{ else }}{{ $bold = add $bold 1 }}{{ end -}}
+      {{- else if eq $name "p" -}}
+        {{- $inTitle = and (not $closing) (in $tok "callout-title") -}}
+      {{- end -}}
+      {{- if and (eq $name "h2") (not $closing) }}{{ $seen = dict }}{{ end -}}
+    {{- end -}}
+    {{- $out = $out | append $tok -}}
+  {{- else if or (not $re) (gt $skip 0) $inTitle -}}
+    {{- $out = $out | append $tok -}}
+  {{- else if not (findRE $re $tok 1) -}}
+    {{- $out = $out | append $tok -}}
+  {{- else -}}
+    {{- /* In bold, up to four words count as a definition of the terms in them. */ -}}
+    {{- $counts := or (eq $bold 0) (le (len (findRE `\S+` $tok)) 4) -}}
+    {{- /* Put a marker around every match, then go through the pieces in order. */ -}}
+    {{- range $i, $piece := split (replaceRE $re "\x02${1}\x03" $tok) "\x02" -}}
+      {{- if eq $i 0 -}}
+        {{- $out = $out | append $piece -}}
+      {{- else -}}
+        {{- $pair := split $piece "\x03" -}}
+        {{- $surface := index $pair 0 -}}
+        {{- $key := lower $surface | replaceRE `[\s-]+` " " -}}
+        {{- $term := index $terms $key -}}
+        {{- if not $term }}{{ $term = index $terms (strings.TrimSuffix "s" $key) }}{{ end -}}
+        {{- if not $term }}{{ $term = index $terms (strings.TrimSuffix "es" $key) }}{{ end -}}
+        {{- $class := "" -}}
+        {{- with $term -}}
+          {{- if .kind -}}
+            {{- $class = printf "term term-%s" .kind -}}
+          {{- else if and (eq $bold 0) (not (index $seen .id)) -}}
+            {{- $class = "term" -}}
+          {{- end -}}
+          {{- if $counts }}{{ $seen = merge $seen (dict .id true) }}{{ end -}}
+        {{- end -}}
+        {{- if $class -}}
+          {{- $out = $out | append (printf `<span class="%s" tabindex="0" data-tip="%s">%s</span>` $class $term.tip $surface) -}}
+        {{- else -}}
+          {{- $out = $out | append $surface -}}
+        {{- end -}}
+        {{- $out = $out | append (index $pair 1) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return (delimit $out "") -}}

@@ -1,5 +1,9 @@
 {{ define "main" }}
 {{- $content := .Content }}
+{{- /* Glossary terms get a note in the text (see _partials/terms.html); the glossary itself does not. */ -}}
+{{- with site.Params.terms }}
+  {{- if ne $.File.LogicalName .glossary }}{{ $content = partial "terms.html" $content }}{{ end }}
+{{- end }}
 {{- with .TableOfContents }}
   {{- if findRE `<li>` . 3 | len | lt 2 }}
     {{- $toc := printf `<details class="toc"><summary>On this page</summary>%s</details>` . }}

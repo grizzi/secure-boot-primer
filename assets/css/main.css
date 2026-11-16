@@ -12,6 +12,10 @@
   --example: #44804a;   --example-bg: #f1f8f1;
   --warning: #a8670f;   --warning-bg: #fdf6e8;
   --bad: #b42318;       --bad-bg: #fdecea;
+  --term: #0e7490;      /* a glossary term in the text */
+  --secure: #7a45a8;    /* the secure world, as in the figures */
+  --normal: #2f6b33;    /* the normal world */
+  --tip-bg: #1e293b;    --tip-fg: #f1f5f9;
   --content-width: 56rem;  /* one column for text, figures, code and callouts */
   color-scheme: light dark;
 }
@@ -29,6 +33,10 @@
     --example: #86bf8c;   --example-bg: #13221a;
     --warning: #e3aa52;   --warning-bg: #2a2114;
     --bad: #f1867b;       --bad-bg: #2c1716;
+    --term: #6cc7dc;
+    --secure: #c4a1e8;
+    --normal: #86bf8c;
+    --tip-bg: #e2e8f0;    --tip-fg: #10161d;
   }
 }
 
@@ -219,6 +227,71 @@ details.callout > summary::before {
 details.callout[open] > summary::before { transform: rotate(90deg); }
 details.callout:not([open]) > summary { margin: 0; }
 .callout-body .highlight pre { background: var(--bg); }
+
+/* Term notes. terms.html wraps glossary terms in <span class="term" data-tip="...">.
+   A term has a colour and a dotted underline; its explanation appears below it while the
+   pointer is on it, or while it has focus (Tab key, or a tap on a phone). No JavaScript. */
+
+.term {
+  color: var(--term);
+  text-decoration: underline dotted;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+  border-radius: 3px;
+  cursor: help;
+}
+.term:focus { outline: none; }
+.term:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+
+/* The two worlds keep their colour from the figures at every mention. */
+.term-secure, .term-normal { padding: 0 0.15em; }
+.term-secure { color: var(--secure); background: color-mix(in srgb, var(--secure) 10%, transparent); }
+.term-normal { color: var(--normal); background: color-mix(in srgb, var(--normal) 10%, transparent); }
+
+.term::after {
+  content: attr(data-tip);
+  display: none;
+  position: absolute;
+  z-index: 20;
+  width: max-content;
+  max-width: min(24rem, 100vw - 2.5rem);
+  margin: 0.35rem 0;
+  padding: 0.45rem 0.7rem;
+  border-radius: 6px;
+  background: var(--tip-bg);
+  color: var(--tip-fg);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.2);
+  font-size: 0.82rem;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.45;
+  text-align: left;
+  hyphens: manual;
+  -webkit-hyphens: manual;
+  pointer-events: none;
+}
+/* A short delay, so that moving the pointer across a paragraph does not flash notes. */
+.term:hover::after, .term:focus::after { display: block; animation: tip-in 0.15s 0.2s both; }
+@keyframes tip-in { from { opacity: 0; } }
+
+/* Where the note goes. It has no top or left, so by default it sits where a block would
+   start: below the term's line, at the left edge of the paragraph. Browsers with anchor
+   positioning centre it below the term instead, moved sideways as far as needed to stay
+   inside the text column, and put it above the term if there is no room below. */
+@supports (anchor-scope: --term) and (position-area: bottom) {
+  .prose { position: relative; }
+  .term { anchor-name: --term; anchor-scope: --term; }
+  .term::after {
+    position-anchor: --term;
+    position-area: bottom;
+    position-try-fallbacks: flip-block;
+  }
+}
+
+@media print {
+  .term { color: inherit; background: none; text-decoration: none; }
+  .term::after { display: none !important; }
+}
 
 /* "On this page" */
 

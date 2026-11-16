@@ -1,0 +1,51 @@
+{{- /*
+  The terms that get a note in the text, read from the glossary page (params.terms.glossary).
+  Every line "- **Name**: explanation" is one term. Names separated by " / " are spellings of
+  the same term, and a part in parentheses is left out: "CA (OP-TEE)" is the term "CA".
+
+  Returns a dict:
+    re     one regular expression that matches any spelling in running text
+    terms  spelling (lower case, hyphens as spaces) -> dict "id", "tip", "kind"
+
+  Matching: a capital first letter is optional for ordinary words ("Kernel" also matches
+  "kernel"), abbreviations must match exactly ("TA", "SoC"), a plural "s" or "es" may follow,
+  and a space in a name also matches a hyphen ("normal world", "normal-world").
+*/ -}}
+{{- $cfg := site.Params.terms | default dict -}}
+{{- $colours := $cfg.colours | default dict -}}
+{{- $terms := dict -}}
+{{- $alts := slice -}}
+{{- with site.GetPage ($cfg.glossary | default "glossary") -}}
+  {{- range findRESubmatch `(?m)^- \*\*(.+?)\*\*:\s*(.+?)\s*$` .RawContent -}}
+    {{- /* The explanation as plain text: no Markdown marks, links reduced to their text. */ -}}
+    {{- $tip := index . 2 | replaceRE `\[([^\]]+)\]\([^)]*\)` "$1" | replaceRE "[*`]" "" | strings.FirstUpper | htmlEscape -}}
+    {{- $names := slice -}}
+    {{- range split (index . 1) " / " -}}
+      {{- $names = $names | append (trim (replaceRE `\s*\([^)]*\)` "" .) " ") -}}
+    {{- end -}}
+    {{- $id := "" -}}
+    {{- $kind := "" -}}
+    {{- range $names -}}
+      {{- $key := lower . | replaceRE `[\s-]+` " " -}}
+      {{- if not $id }}{{ $id = $key }}{{ end -}}
+      {{- with index $colours $key }}{{ $kind = . }}{{ end -}}
+    {{- end -}}
+    {{- range $names -}}
+      {{- $key := lower . | replaceRE `[\s-]+` " " -}}
+      {{- if and $key (not (index $terms $key)) -}}
+        {{- $terms = merge $terms (dict $key (dict "id" $id "tip" $tip "kind" $kind)) -}}
+        {{- $pat := replaceRE `([.*+?^${}()|\[\]\\])` `\$1` . | replaceRE `\s+` `(?:\s+|-)` -}}
+        {{- if findRE `^[A-Za-z][a-z]` . 1 -}}
+          {{- $pat = printf "[%s%s]%s" (upper (substr . 0 1)) (lower (substr . 0 1)) (substr $pat 1) -}}
+        {{- end -}}
+        {{- $alts = $alts | append (dict "pattern" (printf "%s(?:e?s)?" $pat) "length" (len .)) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- /* Longest spelling first, so that "root filesystem" wins over "filesystem". */ -}}
+{{- $patterns := slice -}}
+{{- range sort $alts "length" "desc" }}{{ $patterns = $patterns | append .pattern }}{{ end -}}
+{{- $re := "" -}}
+{{- if $patterns }}{{ $re = printf `\b(%s)\b` (delimit $patterns "|") }}{{ end -}}
+{{- return (dict "re" $re "terms" $terms) -}}

@@ -5,13 +5,17 @@ slug: where-to-keep-the-disk-key
 
 **First attempt: a key file in the initrd.** Hari puts the passphrase in a file inside the initrd, which passes it to `cryptsetup`. The robot now opens its disk by itself. But the initrd sits on the plain `/boot` partition: the thief reads the key file and opens the disk on a laptop. The key must not be on the disk.
 
-**Second attempt: a key in the board's flash chip.** A thief who takes only the disk is now stopped. A thief who takes the whole robot is not: the flash chip can be read with a flash programmer, or the robot can be started with another operating system that reads it. Anything the operating system can read, an attacker running another operating system can read too.
+**Second attempt: a key in the board's flash chip.** A thief who takes only the disk is now stopped. A thief who takes the whole robot is not, and has two ways to read the flash chip. A **flash programmer**, a small tool that clips onto the pins of the chip, copies its contents to a laptop without the robot even being switched on. Or the thief starts the robot from a USB stick with another operating system, which reads the flash chip as Hari's Linux does. Anything the operating system can read, an attacker running another operating system can read too.
+
+![A key in the flash chip: two ways to read it](../assets/figures/flash-key-attack.svg)
 
 ## The key inside the processor chip
 
-Hari's first idea: keep a secret inside the processor chip. On the board, the chips talk to each other over wires, and wires can be tapped or chips read out. A secret that never leaves the processor chip cannot be read that way. So Hari wants a small storage area inside the processor chip itself, written once when the robot is prepared and impossible to change afterwards. Chips already contain such storage: fuses.
+Hari's first idea: keep the secret inside the processor chip itself. A secret that is stored there and never leaves the chip is out of reach of a flash programmer, and of any other tool attached to the board. So Hari wants a small storage area inside the processor chip, written once when the robot is prepared and impossible to change afterwards. Chips already contain such storage: **fuses**.
 
-**What the fuses hold.** Not the disk key itself, but a **root key** from which the disk passphrase is computed at boot. The passphrase has to be handed to Linux at every boot, because `cryptsetup` runs in Linux. If it were the fused key itself, Linux would see that key, and a single leak would expose it for the life of the device, since fuses cannot change. A key computed from the fused key can be handed out, replaced (for example for a new disk), and made different for every purpose, while the root key itself stays inside the chip. The LUKS volume key does not move either: it stays in the LUKS header, locked in a keyslot, and the computed passphrase unlocks that keyslot. [Putting the two parts together](#Putting%20the%20two%20parts%20together) shows the whole chain.
+**What the fuses hold.** Not the disk key itself, but a **root key** from which the disk passphrase is computed at boot. The passphrase has to be handed to Linux at every boot, because `cryptsetup` runs in Linux.
+
+If it were the fused key itself, Linux would see that key, and a single leak would expose it for the life of the device, **since fuses cannot change**. A key computed from the fused key can be handed out, replaced (for example for a new disk), and made different for every purpose, while the root key itself stays inside the chip. The LUKS volume key does not move either: it stays in the LUKS header, locked in a keyslot, and the computed passphrase unlocks that keyslot. [Putting the two parts together](#Putting%20the%20two%20parts%20together) shows the whole chain.
 
 The processor chip on the Jetson is a SoC, a single chip with the processor cores and most controllers (see [The parts of a computer](00-basics.md#The%20parts%20of%20a%20computer)).
 
