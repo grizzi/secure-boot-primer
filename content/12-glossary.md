@@ -18,6 +18,7 @@ appendix: true
 - **Kernel command line**: a line of settings the boot loader passes to the kernel, such as `root=`; readable in `/proc/cmdline`.
 - **Mask ROM**: read-only memory whose contents are fixed by the chip's manufacturing masks; identical on every chip and unchangeable.
 - **Capsule**: signed UEFI firmware update package.
+- **Cipher**: a method of encryption, such as AES. A **mode** (XTS, CBC) is the rule for using it on more than one block; `cryptsetup` names both together, as in `aes-xts-plain64`.
 - **CA (OP-TEE)**: client application in the normal world. **CA (PKI)**: certificate authority. Context tells which.
 - **Cold boot attack**: reading keys from RAM chips that were cooled and moved to another computer before their contents faded.
 - **dm-crypt**: kernel block-device encryption layer used by LUKS.

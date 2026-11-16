@@ -9,7 +9,7 @@ Hari's first version is the simplest one that works. The firmware runs whatever 
 
 ![Hari's first design: each program runs the next one, with no checks](../assets/figures/naive-boot.svg)
 
-The robot will spend its life in places Hari does not control. Someone can unplug it, carry it away, open the lid, pull out the disk, attach a USB cable, or plug into the debug serial header, a connector that gives a text console to the computer. The disk holds credentials, customer data such as images and maps, and Hari's software.
+The robot will go on a mission on the moon. Moon hackers can unplug it, carry it away, open the lid, pull out the disk, attach a USB cable, or plug into the debug serial header, a connector that gives a text console to the computer. The disk holds credentials, customer data such as images and maps, and Hari's software.
 
 > [!example] On the Jetson
 > Hari's robots use the Jetson Orin NX from [Basics](00-basics.md), running JetPack 6, NVIDIA's software release for the Jetson, whose Linux part is L4T. Without disk encryption, the `APP` partition holds the whole root filesystem; the next chapter changes that.
