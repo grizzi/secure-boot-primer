@@ -130,7 +130,13 @@ Linux shows each disk and each partition as a special file in the folder `/dev`.
 >
 > This laptop matches the figure, with one difference. Its second partition does not hold ext4 directly: it is encrypted (`crypto_LUKS`), and a decrypted view of it, `cryptroot`, holds the ext4 filesystem mounted at `/`. [Someone takes the disk](02-someone-takes-the-disk.md) explains how this works. `vfat` is Linux's name for FAT.
 
-TODO: small callout about fstypes
+> [!info] Filesystem types
+> There are many filesystems, and each **filesystem type** lays out files and folders in its own way. The kernel has separate code for every type it can read.
+>
+> - **ext4** is the usual type on Linux, used for the root filesystem.
+> - **FAT** is much older and simpler, and almost every system can read it. The UEFI standard requires firmware to read FAT, which is why the small partition that the firmware boots from uses it.
+>
+> Each type writes its own marker, a few known bytes, near the start of the partition. `mount` reads the marker to choose the right code, and `lsblk` shows it in the `FSTYPE` column. Not every marker is a filesystem: `crypto_LUKS` marks an encrypted partition, whose filesystem is visible only after decrypting.
 
 > [!example] On the Jetson
 > The disk is an NVMe SSD on the carrier board, so it appears as `/dev/nvme0n1`. In NVIDIA's standard setup, its first partition, called `APP`, holds the whole root filesystem, `/boot` included. With NVIDIA's disk encryption, `APP` keeps only `/boot`, and the root filesystem moves to a separate, encrypted partition.
@@ -149,7 +155,14 @@ It also passes the kernel the **kernel command line**: a short line of text with
 > BOOT_IMAGE=/vmlinuz-6.5.0-1025-oem root=UUID=… ro cryptdevice=UUID=…:cryptroot root=/dev/mapper/cryptroot quiet splash vt.handoff=7
 > ```
 >
-> `BOOT_IMAGE` is the kernel file that the boot loader, GRUB, loaded. `root=` names the root filesystem, here by its UUID, a unique ID stored in the filesystem. `ro` mounts it read-only at first, and `quiet splash` show a logo instead of the boot messages. `cryptdevice=` belongs to the encrypted partition from the previous box.
+> `root=` names the root filesystem, here by its UUID, a unique ID stored in the filesystem. `ro` mounts it read-only at first, and `quiet splash` show a logo instead of the boot messages.
+>
+> Two entries are not settings of the kernel, and many computers do not have them:
+>
+> - `BOOT_IMAGE=` is a note that GRUB, the boot loader of this laptop, adds by itself: the kernel file it loaded. With another boot loader, it is missing.
+> - `cryptdevice=` is meant for the scripts of the initrd and names the encrypted partition from the previous box. Without an encrypted disk, it is missing.
+>
+> The kernel skips the entries it does not know. Programs that run later, such as the scripts of the initrd, can read the whole line in `/proc/cmdline` and pick out their own.
 
 > [!example] On the Jetson
 > The boot loader is NVIDIA's **L4TLauncher**. Its configuration file is `/boot/extlinux/extlinux.conf`, which names the kernel, the initrd and the command line (shortened):
@@ -161,9 +174,7 @@ It also passes the kernel the **kernel command line**: a short line of text with
 >       APPEND ${cbootargs} root=/dev/nvme0n1p1 rw rootwait …
 > ```
 >
-> `${cbootargs}` is replaced with settings from the firmware, and `root=` names the `APP` partition.
-
-TODO mention that BOOT_IMAGE is not used when there is no Grub menu and neither the cryptdevice.
+> `${cbootargs}` is replaced with settings from the firmware, and `root=` names the `APP` partition. The line has neither of the two extra entries of the laptop. L4TLauncher is not GRUB and adds no `BOOT_IMAGE=`. NVIDIA's initrd does not use `cryptdevice=` either: with NVIDIA's disk encryption, it reads which partitions to decrypt from a file inside the initrd, `/etc/crypttab`.
 
 ## The kernel
 
